@@ -1,4 +1,22 @@
-# FritzHome
+# FritzHome 
+
+ FritzHome is a SmartHome ControlCenter for Windows 
+ 
+ Windows GUI and Commandline Interface
+ 
+ Manage your Snmart Home Devices and get Alerts like 'Battery Status Warnings' as Windows Notification
+ 
+# Supported Deveices
+* AVM FRITZ!DECT 200 (Smart Socket)
+* AVM FRITZ!DECT 210 (Smart Socket)
+* AVM FRITZ!DECT 300 (Thermostat)
+* AVM FRITZ!DECT 301 (Thermostat)
+* AVM FRITZ!DECT 400 (Switch)
+* AVM FRITZ!DECT 440 (Switch)
+* AVM FRITZ!DECT 500 (RGB-Color Lightbulb)
+* Eurotronic CometDECT (Thermostat)
+* Magenta Bewegungsmelder (Motion Detector)
+* Magenta Rauchmelder(Smoke Detector)
 
 # The Windows GUI and SystemTray Version
 
