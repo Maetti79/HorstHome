@@ -1,0 +1,318 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Chart_Day" xml:space="preserve">
+    <value>Hours</value>
+  </data>
+  <data name="Chart_Hour" xml:space="preserve">
+    <value>Minutes</value>
+  </data>
+  <data name="Chart_Month" xml:space="preserve">
+    <value>Days</value>
+  </data>
+  <data name="Chart_Temperature" xml:space="preserve">
+    <value>Temperature °C</value>
+  </data>
+  <data name="Chart_V" xml:space="preserve">
+    <value>Volt</value>
+  </data>
+  <data name="Chart_W" xml:space="preserve">
+    <value>Watt</value>
+  </data>
+  <data name="Chart_Week" xml:space="preserve">
+    <value>Days</value>
+  </data>
+  <data name="Chart_Wh" xml:space="preserve">
+    <value>Energie (Wh)</value>
+  </data>
+  <data name="Chart_Year" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="Detail_Annex" xml:space="preserve">
+    <value>Annes</value>
+  </data>
+  <data name="Detail_Battery" xml:space="preserve">
+    <value>Battery</value>
+  </data>
+  <data name="Detail_Color" xml:space="preserve">
+    <value>Color</value>
+  </data>
+  <data name="Detail_Energie" xml:space="preserve">
+    <value>Energie Usage (Wh)</value>
+  </data>
+  <data name="Detail_Firmware" xml:space="preserve">
+    <value>Firmware</value>
+  </data>
+  <data name="Detail_Fritzbox" xml:space="preserve">
+    <value>FritzBox</value>
+  </data>
+  <data name="Detail_Indentifier" xml:space="preserve">
+    <value>Indentifier</value>
+  </data>
+  <data name="Detail_Level" xml:space="preserve">
+    <value>Dimmer (%)</value>
+  </data>
+  <data name="Detail_Manufacturer" xml:space="preserve">
+    <value>OEM</value>
+  </data>
+  <data name="Detail_Model" xml:space="preserve">
+    <value>Model</value>
+  </data>
+  <data name="Detail_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Detail_Revision" xml:space="preserve">
+    <value>Revision</value>
+  </data>
+  <data name="Detail_Serial" xml:space="preserve">
+    <value>SerialNo.</value>
+  </data>
+  <data name="Detail_SwitchOff" xml:space="preserve">
+    <value>Off</value>
+  </data>
+  <data name="Detail_SwitchOn" xml:space="preserve">
+    <value>On</value>
+  </data>
+  <data name="Detail_Themprature" xml:space="preserve">
+    <value>Themperatur (°C)</value>
+  </data>
+  <data name="Detail_ThempratureConfort" xml:space="preserve">
+    <value>Confort Themperatur (°C)</value>
+  </data>
+  <data name="Detail_ThempratureLow" xml:space="preserve">
+    <value>Lower Themperatur  (°C)</value>
+  </data>
+  <data name="Detail_ThempratureTarget" xml:space="preserve">
+    <value>Target Themperatur (°C)</value>
+  </data>
+  <data name="Device_Button" xml:space="preserve">
+    <value>Button</value>
+  </data>
+  <data name="Device_Lightbulb" xml:space="preserve">
+    <value>Lightbulb</value>
+  </data>
+  <data name="Device_Motion" xml:space="preserve">
+    <value>Motion Detector</value>
+  </data>
+  <data name="Device_Shutter" xml:space="preserve">
+    <value>Windows Shutter Control</value>
+  </data>
+  <data name="Device_Smoke" xml:space="preserve">
+    <value>Smake Detector</value>
+  </data>
+  <data name="Device_Socket" xml:space="preserve">
+    <value>Socket</value>
+  </data>
+  <data name="Device_Thermostat" xml:space="preserve">
+    <value>Thermostat</value>
+  </data>
+  <data name="Function_Alarm" xml:space="preserve">
+    <value>Alarm</value>
+  </data>
+  <data name="Function_Color" xml:space="preserve">
+    <value>Color</value>
+  </data>
+  <data name="Function_Energiemeter" xml:space="preserve">
+    <value>Energie Meter</value>
+  </data>
+  <data name="Function_Level" xml:space="preserve">
+    <value>Dimmer</value>
+  </data>
+  <data name="Function_Switch" xml:space="preserve">
+    <value>Switch</value>
+  </data>
+  <data name="Function_Thermometer" xml:space="preserve">
+    <value>Thermometer</value>
+  </data>
+  <data name="License_Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="License_Donate" xml:space="preserve">
+    <value>Donate</value>
+  </data>
+  <data name="License_Expires" xml:space="preserve">
+    <value>Expires</value>
+  </data>
+  <data name="License_Key" xml:space="preserve">
+    <value>License Key</value>
+  </data>
+  <data name="License_Reload" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="License_Titel" xml:space="preserve">
+    <value>License Information</value>
+  </data>
+  <data name="License_Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="Menu_About" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="Menu_DE" xml:space="preserve">
+    <value>German</value>
+  </data>
+  <data name="Menu_EN" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="Menu_Fritzbox" xml:space="preserve">
+    <value>FritzBox</value>
+  </data>
+  <data name="Menu_Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Menu_License" xml:space="preserve">
+    <value>License</value>
+  </data>
+  <data name="Menu_Quit" xml:space="preserve">
+    <value>Quit</value>
+  </data>
+  <data name="Menu_Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Menu_Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="Settings_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Settings_Conenction" xml:space="preserve">
+    <value>Connection</value>
+  </data>
+  <data name="Settings_Group" xml:space="preserve">
+    <value>FritzBox</value>
+  </data>
+  <data name="Settings_Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="Settings_Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="Settings_Titel" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Settings_Uri" xml:space="preserve">
+    <value>FritzBox / Uri</value>
+  </data>
+  <data name="Settings_Username" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="Settings_Validate" xml:space="preserve">
+    <value>Validate</value>
+  </data>
+</root>
