@@ -1,6 +1,8 @@
 # FritzHome
 AVM Fritzbox SmartHome Controlcenter for Windows
 
+Windows 10 (32/64) Installer https://fritzhome.purepix.net/setup.exe
+
 # Roadmap:
 
 Manage AVM SmartHome Devices 
