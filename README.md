@@ -9,9 +9,9 @@
 
 **FritzCMD** -> _CLI AVM Fritzbox SmartHome Controlcenter for Windows_ 
 
-Windows 10 (32/64) Installer https://fritzhome.purepix.net/setup.exe
+# Install
 
-contribute to open source, now!
+Windows 10 (32/64) Installer https://fritzhome.purepix.net/setup.exe
 
 ![Overview](https://github.com/Maetti79/FritzHome/blob/main/Images/OverviewView.png?raw=true)
 
