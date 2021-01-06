@@ -1,5 +1,13 @@
 # FritzHome
-AVM Fritzbox SmartHome Controlcenter for Windows
+
+# The Windows GUI and SystemTray Version
+
+**FritzHome** -> _AVM Fritzbox SmartHome Controlcenter for Windows_
+
+
+# The Comandline/Shell Version
+
+**FritzCMD** -> _CLI AVM Fritzbox SmartHome Controlcenter for Windows_ 
 
 Windows 10 (32/64) Installer https://fritzhome.purepix.net/setup.exe
 
