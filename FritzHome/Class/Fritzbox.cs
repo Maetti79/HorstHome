@@ -48,55 +48,68 @@ namespace FritzHome
             Uri = b;
             Username = u;
             Password = p;
+
         }
 
         public Boolean info()
         {
-            XDocument doc = XDocument.Load(Uri + @"jason_boxinfo.xml");
-            if (doc != null)
+            try
             {
-                foreach (XElement boxinfo in doc.Elements())
+                XDocument doc = XDocument.Load(Uri + @"jason_boxinfo.xml");
+                if (doc != null)
                 {
-                    foreach (XElement element in boxinfo.Elements())
+                    foreach (XElement boxinfo in doc.Elements())
                     {
-                        if (element.Name.LocalName.ToString() != "Flag")
+                        foreach (XElement element in boxinfo.Elements())
                         {
-                            Info.Add(element.Name.LocalName.ToString(), element.Value);
+                            if (element.Name.LocalName.ToString() != "Flag")
+                            {
+                                Info.Add(element.Name.LocalName.ToString(), element.Value);
+                            }
                         }
                     }
+                    if (Info["Name"].ToString().Contains("7490"))
+                    {
+                        iconId = 11;
+                    }
+                    if (Info["Name"].ToString().Contains("7590"))
+                    {
+                        iconId = 12;
+                    }
+                    return true;
                 }
-                if (Info["Name"].ToString().Contains("7490"))
+                else
                 {
-                    iconId = 11;
+                    return false;
                 }
-                if (Info["Name"].ToString().Contains("7590"))
-                {
-                    iconId = 12;
-                }
-                return true;
             }
-            else
-            {
+            catch (Exception Ex) {
                 return false;
             }
         }
 
         public Boolean connect()
         {
-            XDocument doc = XDocument.Load(Uri + @"login_sid.lua");
-            SID = GetValue(doc, "SID");
-            if (SID == "0000000000000000")
+            try
             {
-                String challenge = GetValue(doc, "Challenge");
-                doc = XDocument.Load(Uri + @"login_sid.lua?username=" + Username + @"&response=" + GetResponse(challenge, Password));
+                XDocument doc = XDocument.Load(Uri + @"login_sid.lua");
                 SID = GetValue(doc, "SID");
+                if (SID == "0000000000000000")
+                {
+                    String challenge = GetValue(doc, "Challenge");
+                    doc = XDocument.Load(Uri + @"login_sid.lua?username=" + Username + @"&response=" + GetResponse(challenge, Password));
+                    SID = GetValue(doc, "SID");
+                }
+                if (SID != "0000000000000000")
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
-            if (SID != "0000000000000000")
-            {
-                return true;
-            }
-            else
-            {
+            catch (Exception Ex) {
                 return false;
             }
         }
@@ -126,7 +139,8 @@ namespace FritzHome
 
         public void getDevicelist()
         {
-      
+            try
+            {
                 Devices = new List<SmartDevice>();
                 Groups = new List<SmartDeviceGroup>();
 
@@ -143,7 +157,7 @@ namespace FritzHome
                         if (d.GetType() != typeof(Default))
                         {
                             Devices.Add(d);
-                         }
+                        }
                     }
                 }
 
@@ -184,13 +198,17 @@ namespace FritzHome
                 {
                     foreach (SmartDevice device in Devices)
                     {
-                         if (group.Devices.Contains(device))
+                        if (group.Devices.Contains(device))
                         {
                             device.isGrouped = true;
                             device.Group = group;
                         }
                     }
                 }
+            }
+            catch (Exception Ex)
+            {
+            }
         }
 
         public void getColordefaults()

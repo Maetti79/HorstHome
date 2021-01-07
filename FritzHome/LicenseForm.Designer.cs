@@ -103,6 +103,7 @@
             this.EulaRtf.Size = new System.Drawing.Size(562, 469);
             this.EulaRtf.TabIndex = 16;
             this.EulaRtf.Text = "";
+            this.EulaRtf.TextChanged += new System.EventHandler(this.EulaRtf_TextChanged);
             // 
             // LabelExpires
             // 

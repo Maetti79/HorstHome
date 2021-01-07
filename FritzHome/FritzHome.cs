@@ -15,11 +15,13 @@ namespace FritzHome
         public String[] Error;
         private Int32 BatteryWarning = 5;
 
-        public FritzBox fritzBox = new FritzBox();
+        public FritzBox fritzBox;
         public CultureInfo culture;
         public ResourceManager rm;
         public NotifyIcon trayIcon;
         public ContextMenuStrip trayMenu;
+        String BNodeName;
+        TreeNode BNode;
 
         public FritzHome()
         {
@@ -38,85 +40,128 @@ namespace FritzHome
             trayIcon.Visible = true;
         }
 
+
         private void Form1_Load(object sender, EventArgs e)
         {
-
+ 
+            fritzBox = new FritzBox();
             changeCulture(culture.ToString());
-            loadLicense();
-            loadConnection();
-            fritzBox.info();
-            if (fritzBox.connect() == true)
+
+            if (loadLicense() == true && loadConnection() == true)
             {
-                fritzBox.getDevicelist();
-                fritzBox.getColordefaults();
-                fritzBox.getTemplatelist();
+                loadFritzbox();
             }
-
-            BatteryWarnings();
-
+          
             SmartDeviceTreeView.Nodes.Clear();
             trayMenu.Items.Clear();
 
-            String BNodeName = fritzBox.Info["Name"];
+            loadDevices();
+            loadGroups();
+            BatteryWarnings();
+        }
 
-            TreeNode BNode = new TreeNode(BNodeName);
-            BNode.ImageIndex = fritzBox.iconId;
-            BNode.SelectedImageIndex = fritzBox.iconId;
-            SmartDeviceTreeView.Nodes.Add(BNode);
-
-            ToolStripMenuItem BoxMenu = new ToolStripMenuItem(BNodeName, Icons.Images[fritzBox.iconId]);
-            BoxMenu.Click += trayMenu_ItemClicked;
-            trayMenu.Items.Add(BoxMenu);
-
-            foreach (SmartDeviceGroup group in fritzBox.Groups)
+         private Boolean loadFritzbox() {
+            try
             {
-                String GNodeName = group.GroupName;
+                fritzBox.info();
+                if (fritzBox.connect() == true)
+                {
+                    fritzBox.getDevicelist();
+                    fritzBox.getColordefaults();
+                    fritzBox.getTemplatelist();
+                    loadDevices();
+                    loadGroups();
+                    BatteryWarnings();
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+            catch (Exception err)
+            {
+                errorLog(System.Reflection.MethodBase.GetCurrentMethod().Name, err);
+                return false;
+            }
+        }
 
-                TreeNode GNode = new TreeNode(GNodeName);
-                GNode.ImageIndex = group.iconId;
-                GNode.SelectedImageIndex = group.iconId;
-                BNode.Nodes.Add(GNode);
+        private void loadDevices() {
+            try
+            {
+                BNodeName = fritzBox.Info["Name"];
 
-                ToolStripMenuItem GMenu = new ToolStripMenuItem(GNodeName, Icons.Images[group.iconId]);
-                GMenu.Click += trayMenu_ItemClicked;
-                trayMenu.Items.Add(GMenu);
+                BNode = new TreeNode(BNodeName);
+                BNode.ImageIndex = fritzBox.iconId;
+                BNode.SelectedImageIndex = fritzBox.iconId;
+                SmartDeviceTreeView.Nodes.Add(BNode);
 
+                ToolStripMenuItem BoxMenu = new ToolStripMenuItem(BNodeName, Icons.Images[fritzBox.iconId]);
+                BoxMenu.Click += trayMenu_ItemClicked;
+                trayMenu.Items.Add(BoxMenu);
+                foreach (SmartDeviceGroup group in fritzBox.Groups)
+                {
+                    String GNodeName = group.GroupName;
+
+                    TreeNode GNode = new TreeNode(GNodeName);
+                    GNode.ImageIndex = group.iconId;
+                    GNode.SelectedImageIndex = group.iconId;
+                    BNode.Nodes.Add(GNode);
+
+                    ToolStripMenuItem GMenu = new ToolStripMenuItem(GNodeName, Icons.Images[group.iconId]);
+                    GMenu.Click += trayMenu_ItemClicked;
+                    trayMenu.Items.Add(GMenu);
+
+                    foreach (SmartDevice device in fritzBox.Devices)
+                    {
+                        if (group.Devices.Contains(device) && device.isGrouped == true)
+                        {
+                            String DNodeName = device.DeviceName;
+
+                            TreeNode DNode = new TreeNode(DNodeName);
+                            DNode.ImageIndex = device.iconId;
+                            DNode.SelectedImageIndex = device.iconId;
+                            GNode.Nodes.Add(DNode);
+
+                            ToolStripMenuItem DMenu = new ToolStripMenuItem(DNodeName, Icons.Images[device.iconId]);
+                            DMenu.Click += trayMenu_ItemClicked;
+                            GMenu.DropDownItems.Add(DMenu);
+                        }
+                    }
+                }
+
+            }
+            catch (Exception err)
+            {
+                errorLog(System.Reflection.MethodBase.GetCurrentMethod().Name, err);
+            }
+        }
+
+        private void loadGroups() {
+            try
+            {
                 foreach (SmartDevice device in fritzBox.Devices)
                 {
-                    if (group.Devices.Contains(device) && device.isGrouped == true)
+                    if (device.isGrouped == false)
                     {
                         String DNodeName = device.DeviceName;
 
                         TreeNode DNode = new TreeNode(DNodeName);
                         DNode.ImageIndex = device.iconId;
                         DNode.SelectedImageIndex = device.iconId;
-                        GNode.Nodes.Add(DNode);
+                        BNode.Nodes.Add(DNode);
 
                         ToolStripMenuItem DMenu = new ToolStripMenuItem(DNodeName, Icons.Images[device.iconId]);
                         DMenu.Click += trayMenu_ItemClicked;
-                        GMenu.DropDownItems.Add(DMenu);
+                        trayMenu.Items.Add(DMenu);
                     }
                 }
+                trayMenu.Items.Add("-");
+                trayMenu.Items.Add("Beenden", Icons.Images[0], OnExit);
             }
-
-            foreach (SmartDevice device in fritzBox.Devices)
+            catch (Exception err)
             {
-                if (device.isGrouped == false)
-                {
-                    String DNodeName = device.DeviceName;
-
-                    TreeNode DNode = new TreeNode(DNodeName);
-                    DNode.ImageIndex = device.iconId;
-                    DNode.SelectedImageIndex = device.iconId;
-                    BNode.Nodes.Add(DNode);
-
-                    ToolStripMenuItem DMenu = new ToolStripMenuItem(DNodeName, Icons.Images[device.iconId]);
-                    DMenu.Click += trayMenu_ItemClicked;
-                    trayMenu.Items.Add(DMenu);
-                }
+                errorLog(System.Reflection.MethodBase.GetCurrentMethod().Name, err);
             }
-            trayMenu.Items.Add("-");
-            trayMenu.Items.Add("Beenden", Icons.Images[0], OnExit);
         }
 
         private void trayMenu_ItemClicked(object sender, EventArgs e)
@@ -179,7 +224,7 @@ namespace FritzHome
             }
         }
 
-        public void loadPlugins()
+        public Boolean loadPlugins()
         {
             try
             {
@@ -188,10 +233,12 @@ namespace FritzHome
                 {
                     Console.WriteLine(pl.ToString());
                 }
+                return true;
             }
             catch (Exception err)
             {
                 errorLog(System.Reflection.MethodBase.GetCurrentMethod().Name, err);
+                return false;
             }
         }
 
@@ -210,9 +257,14 @@ namespace FritzHome
                 subkey = key.OpenSubKey("FritzBox");
                 if (subkey != null)
                 {
-                    String UriTxt = subkey.GetValue("FritzBoxUri").ToString();
-                    String UsernameTxt = subkey.GetValue("Username").ToString();
-                    String PasswordTxt = subkey.GetValue("Password").ToString();
+                    String UriTxt = subkey.GetValue("FritzBoxUri", "http://fritz.box/").ToString();
+                    String UsernameTxt = subkey.GetValue("Username", "").ToString();
+                    String Salt = StringEncryptor.GenerateAPassKey(Serial.cpuSerial());
+                    String PasswordTxt = "";
+                    if (subkey.GetValue("Password", "").ToString() != "")
+                    {
+                        PasswordTxt = StringEncryptor.Decrypt(subkey.GetValue("Password", "").ToString(), Salt);
+                    }
                     fritzBox = new FritzBox(UriTxt, UsernameTxt, PasswordTxt);
                 }
                 key.Close();
@@ -266,7 +318,7 @@ namespace FritzHome
                 subkey = key.OpenSubKey("FritzBox");
                 if (subkey != null)
                 {
-                    String c = subkey.GetValue("Culture").ToString();
+                    String c = subkey.GetValue("Culture", "de-DE").ToString();
                     CultureInfo.DefaultThreadCurrentCulture = new CultureInfo(c);
                     CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo(c);
                 }
@@ -362,7 +414,7 @@ namespace FritzHome
                 {
                     if (fritzBox.Info["Name"].ToString() == SmartDeviceTreeView.SelectedNode.Text.ToString())
                     {
-                        FritzboxView fbv = new FritzboxView(this,fritzBox);
+                        FritzboxView fbv = new FritzboxView(this, fritzBox);
                         fbv.Dock = DockStyle.Fill;
                         TabPage DeviceInfoTab = new TabPage(fritzBox.Info["Name"].ToString());
                         DeviceInfoTab.Controls.Add(fbv);
@@ -387,7 +439,7 @@ namespace FritzHome
                         SmartDeviceTabContainer.TabPages.Clear();
                         if (device.SupportedFunctions.hasFlag(SmartDeviceFunctionType.Thermostat))
                         {
-                            ThermostatView thv = new ThermostatView(this,fritzBox.Uri, fritzBox.SID, device);
+                            ThermostatView thv = new ThermostatView(this, fritzBox.Uri, fritzBox.SID, device);
                             thv.Dock = DockStyle.Fill;
                             TabPage DeviceInfoTab = new TabPage(device.DeviceName);
                             DeviceInfoTab.Controls.Add(thv);
@@ -395,7 +447,7 @@ namespace FritzHome
                         }
                         else if (device.SupportedFunctions.hasFlag(SmartDeviceFunctionType.Switch))
                         {
-                            SocketView sv = new SocketView(this,fritzBox.Uri, fritzBox.SID, device);
+                            SocketView sv = new SocketView(this, fritzBox.Uri, fritzBox.SID, device);
                             sv.Dock = DockStyle.Fill;
                             TabPage DeviceInfoTab = new TabPage(device.DeviceName);
                             DeviceInfoTab.Controls.Add(sv);
@@ -403,7 +455,7 @@ namespace FritzHome
                         }
                         else if (device.SupportedFunctions.hasFlag(SmartDeviceFunctionType.Color))
                         {
-                            LightView lv = new LightView(this,fritzBox.Uri, fritzBox.SID, device);
+                            LightView lv = new LightView(this, fritzBox.Uri, fritzBox.SID, device);
                             lv.Dock = DockStyle.Fill;
                             TabPage DeviceInfoTab = new TabPage(device.DeviceName);
                             DeviceInfoTab.Controls.Add(lv);
@@ -468,7 +520,7 @@ namespace FritzHome
 
         private void connectionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void languageToolStripMenuItem_Click(object sender, EventArgs e)
@@ -583,7 +635,20 @@ namespace FritzHome
                     var result = sform.ShowDialog();
                     if (result == DialogResult.OK)
                     {
+                        fritzBox = new FritzBox();
+                        changeCulture(culture.ToString());
 
+                        if (loadLicense() == true && loadConnection() == true)
+                        {
+                            loadFritzbox();
+                        }
+
+                        SmartDeviceTreeView.Nodes.Clear();
+                        trayMenu.Items.Clear();
+
+                        loadDevices();
+                        loadGroups();
+                        BatteryWarnings();
                     }
                 }
             }
@@ -611,7 +676,8 @@ namespace FritzHome
 
         }
 
-        private void BatteryWarnings() {
+        private void BatteryWarnings()
+        {
             foreach (SmartDevice d in fritzBox.Devices)
             {
                 if (d.Battery <= BatteryWarning)

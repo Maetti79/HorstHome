@@ -148,7 +148,11 @@ namespace FritzHome
                 {
                     subkey.SetValue("FritzBoxUri", UriTxt.Text.ToString());
                     subkey.SetValue("Username", UsernameTxt.Text.ToString());
-                    subkey.SetValue("Password", PasswordTxt.Text.ToString());
+                    if (PasswordTxt.Text.ToString() != "")
+                    {
+                        String Salt = StringEncryptor.GenerateAPassKey(Serial.cpuSerial());
+                        subkey.SetValue("Password", StringEncryptor.Encrypt(PasswordTxt.Text.ToString(), Salt));
+                    }
                 }
                 key.Close();
             }
@@ -167,9 +171,14 @@ namespace FritzHome
             subkey = key.OpenSubKey("FritzBox");
             if (subkey != null)
             {
-                UriTxt.Text = subkey.GetValue("FritzBoxUri").ToString();
-                UsernameTxt.Text = subkey.GetValue("Username").ToString();
-                PasswordTxt.Text = subkey.GetValue("Password").ToString();
+                UriTxt.Text = subkey.GetValue("FritzBoxUri", "http://fritz.box/").ToString();
+                UsernameTxt.Text = subkey.GetValue("Username", "").ToString();
+                String Salt = StringEncryptor.GenerateAPassKey(Serial.cpuSerial());
+                PasswordTxt.Text = "";
+                if (subkey.GetValue("Password", "").ToString() != "")
+                {
+                    PasswordTxt.Text = StringEncryptor.Decrypt(subkey.GetValue("Password", "").ToString(), Salt);
+                } 
             }
             if (key != null)
             {

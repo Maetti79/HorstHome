@@ -172,5 +172,10 @@ namespace FritzHome
                 "&bn=" + "PP%2dDonationsBF";
             System.Diagnostics.Process.Start(url);
         }
+
+        private void EulaRtf_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

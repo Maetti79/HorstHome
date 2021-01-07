@@ -109,7 +109,7 @@
             this.CancelBtn.Location = new System.Drawing.Point(211, 315);
             this.CancelBtn.Name = "CancelBtn";
             this.CancelBtn.Size = new System.Drawing.Size(75, 23);
-            this.CancelBtn.TabIndex = 53;
+            this.CancelBtn.TabIndex = 6;
             this.CancelBtn.Text = "Cancel";
             this.CancelBtn.UseVisualStyleBackColor = true;
             this.CancelBtn.Click += new System.EventHandler(this.cancelBtn_Click);
@@ -169,21 +169,22 @@
             this.UsernameTxt.Location = new System.Drawing.Point(131, 51);
             this.UsernameTxt.Name = "UsernameTxt";
             this.UsernameTxt.Size = new System.Drawing.Size(155, 20);
-            this.UsernameTxt.TabIndex = 7;
+            this.UsernameTxt.TabIndex = 2;
             // 
             // PasswordTxt
             // 
             this.PasswordTxt.Location = new System.Drawing.Point(131, 77);
             this.PasswordTxt.Name = "PasswordTxt";
             this.PasswordTxt.Size = new System.Drawing.Size(155, 20);
-            this.PasswordTxt.TabIndex = 6;
+            this.PasswordTxt.TabIndex = 3;
+            this.PasswordTxt.UseSystemPasswordChar = true;
             // 
             // UriTxt
             // 
             this.UriTxt.Location = new System.Drawing.Point(131, 22);
             this.UriTxt.Name = "UriTxt";
             this.UriTxt.Size = new System.Drawing.Size(155, 20);
-            this.UriTxt.TabIndex = 5;
+            this.UriTxt.TabIndex = 1;
             this.UriTxt.Text = "http://fritz.box/";
             this.UriTxt.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
@@ -193,7 +194,7 @@
             this.OkBtn.Location = new System.Drawing.Point(39, 315);
             this.OkBtn.Name = "OkBtn";
             this.OkBtn.Size = new System.Drawing.Size(75, 23);
-            this.OkBtn.TabIndex = 4;
+            this.OkBtn.TabIndex = 5;
             this.OkBtn.Text = "Ok";
             this.OkBtn.UseVisualStyleBackColor = true;
             this.OkBtn.Click += new System.EventHandler(this.okBtn_Click);
@@ -203,7 +204,7 @@
             this.ValidateBtn.Location = new System.Drawing.Point(131, 104);
             this.ValidateBtn.Name = "ValidateBtn";
             this.ValidateBtn.Size = new System.Drawing.Size(155, 23);
-            this.ValidateBtn.TabIndex = 3;
+            this.ValidateBtn.TabIndex = 4;
             this.ValidateBtn.Text = "Validate";
             this.ValidateBtn.UseVisualStyleBackColor = true;
             this.ValidateBtn.Click += new System.EventHandler(this.validateBtn_Click);

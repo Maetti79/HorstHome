@@ -26,7 +26,7 @@
     <InstallUrl>https://fritzhome.purepix.net/</InstallUrl>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationRevision>3</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -120,6 +120,7 @@
     <Compile Include="Class\PluginCore.cs" />
     <Compile Include="Class\Serial.cs" />
     <Compile Include="Class\SmartDeviceTemplate.cs" />
+    <Compile Include="Class\StringEncryptor.cs" />
     <Compile Include="Device\HanFunSmoke.cs" />
     <Compile Include="Device\HanFunMotion.cs" />
     <Compile Include="LicenseForm.cs">
