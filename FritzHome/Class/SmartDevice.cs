@@ -19,7 +19,7 @@ namespace FritzHome
         public Int32 Id;
         public String Identifier;
         public String DeviceName;
-
+        
         public String Manufacturer;
         public String FirmwareVersion;
 

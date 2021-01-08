@@ -57,9 +57,9 @@ namespace FritzHome
                     LabelName.Text = i18n.de.Detail_Name.ToString();
                     LabelIdentifier.Text = i18n.de.Detail_Indentifier.ToString();
                     LabelManufacturer.Text = i18n.de.Detail_Manufacturer.ToString();
-                    LabelFirmware.Text = i18n.de.Detail_Battery.ToString();
-                    LabelTemperatur.Text = i18n.de.Detail_Battery.ToString();
-                    LabelEnergie.Text = i18n.de.Detail_Battery.ToString();
+                    LabelFirmware.Text = i18n.de.Detail_Firmware.ToString();
+                    LabelTemperatur.Text = i18n.de.Detail_Themprature.ToString();
+                    LabelEnergie.Text = i18n.de.Detail_Energie.ToString();
                     OnBtn.Text = i18n.de.Detail_SwitchOn.ToString();
                     OffBtn.Text = i18n.de.Detail_SwitchOff.ToString();
                 }
@@ -69,9 +69,9 @@ namespace FritzHome
                     LabelName.Text = i18n.en.Detail_Name.ToString();
                     LabelIdentifier.Text = i18n.en.Detail_Indentifier.ToString();
                     LabelManufacturer.Text = i18n.en.Detail_Manufacturer.ToString();
-                    LabelFirmware.Text = i18n.en.Detail_Battery.ToString();
-                    LabelTemperatur.Text = i18n.en.Detail_Battery.ToString();
-                    LabelEnergie.Text = i18n.en.Detail_Battery.ToString();
+                    LabelFirmware.Text = i18n.en.Detail_Firmware.ToString();
+                    LabelTemperatur.Text = i18n.en.Detail_Themprature.ToString();
+                    LabelEnergie.Text = i18n.en.Detail_Energie.ToString();
                     OnBtn.Text = i18n.en.Detail_SwitchOn.ToString();
                     OffBtn.Text = i18n.en.Detail_SwitchOff.ToString();
                 }

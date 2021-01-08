@@ -63,7 +63,7 @@
             // 
             this.pictureBox10.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox10.Image")));
             this.pictureBox10.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox10.InitialImage")));
-            this.pictureBox10.Location = new System.Drawing.Point(70, 41);
+            this.pictureBox10.Location = new System.Drawing.Point(100, 41);
             this.pictureBox10.Name = "pictureBox10";
             this.pictureBox10.Size = new System.Drawing.Size(32, 32);
             this.pictureBox10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -74,7 +74,7 @@
             // 
             this.pictureBox9.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox9.Image")));
             this.pictureBox9.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox9.InitialImage")));
-            this.pictureBox9.Location = new System.Drawing.Point(70, 117);
+            this.pictureBox9.Location = new System.Drawing.Point(100, 117);
             this.pictureBox9.Name = "pictureBox9";
             this.pictureBox9.Size = new System.Drawing.Size(32, 32);
             this.pictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -85,7 +85,7 @@
             // 
             this.pictureBox8.Image = global::FritzHome.Properties.Resources.cpu;
             this.pictureBox8.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox8.InitialImage")));
-            this.pictureBox8.Location = new System.Drawing.Point(70, 155);
+            this.pictureBox8.Location = new System.Drawing.Point(100, 155);
             this.pictureBox8.Name = "pictureBox8";
             this.pictureBox8.Size = new System.Drawing.Size(32, 32);
             this.pictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -96,7 +96,7 @@
             // 
             this.pictureBox7.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox7.Image")));
             this.pictureBox7.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox7.InitialImage")));
-            this.pictureBox7.Location = new System.Drawing.Point(70, 79);
+            this.pictureBox7.Location = new System.Drawing.Point(100, 79);
             this.pictureBox7.Name = "pictureBox7";
             this.pictureBox7.Size = new System.Drawing.Size(32, 32);
             this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -107,7 +107,7 @@
             // 
             this.pictureBox6.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox6.Image")));
             this.pictureBox6.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox6.InitialImage")));
-            this.pictureBox6.Location = new System.Drawing.Point(70, 3);
+            this.pictureBox6.Location = new System.Drawing.Point(100, 3);
             this.pictureBox6.Name = "pictureBox6";
             this.pictureBox6.Size = new System.Drawing.Size(32, 32);
             this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -118,100 +118,105 @@
             // 
             this.DeviceName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.DeviceName.Location = new System.Drawing.Point(108, 46);
+            this.DeviceName.Location = new System.Drawing.Point(137, 48);
             this.DeviceName.Name = "DeviceName";
             this.DeviceName.ReadOnly = true;
-            this.DeviceName.Size = new System.Drawing.Size(290, 20);
+            this.DeviceName.Size = new System.Drawing.Size(260, 20);
             this.DeviceName.TabIndex = 97;
             // 
             // LabelName
             // 
-            this.LabelName.AutoSize = true;
-            this.LabelName.Location = new System.Drawing.Point(29, 50);
+            this.LabelName.Location = new System.Drawing.Point(4, 41);
             this.LabelName.Name = "LabelName";
-            this.LabelName.Size = new System.Drawing.Size(35, 13);
+            this.LabelName.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.LabelName.Size = new System.Drawing.Size(90, 32);
             this.LabelName.TabIndex = 96;
             this.LabelName.Text = "Name";
+            this.LabelName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Firmware
             // 
             this.Firmware.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Firmware.Location = new System.Drawing.Point(108, 162);
+            this.Firmware.Location = new System.Drawing.Point(137, 162);
             this.Firmware.Name = "Firmware";
             this.Firmware.ReadOnly = true;
-            this.Firmware.Size = new System.Drawing.Size(290, 20);
+            this.Firmware.Size = new System.Drawing.Size(260, 20);
             this.Firmware.TabIndex = 95;
             // 
             // Manufacturer
             // 
             this.Manufacturer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Manufacturer.Location = new System.Drawing.Point(108, 124);
+            this.Manufacturer.Location = new System.Drawing.Point(137, 124);
             this.Manufacturer.Name = "Manufacturer";
             this.Manufacturer.ReadOnly = true;
-            this.Manufacturer.Size = new System.Drawing.Size(290, 20);
+            this.Manufacturer.Size = new System.Drawing.Size(260, 20);
             this.Manufacturer.TabIndex = 94;
             // 
             // Identifier
             // 
             this.Identifier.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Identifier.Location = new System.Drawing.Point(108, 86);
+            this.Identifier.Location = new System.Drawing.Point(137, 86);
             this.Identifier.Name = "Identifier";
             this.Identifier.ReadOnly = true;
-            this.Identifier.Size = new System.Drawing.Size(290, 20);
+            this.Identifier.Size = new System.Drawing.Size(260, 20);
             this.Identifier.TabIndex = 93;
             // 
             // Modell
             // 
             this.Modell.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Modell.Location = new System.Drawing.Point(108, 12);
+            this.Modell.Location = new System.Drawing.Point(137, 10);
             this.Modell.Name = "Modell";
             this.Modell.ReadOnly = true;
-            this.Modell.Size = new System.Drawing.Size(290, 20);
+            this.Modell.Size = new System.Drawing.Size(260, 20);
             this.Modell.TabIndex = 92;
             // 
             // LabelFirmware
             // 
-            this.LabelFirmware.AutoSize = true;
-            this.LabelFirmware.Location = new System.Drawing.Point(15, 164);
+            this.LabelFirmware.Location = new System.Drawing.Point(4, 155);
             this.LabelFirmware.Name = "LabelFirmware";
-            this.LabelFirmware.Size = new System.Drawing.Size(49, 13);
+            this.LabelFirmware.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.LabelFirmware.Size = new System.Drawing.Size(90, 32);
             this.LabelFirmware.TabIndex = 91;
             this.LabelFirmware.Text = "Firmware";
+            this.LabelFirmware.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // LabelManufacturer
             // 
-            this.LabelManufacturer.AutoSize = true;
-            this.LabelManufacturer.Location = new System.Drawing.Point(33, 127);
+            this.LabelManufacturer.Location = new System.Drawing.Point(4, 117);
             this.LabelManufacturer.Name = "LabelManufacturer";
-            this.LabelManufacturer.Size = new System.Drawing.Size(31, 13);
+            this.LabelManufacturer.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.LabelManufacturer.Size = new System.Drawing.Size(90, 32);
             this.LabelManufacturer.TabIndex = 90;
             this.LabelManufacturer.Text = "OEM";
+            this.LabelManufacturer.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // LabelIdentifier
             // 
-            this.LabelIdentifier.AutoSize = true;
-            this.LabelIdentifier.Location = new System.Drawing.Point(17, 88);
+            this.LabelIdentifier.Location = new System.Drawing.Point(4, 79);
             this.LabelIdentifier.Name = "LabelIdentifier";
-            this.LabelIdentifier.Size = new System.Drawing.Size(47, 13);
+            this.LabelIdentifier.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.LabelIdentifier.Size = new System.Drawing.Size(90, 32);
             this.LabelIdentifier.TabIndex = 89;
             this.LabelIdentifier.Text = "Identifier";
+            this.LabelIdentifier.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // LabelModel
             // 
-            this.LabelModel.AutoSize = true;
-            this.LabelModel.Location = new System.Drawing.Point(26, 13);
+            this.LabelModel.Location = new System.Drawing.Point(4, 3);
             this.LabelModel.Name = "LabelModel";
-            this.LabelModel.Size = new System.Drawing.Size(38, 13);
+            this.LabelModel.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.LabelModel.Size = new System.Drawing.Size(90, 32);
             this.LabelModel.TabIndex = 88;
             this.LabelModel.Text = "Modell";
+            this.LabelModel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // pictureBox5
             // 
-            this.pictureBox5.Location = new System.Drawing.Point(70, 193);
+            this.pictureBox5.Location = new System.Drawing.Point(100, 193);
             this.pictureBox5.Name = "pictureBox5";
             this.pictureBox5.Size = new System.Drawing.Size(32, 32);
             this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -220,21 +225,23 @@
             // 
             // LabelBattery
             // 
-            this.LabelBattery.AutoSize = true;
-            this.LabelBattery.Location = new System.Drawing.Point(24, 202);
+            this.LabelBattery.Location = new System.Drawing.Point(4, 193);
             this.LabelBattery.Name = "LabelBattery";
-            this.LabelBattery.Size = new System.Drawing.Size(40, 13);
+            this.LabelBattery.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.LabelBattery.Size = new System.Drawing.Size(90, 32);
             this.LabelBattery.TabIndex = 114;
             this.LabelBattery.Text = "Battery";
+            this.LabelBattery.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // progressBar1
             // 
             this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar1.Location = new System.Drawing.Point(108, 200);
+            this.progressBar1.Location = new System.Drawing.Point(137, 200);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(289, 20);
+            this.progressBar1.Size = new System.Drawing.Size(260, 20);
             this.progressBar1.TabIndex = 113;
+            this.progressBar1.Click += new System.EventHandler(this.progressBar1_Click);
             // 
             // BatteryIcons
             // 

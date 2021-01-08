@@ -88,10 +88,10 @@
             // 
             this.Firmware.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Firmware.Location = new System.Drawing.Point(107, 162);
+            this.Firmware.Location = new System.Drawing.Point(138, 162);
             this.Firmware.Name = "Firmware";
             this.Firmware.ReadOnly = true;
-            this.Firmware.Size = new System.Drawing.Size(277, 20);
+            this.Firmware.Size = new System.Drawing.Size(260, 20);
             this.Firmware.TabIndex = 23;
             this.Firmware.TextChanged += new System.EventHandler(this.Firmware_TextChanged);
             // 
@@ -99,10 +99,10 @@
             // 
             this.Manufacturer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Manufacturer.Location = new System.Drawing.Point(107, 124);
+            this.Manufacturer.Location = new System.Drawing.Point(138, 124);
             this.Manufacturer.Name = "Manufacturer";
             this.Manufacturer.ReadOnly = true;
-            this.Manufacturer.Size = new System.Drawing.Size(277, 20);
+            this.Manufacturer.Size = new System.Drawing.Size(260, 20);
             this.Manufacturer.TabIndex = 22;
             this.Manufacturer.TextChanged += new System.EventHandler(this.Manufacturer_TextChanged);
             // 
@@ -110,10 +110,10 @@
             // 
             this.Identifier.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Identifier.Location = new System.Drawing.Point(107, 86);
+            this.Identifier.Location = new System.Drawing.Point(138, 86);
             this.Identifier.Name = "Identifier";
             this.Identifier.ReadOnly = true;
-            this.Identifier.Size = new System.Drawing.Size(277, 20);
+            this.Identifier.Size = new System.Drawing.Size(260, 20);
             this.Identifier.TabIndex = 21;
             this.Identifier.TextChanged += new System.EventHandler(this.Identifier_TextChanged);
             // 
@@ -121,77 +121,82 @@
             // 
             this.Modell.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Modell.Location = new System.Drawing.Point(107, 12);
+            this.Modell.Location = new System.Drawing.Point(138, 10);
             this.Modell.Name = "Modell";
             this.Modell.ReadOnly = true;
-            this.Modell.Size = new System.Drawing.Size(277, 20);
+            this.Modell.Size = new System.Drawing.Size(260, 20);
             this.Modell.TabIndex = 20;
             this.Modell.TextChanged += new System.EventHandler(this.Modell_TextChanged);
             // 
             // LabelFirmware
             // 
-            this.LabelFirmware.AutoSize = true;
-            this.LabelFirmware.Location = new System.Drawing.Point(14, 164);
+            this.LabelFirmware.Location = new System.Drawing.Point(4, 155);
             this.LabelFirmware.Name = "LabelFirmware";
-            this.LabelFirmware.Size = new System.Drawing.Size(49, 13);
+            this.LabelFirmware.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.LabelFirmware.Size = new System.Drawing.Size(90, 32);
             this.LabelFirmware.TabIndex = 19;
             this.LabelFirmware.Text = "Firmware";
+            this.LabelFirmware.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.LabelFirmware.Click += new System.EventHandler(this.label6_Click);
             // 
             // LabelManufacturer
             // 
-            this.LabelManufacturer.AutoSize = true;
-            this.LabelManufacturer.Location = new System.Drawing.Point(32, 127);
+            this.LabelManufacturer.Location = new System.Drawing.Point(4, 117);
             this.LabelManufacturer.Name = "LabelManufacturer";
-            this.LabelManufacturer.Size = new System.Drawing.Size(31, 13);
+            this.LabelManufacturer.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.LabelManufacturer.Size = new System.Drawing.Size(90, 32);
             this.LabelManufacturer.TabIndex = 16;
             this.LabelManufacturer.Text = "OEM";
+            this.LabelManufacturer.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.LabelManufacturer.Click += new System.EventHandler(this.label3_Click);
             // 
             // LabelIdentifier
             // 
-            this.LabelIdentifier.AutoSize = true;
-            this.LabelIdentifier.Location = new System.Drawing.Point(16, 88);
+            this.LabelIdentifier.Location = new System.Drawing.Point(4, 79);
             this.LabelIdentifier.Name = "LabelIdentifier";
-            this.LabelIdentifier.Size = new System.Drawing.Size(47, 13);
+            this.LabelIdentifier.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.LabelIdentifier.Size = new System.Drawing.Size(90, 32);
             this.LabelIdentifier.TabIndex = 15;
             this.LabelIdentifier.Text = "Identifier";
+            this.LabelIdentifier.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.LabelIdentifier.Click += new System.EventHandler(this.label2_Click);
             // 
             // LabelModel
             // 
-            this.LabelModel.AutoSize = true;
-            this.LabelModel.Location = new System.Drawing.Point(25, 12);
+            this.LabelModel.Location = new System.Drawing.Point(4, 3);
             this.LabelModel.Name = "LabelModel";
-            this.LabelModel.Size = new System.Drawing.Size(38, 13);
+            this.LabelModel.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.LabelModel.Size = new System.Drawing.Size(90, 32);
             this.LabelModel.TabIndex = 14;
             this.LabelModel.Text = "Modell";
+            this.LabelModel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.LabelModel.Click += new System.EventHandler(this.label1_Click);
             // 
             // LabelName
             // 
-            this.LabelName.AutoSize = true;
-            this.LabelName.Location = new System.Drawing.Point(28, 51);
+            this.LabelName.Location = new System.Drawing.Point(4, 41);
             this.LabelName.Name = "LabelName";
-            this.LabelName.Size = new System.Drawing.Size(35, 13);
+            this.LabelName.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.LabelName.Size = new System.Drawing.Size(90, 32);
             this.LabelName.TabIndex = 24;
             this.LabelName.Text = "Name";
+            this.LabelName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.LabelName.Click += new System.EventHandler(this.label4_Click);
             // 
             // DeviceName
             // 
             this.DeviceName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.DeviceName.Location = new System.Drawing.Point(107, 48);
+            this.DeviceName.Location = new System.Drawing.Point(138, 48);
             this.DeviceName.Name = "DeviceName";
             this.DeviceName.ReadOnly = true;
-            this.DeviceName.Size = new System.Drawing.Size(277, 20);
+            this.DeviceName.Size = new System.Drawing.Size(260, 20);
             this.DeviceName.TabIndex = 25;
             this.DeviceName.TextChanged += new System.EventHandler(this.DeviceName_TextChanged);
             // 
             // TempLow
             // 
-            this.TempLow.Location = new System.Drawing.Point(107, 274);
+            this.TempLow.Location = new System.Drawing.Point(138, 276);
             this.TempLow.Name = "TempLow";
             this.TempLow.ReadOnly = true;
             this.TempLow.Size = new System.Drawing.Size(46, 20);
@@ -200,7 +205,7 @@
             // 
             // TempHigh
             // 
-            this.TempHigh.Location = new System.Drawing.Point(107, 312);
+            this.TempHigh.Location = new System.Drawing.Point(138, 313);
             this.TempHigh.Name = "TempHigh";
             this.TempHigh.ReadOnly = true;
             this.TempHigh.Size = new System.Drawing.Size(46, 20);
@@ -211,16 +216,16 @@
             // 
             this.Tempratur.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Tempratur.Location = new System.Drawing.Point(107, 236);
+            this.Tempratur.Location = new System.Drawing.Point(138, 238);
             this.Tempratur.Name = "Tempratur";
             this.Tempratur.ReadOnly = true;
-            this.Tempratur.Size = new System.Drawing.Size(277, 20);
+            this.Tempratur.Size = new System.Drawing.Size(260, 20);
             this.Tempratur.TabIndex = 33;
             this.Tempratur.TextChanged += new System.EventHandler(this.Tempratur_TextChanged);
             // 
             // TempTarget
             // 
-            this.TempTarget.Location = new System.Drawing.Point(107, 350);
+            this.TempTarget.Location = new System.Drawing.Point(138, 351);
             this.TempTarget.Name = "TempTarget";
             this.TempTarget.ReadOnly = true;
             this.TempTarget.Size = new System.Drawing.Size(46, 20);
@@ -229,62 +234,67 @@
             // 
             // LabelTemperaturLow
             // 
-            this.LabelTemperaturLow.AutoSize = true;
-            this.LabelTemperaturLow.Location = new System.Drawing.Point(36, 277);
+            this.LabelTemperaturLow.Location = new System.Drawing.Point(4, 269);
             this.LabelTemperaturLow.Name = "LabelTemperaturLow";
-            this.LabelTemperaturLow.Size = new System.Drawing.Size(27, 13);
+            this.LabelTemperaturLow.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.LabelTemperaturLow.Size = new System.Drawing.Size(90, 32);
             this.LabelTemperaturLow.TabIndex = 37;
             this.LabelTemperaturLow.Text = "Low";
+            this.LabelTemperaturLow.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.LabelTemperaturLow.Click += new System.EventHandler(this.label5_Click);
             // 
             // LabelTemperaturComfort
             // 
-            this.LabelTemperaturComfort.AutoSize = true;
-            this.LabelTemperaturComfort.Location = new System.Drawing.Point(20, 315);
+            this.LabelTemperaturComfort.Location = new System.Drawing.Point(4, 306);
             this.LabelTemperaturComfort.Name = "LabelTemperaturComfort";
-            this.LabelTemperaturComfort.Size = new System.Drawing.Size(43, 13);
+            this.LabelTemperaturComfort.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.LabelTemperaturComfort.Size = new System.Drawing.Size(90, 32);
             this.LabelTemperaturComfort.TabIndex = 38;
             this.LabelTemperaturComfort.Text = "Comfort";
+            this.LabelTemperaturComfort.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.LabelTemperaturComfort.Click += new System.EventHandler(this.label7_Click);
             // 
             // LabelTemperaturTarget
             // 
-            this.LabelTemperaturTarget.AutoSize = true;
-            this.LabelTemperaturTarget.Location = new System.Drawing.Point(25, 353);
+            this.LabelTemperaturTarget.Location = new System.Drawing.Point(4, 344);
             this.LabelTemperaturTarget.Name = "LabelTemperaturTarget";
-            this.LabelTemperaturTarget.Size = new System.Drawing.Size(38, 13);
+            this.LabelTemperaturTarget.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.LabelTemperaturTarget.Size = new System.Drawing.Size(90, 32);
             this.LabelTemperaturTarget.TabIndex = 39;
             this.LabelTemperaturTarget.Text = "Target";
+            this.LabelTemperaturTarget.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.LabelTemperaturTarget.Click += new System.EventHandler(this.label8_Click);
             // 
             // LabelTemperatur
             // 
-            this.LabelTemperatur.AutoSize = true;
-            this.LabelTemperatur.Location = new System.Drawing.Point(8, 239);
+            this.LabelTemperatur.Location = new System.Drawing.Point(4, 231);
             this.LabelTemperatur.Name = "LabelTemperatur";
-            this.LabelTemperatur.Size = new System.Drawing.Size(55, 13);
+            this.LabelTemperatur.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.LabelTemperatur.Size = new System.Drawing.Size(90, 32);
             this.LabelTemperatur.TabIndex = 40;
             this.LabelTemperatur.Text = "Tempratur";
+            this.LabelTemperatur.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.LabelTemperatur.Click += new System.EventHandler(this.label9_Click);
             // 
             // progressBar1
             // 
             this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar1.Location = new System.Drawing.Point(107, 200);
+            this.progressBar1.Location = new System.Drawing.Point(138, 201);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(277, 20);
+            this.progressBar1.Size = new System.Drawing.Size(259, 20);
             this.progressBar1.TabIndex = 41;
             this.progressBar1.Click += new System.EventHandler(this.progressBar1_Click);
             // 
             // LabelBattery
             // 
-            this.LabelBattery.AutoSize = true;
-            this.LabelBattery.Location = new System.Drawing.Point(23, 202);
+            this.LabelBattery.Location = new System.Drawing.Point(4, 193);
             this.LabelBattery.Name = "LabelBattery";
-            this.LabelBattery.Size = new System.Drawing.Size(40, 13);
+            this.LabelBattery.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.LabelBattery.Size = new System.Drawing.Size(90, 32);
             this.LabelBattery.TabIndex = 42;
             this.LabelBattery.Text = "Battery";
+            this.LabelBattery.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.LabelBattery.Click += new System.EventHandler(this.label10_Click);
             // 
             // BatteryIcons
@@ -305,7 +315,7 @@
             // 
             // pictureBox5
             // 
-            this.pictureBox5.Location = new System.Drawing.Point(69, 193);
+            this.pictureBox5.Location = new System.Drawing.Point(100, 193);
             this.pictureBox5.Name = "pictureBox5";
             this.pictureBox5.Size = new System.Drawing.Size(32, 32);
             this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -317,7 +327,7 @@
             // 
             this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
             this.pictureBox4.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox4.InitialImage")));
-            this.pictureBox4.Location = new System.Drawing.Point(69, 231);
+            this.pictureBox4.Location = new System.Drawing.Point(100, 231);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(32, 32);
             this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -329,7 +339,7 @@
             // 
             this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
             this.pictureBox3.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox3.InitialImage")));
-            this.pictureBox3.Location = new System.Drawing.Point(69, 344);
+            this.pictureBox3.Location = new System.Drawing.Point(100, 344);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(32, 32);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -341,7 +351,7 @@
             // 
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
             this.pictureBox2.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox2.InitialImage")));
-            this.pictureBox2.Location = new System.Drawing.Point(69, 306);
+            this.pictureBox2.Location = new System.Drawing.Point(100, 306);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(32, 32);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -353,7 +363,7 @@
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.InitialImage")));
-            this.pictureBox1.Location = new System.Drawing.Point(69, 269);
+            this.pictureBox1.Location = new System.Drawing.Point(100, 269);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(32, 32);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -365,7 +375,7 @@
             // 
             this.pictureBox6.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox6.Image")));
             this.pictureBox6.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox6.InitialImage")));
-            this.pictureBox6.Location = new System.Drawing.Point(69, 3);
+            this.pictureBox6.Location = new System.Drawing.Point(100, 3);
             this.pictureBox6.Name = "pictureBox6";
             this.pictureBox6.Size = new System.Drawing.Size(32, 32);
             this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -377,7 +387,7 @@
             // 
             this.pictureBox7.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox7.Image")));
             this.pictureBox7.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox7.InitialImage")));
-            this.pictureBox7.Location = new System.Drawing.Point(69, 79);
+            this.pictureBox7.Location = new System.Drawing.Point(100, 79);
             this.pictureBox7.Name = "pictureBox7";
             this.pictureBox7.Size = new System.Drawing.Size(32, 32);
             this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -390,7 +400,7 @@
             this.pictureBox8.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.pictureBox8.Image = global::FritzHome.Properties.Resources.cpu;
             this.pictureBox8.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox8.InitialImage")));
-            this.pictureBox8.Location = new System.Drawing.Point(69, 155);
+            this.pictureBox8.Location = new System.Drawing.Point(100, 155);
             this.pictureBox8.Name = "pictureBox8";
             this.pictureBox8.Size = new System.Drawing.Size(32, 32);
             this.pictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -402,7 +412,7 @@
             // 
             this.pictureBox9.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox9.Image")));
             this.pictureBox9.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox9.InitialImage")));
-            this.pictureBox9.Location = new System.Drawing.Point(69, 117);
+            this.pictureBox9.Location = new System.Drawing.Point(100, 117);
             this.pictureBox9.Name = "pictureBox9";
             this.pictureBox9.Size = new System.Drawing.Size(32, 32);
             this.pictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -414,7 +424,7 @@
             // 
             this.pictureBox10.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox10.Image")));
             this.pictureBox10.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox10.InitialImage")));
-            this.pictureBox10.Location = new System.Drawing.Point(69, 41);
+            this.pictureBox10.Location = new System.Drawing.Point(100, 41);
             this.pictureBox10.Name = "pictureBox10";
             this.pictureBox10.Size = new System.Drawing.Size(32, 32);
             this.pictureBox10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -427,9 +437,9 @@
             this.TempratureSetBtn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TempratureSetBtn.Image = ((System.Drawing.Image)(resources.GetObject("TempratureSetBtn.Image")));
-            this.TempratureSetBtn.Location = new System.Drawing.Point(107, 382);
+            this.TempratureSetBtn.Location = new System.Drawing.Point(138, 377);
             this.TempratureSetBtn.Name = "TempratureSetBtn";
-            this.TempratureSetBtn.Size = new System.Drawing.Size(277, 36);
+            this.TempratureSetBtn.Size = new System.Drawing.Size(260, 36);
             this.TempratureSetBtn.TabIndex = 49;
             this.TempratureSetBtn.UseVisualStyleBackColor = true;
             this.TempratureSetBtn.Click += new System.EventHandler(this.TempratureSetBtn_Click);
@@ -438,11 +448,11 @@
             // 
             this.TempTargetBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TempTargetBar.Location = new System.Drawing.Point(159, 345);
+            this.TempTargetBar.Location = new System.Drawing.Point(190, 347);
             this.TempTargetBar.Maximum = 28;
             this.TempTargetBar.Minimum = 8;
             this.TempTargetBar.Name = "TempTargetBar";
-            this.TempTargetBar.Size = new System.Drawing.Size(225, 45);
+            this.TempTargetBar.Size = new System.Drawing.Size(208, 45);
             this.TempTargetBar.TabIndex = 50;
             this.TempTargetBar.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
             this.TempTargetBar.Value = 18;
@@ -452,11 +462,11 @@
             // 
             this.TempLowBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TempLowBar.Location = new System.Drawing.Point(159, 270);
+            this.TempLowBar.Location = new System.Drawing.Point(190, 272);
             this.TempLowBar.Maximum = 28;
             this.TempLowBar.Minimum = 8;
             this.TempLowBar.Name = "TempLowBar";
-            this.TempLowBar.Size = new System.Drawing.Size(225, 45);
+            this.TempLowBar.Size = new System.Drawing.Size(208, 45);
             this.TempLowBar.TabIndex = 51;
             this.TempLowBar.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
             this.TempLowBar.Value = 18;
@@ -466,11 +476,11 @@
             // 
             this.TempHighBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TempHighBar.Location = new System.Drawing.Point(159, 307);
+            this.TempHighBar.Location = new System.Drawing.Point(190, 309);
             this.TempHighBar.Maximum = 28;
             this.TempHighBar.Minimum = 8;
             this.TempHighBar.Name = "TempHighBar";
-            this.TempHighBar.Size = new System.Drawing.Size(225, 45);
+            this.TempHighBar.Size = new System.Drawing.Size(208, 45);
             this.TempHighBar.TabIndex = 52;
             this.TempHighBar.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
             this.TempHighBar.Value = 18;
@@ -493,9 +503,9 @@
             // 
             this.OffBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.OffBtn.Enabled = false;
-            this.OffBtn.Location = new System.Drawing.Point(308, 424);
+            this.OffBtn.Location = new System.Drawing.Point(341, 419);
             this.OffBtn.Name = "OffBtn";
-            this.OffBtn.Size = new System.Drawing.Size(76, 23);
+            this.OffBtn.Size = new System.Drawing.Size(57, 23);
             this.OffBtn.TabIndex = 84;
             this.OffBtn.Text = "Off";
             this.OffBtn.UseVisualStyleBackColor = true;
@@ -504,9 +514,9 @@
             // OnBtn
             // 
             this.OnBtn.Enabled = false;
-            this.OnBtn.Location = new System.Drawing.Point(107, 425);
+            this.OnBtn.Location = new System.Drawing.Point(138, 419);
             this.OnBtn.Name = "OnBtn";
-            this.OnBtn.Size = new System.Drawing.Size(76, 23);
+            this.OnBtn.Size = new System.Drawing.Size(46, 23);
             this.OnBtn.TabIndex = 83;
             this.OnBtn.Text = "On";
             this.OnBtn.UseVisualStyleBackColor = true;
@@ -516,6 +526,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.Controls.Add(this.OffBtn);
             this.Controls.Add(this.OnBtn);
             this.Controls.Add(this.TempratureSetBtn);
@@ -553,6 +564,7 @@
             this.Controls.Add(this.LabelIdentifier);
             this.Controls.Add(this.LabelModel);
             this.Name = "ThermostatView";
+            this.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.Size = new System.Drawing.Size(400, 450);
             this.Load += new System.EventHandler(this.ThermostatView_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();

@@ -85,7 +85,7 @@ namespace FritzHome
             }
         }
 
-        private void loadDevices() {
+        private void loadGroups() {
             try
             {
                 BNodeName = fritzBox.Info["Name"];
@@ -120,6 +120,11 @@ namespace FritzHome
                             TreeNode DNode = new TreeNode(DNodeName);
                             DNode.ImageIndex = device.iconId;
                             DNode.SelectedImageIndex = device.iconId;
+                            if (device.isConnected == false) {
+                                DNode.ForeColor = Color.Gray;
+                            } else {
+                                DNode.ForeColor = Color.Black;
+                            }
                             GNode.Nodes.Add(DNode);
 
                             ToolStripMenuItem DMenu = new ToolStripMenuItem(DNodeName, Icons.Images[device.iconId]);
@@ -136,7 +141,7 @@ namespace FritzHome
             }
         }
 
-        private void loadGroups() {
+        private void loadDevices() {
             try
             {
                 foreach (SmartDevice device in fritzBox.Devices)
@@ -148,6 +153,14 @@ namespace FritzHome
                         TreeNode DNode = new TreeNode(DNodeName);
                         DNode.ImageIndex = device.iconId;
                         DNode.SelectedImageIndex = device.iconId;
+                        if (device.isConnected == false)
+                        {
+                            DNode.ForeColor = Color.Gray;
+                        }
+                        else
+                        {
+                            DNode.ForeColor = Color.Black;
+                        }
                         BNode.Nodes.Add(DNode);
 
                         ToolStripMenuItem DMenu = new ToolStripMenuItem(DNodeName, Icons.Images[device.iconId]);
