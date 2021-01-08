@@ -19,7 +19,7 @@ namespace FritzHome
         public Int32 Id;
         public String Identifier;
         public String DeviceName;
-        
+
         public String Manufacturer;
         public String FirmwareVersion;
 
@@ -55,6 +55,8 @@ namespace FritzHome
 
         public const Int32 Temperature_min = 8;
         public const Int32 Temperature_max = 28;
+        public const Int32 Temperature_off = 253;
+        public const Int32 Temperature_on = 254;
 
         public Int32[] Interfaces;
 
@@ -95,7 +97,7 @@ namespace FritzHome
 
             if (SupportedFunctions.hasFlag(SmartDeviceFunctionType.Thermometer))
             {
-                XElement temp = device.Element("temperature");                
+                XElement temp = device.Element("temperature");
                 Temperature = (getDoubleValue(temp, "celsius") - getDoubleValue(temp, "offset")) / 10;
             }
             else
@@ -121,8 +123,8 @@ namespace FritzHome
                 ColorMode = getInt32Attribute(temp, "current_mode");
                 SupportedColorModes = new SmartDeviceColorMode(getStringAttribute(temp, "supported_modes"));
                 ColorTemperature = getInt32Value(temp, "temperature");
-                ColorSaturation = getInt32Value(temp, "saturation"); 
-                ColorHue = getInt32Value(temp,"hue"); 
+                ColorSaturation = getInt32Value(temp, "saturation");
+                ColorHue = getInt32Value(temp, "hue");
             }
             else
             {
@@ -512,7 +514,14 @@ namespace FritzHome
                     String Result = await CallWebserviceAsync(Uri + @"webservices/homeautoswitch.lua?ain=" + Identifier
                             + "&sid=" + SID
                             + "&switchcmd=gethkrtsoll");
-                    TemperatureTarget = TemperatureHKRToCelsius(Double.Parse(Result));
+                    if (Double.Parse(Result) < 250)
+                    {
+                        TemperatureTarget = TemperatureHKRToCelsius(Double.Parse(Result));
+                    }
+                    else
+                    {
+                        TemperatureTarget = Double.Parse(Result);
+                    }
                     return true;
                 }
                 else
@@ -536,7 +545,14 @@ namespace FritzHome
                     String Result = await CallWebserviceAsync(Uri + @"webservices/homeautoswitch.lua?ain=" + Identifier
                             + "&sid=" + SID
                             + "&switchcmd=gethkrkomfort");
-                    TemperatureHigh = TemperatureHKRToCelsius(Double.Parse(Result));
+                    if (Double.Parse(Result) < 250)
+                    {
+                        TemperatureHigh = TemperatureHKRToCelsius(Double.Parse(Result));
+                    }
+                    else
+                    {
+                        TemperatureHigh = Double.Parse(Result);
+                    }
                     return true;
                 }
                 else
@@ -560,7 +576,14 @@ namespace FritzHome
                     String Result = await CallWebserviceAsync(Uri + @"webservices/homeautoswitch.lua?ain=" + Identifier
                             + "&sid=" + SID
                             + "&switchcmd=gethkrabsenk");
-                    TemperatureLow = TemperatureHKRToCelsius(Double.Parse(Result));
+                    if (Double.Parse(Result) < 250)
+                    {
+                        TemperatureLow = TemperatureHKRToCelsius(Double.Parse(Result));
+                    }
+                    else
+                    {
+                        TemperatureLow = Double.Parse(Result);
+                    }
                     return true;
                 }
                 else

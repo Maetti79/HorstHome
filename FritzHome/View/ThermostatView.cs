@@ -16,7 +16,7 @@ namespace FritzHome
             InitializeComponent();
         }
 
-        public ThermostatView(FritzHome mainfrm,  String u, String s, SmartDevice d)
+        public ThermostatView(FritzHome mainfrm, String u, String s, SmartDevice d)
         {
             InitializeComponent();
             parent = mainfrm;
@@ -96,20 +96,68 @@ namespace FritzHome
 
             Tempratur.Text = device.Temperature.ToString() + "°C";
 
-            TempLow.Text = device.TemperatureLow.ToString() + "°C";
             TempLowBar.Minimum = SmartDevice.Temperature_min * 2;
             TempLowBar.Maximum = SmartDevice.Temperature_max * 2;
-            TempLowBar.Value = device.TemperatureCensiusToHKR(device.TemperatureLow);
+            if (device.TemperatureLow == SmartDevice.Temperature_off)
+            {
+                if (parent.culture.ToString() == "de-DE")
+                {
+                    TempLow.Text = i18n.de.Detail_SwitchOff.ToString();
+                }
+                else
+                {
+                    TempLow.Text = i18n.en.Detail_SwitchOff.ToString();
+                }
+                TempLowBar.Value = device.TemperatureCensiusToHKR(device.TemperatureLow);
+            }
+            else
+            {
+                TempLow.Text = device.TemperatureLow.ToString() + "°C";
+                TempLowBar.Value = device.TemperatureCensiusToHKR(device.TemperatureLow);
+            }
 
             TempHigh.Text = device.TemperatureHigh.ToString() + "°C";
             TempHighBar.Minimum = SmartDevice.Temperature_min * 2;
             TempHighBar.Maximum = SmartDevice.Temperature_max * 2;
-            TempHighBar.Value = device.TemperatureCensiusToHKR(device.TemperatureHigh);
+            if (device.TemperatureHigh == SmartDevice.Temperature_off)
+            {
+                if (parent.culture.ToString() == "de-DE")
+                {
+                    TempHigh.Text = i18n.de.Detail_SwitchOff.ToString();
+                }
+                else
+                {
+                    TempHigh.Text = i18n.en.Detail_SwitchOff.ToString();
+                }
+                TempHighBar.Value = device.TemperatureCensiusToHKR(device.TemperatureHigh);
+            }
+            else
+            {
+                TempHigh.Text = device.TemperatureHigh.ToString() + "°C";
+                TempHighBar.Value = device.TemperatureCensiusToHKR(device.TemperatureHigh);
+            }
 
-            TempTarget.Text = device.TemperatureTarget.ToString() + "°C";
             TempTargetBar.Minimum = SmartDevice.Temperature_min * 2;
             TempTargetBar.Maximum = SmartDevice.Temperature_max * 2;
-            TempTargetBar.Value = device.TemperatureCensiusToHKR(device.TemperatureTarget);
+            if (device.TemperatureTarget == SmartDevice.Temperature_off)
+            {
+                device.Switch = false;
+                if (parent.culture.ToString() == "de-DE")
+                {
+                    TempTarget.Text = i18n.de.Detail_SwitchOff.ToString();
+                }
+                else
+                {
+                    TempTarget.Text = i18n.en.Detail_SwitchOff.ToString();
+                }
+                TempTargetBar.Value = device.TemperatureCensiusToHKR(device.TemperatureTarget);
+            }
+            else
+            {
+                device.Switch = true;
+                TempTarget.Text = device.TemperatureTarget.ToString() + "°C";
+                TempTargetBar.Value = device.TemperatureCensiusToHKR(device.TemperatureTarget);
+            }
 
             if (device.Switch == true)
             {
@@ -145,9 +193,9 @@ namespace FritzHome
             {
                 double celsius = device.TemperatureHKRToCelsius(TempTargetBar.Value);
                 device.TemperatureTarget = celsius;
-                device.setTemperatureAsync(Uri,SID, device.TemperatureTarget);
+                device.setTemperatureAsync(Uri, SID, device.TemperatureTarget);
             }
-            catch(Exception ex) { }
+            catch (Exception ex) { }
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)
