@@ -85,7 +85,7 @@ namespace FritzHome
             }
         }
 
-        private void loadGroups() {
+        private void loadDevices() {
             try
             {
                 BNodeName = fritzBox.Info["Name"];
@@ -141,7 +141,7 @@ namespace FritzHome
             }
         }
 
-        private void loadDevices() {
+        private void loadGroups() {
             try
             {
                 foreach (SmartDevice device in fritzBox.Devices)
