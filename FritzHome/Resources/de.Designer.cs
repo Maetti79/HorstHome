@@ -493,6 +493,15 @@ namespace i18n {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Build ähnelt.
+        /// </summary>
+        internal static string License_Version {
+            get {
+                return ResourceManager.GetString("License_Version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Über ähnelt.
         /// </summary>
         internal static string Menu_About {

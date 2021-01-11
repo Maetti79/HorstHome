@@ -261,6 +261,9 @@
   <data name="License_Type" xml:space="preserve">
     <value>Type</value>
   </data>
+  <data name="License_Version" xml:space="preserve">
+    <value>Build</value>
+  </data>
   <data name="Menu_About" xml:space="preserve">
     <value>About</value>
   </data>

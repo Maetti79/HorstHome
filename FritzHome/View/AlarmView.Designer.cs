@@ -294,6 +294,7 @@
             this.Controls.Add(this.LabelManufacturer);
             this.Controls.Add(this.LabelIdentifier);
             this.Controls.Add(this.LabelModel);
+            this.DoubleBuffered = true;
             this.Name = "AlarmView";
             this.Size = new System.Drawing.Size(400, 450);
             this.Load += new System.EventHandler(this.AlarmView_Load);

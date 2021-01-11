@@ -50,7 +50,7 @@
             this.DeviceIcons = new System.Windows.Forms.ImageList(this.components);
             this.refreshTimer = new System.Windows.Forms.Timer(this.components);
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.colorWheel1 = new Cyotek.Windows.Forms.ColorWheel();
+            this.LightColor = new Cyotek.Windows.Forms.ColorWheel();
             this.OffBtn = new System.Windows.Forms.Button();
             this.OnBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).BeginInit();
@@ -251,16 +251,17 @@
             // refreshTimer
             // 
             this.refreshTimer.Interval = 5000;
+            this.refreshTimer.Tick += new System.EventHandler(this.refreshTimer_Tick);
             // 
-            // colorWheel1
+            // LightColor
             // 
-            this.colorWheel1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.colorWheel1.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.colorWheel1.Location = new System.Drawing.Point(137, 188);
-            this.colorWheel1.Name = "colorWheel1";
-            this.colorWheel1.Size = new System.Drawing.Size(196, 196);
-            this.colorWheel1.TabIndex = 107;
-            this.colorWheel1.ColorChanged += new System.EventHandler(this.colorWheel1_ColorChanged);
+            this.LightColor.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.LightColor.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.LightColor.Location = new System.Drawing.Point(137, 188);
+            this.LightColor.Name = "LightColor";
+            this.LightColor.Size = new System.Drawing.Size(196, 196);
+            this.LightColor.TabIndex = 107;
+            this.LightColor.ColorChanged += new System.EventHandler(this.colorWheel1_ColorChanged);
             // 
             // OffBtn
             // 
@@ -292,7 +293,7 @@
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.Controls.Add(this.OffBtn);
             this.Controls.Add(this.OnBtn);
-            this.Controls.Add(this.colorWheel1);
+            this.Controls.Add(this.LightColor);
             this.Controls.Add(this.pictureBox10);
             this.Controls.Add(this.pictureBox9);
             this.Controls.Add(this.pictureBox8);
@@ -309,6 +310,7 @@
             this.Controls.Add(this.LabelManufacturer);
             this.Controls.Add(this.LabelIdentifier);
             this.Controls.Add(this.LabelModel);
+            this.DoubleBuffered = true;
             this.Name = "LightView";
             this.Size = new System.Drawing.Size(400, 450);
             this.Load += new System.EventHandler(this.LightView_Load);
@@ -343,7 +345,7 @@
         private System.Windows.Forms.ImageList DeviceIcons;
         private System.Windows.Forms.Timer refreshTimer;
         private System.Windows.Forms.ColorDialog colorDialog1;
-        private Cyotek.Windows.Forms.ColorWheel colorWheel1;
+        private Cyotek.Windows.Forms.ColorWheel LightColor;
         private System.Windows.Forms.Button OffBtn;
         private System.Windows.Forms.Button OnBtn;
     }

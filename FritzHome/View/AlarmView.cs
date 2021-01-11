@@ -9,6 +9,7 @@ namespace FritzHome
         String Uri;
         String SID;
         SmartDevice device;
+        Boolean Initiated;
         private FritzHome parent;
 
         public AlarmView()
@@ -75,6 +76,14 @@ namespace FritzHome
 
         public void updateDynamics()
         {
+            if (Initiated == true)
+            {
+ 
+            }
+            else
+            {
+    
+            }
             progressBar1.Minimum = 0;
             progressBar1.Maximum = 100;
             progressBar1.Value = device.Battery;
@@ -84,6 +93,11 @@ namespace FritzHome
         private void refreshTimer_Tick(object sender, EventArgs e)
         {
             device.tryUpdate(Uri, SID, 30);
+            DateTime Now = DateTime.Now;
+            if (Now.Subtract(device.lastUpdate).TotalSeconds > 0)
+            {
+                Initiated = true;
+            }
             updateDynamics();
         }
 

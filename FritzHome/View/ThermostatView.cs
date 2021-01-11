@@ -9,6 +9,7 @@ namespace FritzHome
         String Uri;
         String SID;
         SmartDevice device;
+        Boolean Initiated;
         private FritzHome parent;
 
         public ThermostatView()
@@ -43,6 +44,16 @@ namespace FritzHome
             Identifier.Text = device.Identifier;
             Manufacturer.Text = device.Manufacturer;
             Firmware.Text = device.FirmwareVersion;
+
+            Initiated = false;
+
+            TempLow.Enabled = false;
+            TempLowBar.Enabled = false;
+            TempHigh.Enabled = false;
+            TempHighBar.Enabled = false;
+            TempTarget.Enabled = false;
+            TempTargetBar.Enabled = false;
+            TempratureSetBtn.Enabled = false;
 
             updateDynamics();
             refreshTimer.Enabled = true;
@@ -89,6 +100,25 @@ namespace FritzHome
 
         public void updateDynamics()
         {
+
+            if (Initiated == true)
+            {
+                TempLow.Enabled = true;
+                TempLowBar.Enabled = true;
+                TempHigh.Enabled = true;
+                TempHighBar.Enabled = true;
+                TempTarget.Enabled = true;
+                TempTargetBar.Enabled = true;
+                TempratureSetBtn.Enabled = true;
+            } else {
+                TempLow.Enabled = false;
+                TempLowBar.Enabled = false;
+                TempHigh.Enabled = false;
+                TempHighBar.Enabled = false;
+                TempTarget.Enabled = false;
+                TempTargetBar.Enabled = false;
+                TempratureSetBtn.Enabled = false;
+            }
             progressBar1.Minimum = 0;
             progressBar1.Maximum = 100;
             progressBar1.Value = device.Battery;
@@ -362,6 +392,11 @@ namespace FritzHome
         private void refreshTimer_Tick(object sender, EventArgs e)
         {
             device.tryUpdate(Uri, SID, 30);
+            DateTime Now = DateTime.Now;
+            if (Now.Subtract(device.lastUpdate).TotalSeconds > 0)
+            {
+                Initiated = true;
+            }
             updateDynamics();
         }
 

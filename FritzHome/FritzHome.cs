@@ -427,12 +427,13 @@ namespace FritzHome
                 {
                     if (fritzBox.Info["Name"].ToString() == SmartDeviceTreeView.SelectedNode.Text.ToString())
                     {
+                        SmartDeviceTabContainer.TabPages.Clear();
                         FritzboxView fbv = new FritzboxView(this, fritzBox);
                         fbv.Dock = DockStyle.Fill;
                         TabPage DeviceInfoTab = new TabPage(fritzBox.Info["Name"].ToString());
                         DeviceInfoTab.Controls.Add(fbv);
-                        SmartDeviceTabContainer.TabPages.Clear();
                         SmartDeviceTabContainer.TabPages.Add(DeviceInfoTab);
+                        Application.DoEvents();
                     }
                 }
 
@@ -448,8 +449,8 @@ namespace FritzHome
                 {
                     if (device != null)
                     {
-                        device.tryUpdate(fritzBox.Uri, fritzBox.SID);
                         SmartDeviceTabContainer.TabPages.Clear();
+                        device.tryUpdate(fritzBox.Uri, fritzBox.SID);
                         if (device.SupportedFunctions.hasFlag(SmartDeviceFunctionType.Thermostat))
                         {
                             ThermostatView thv = new ThermostatView(this, fritzBox.Uri, fritzBox.SID, device);
@@ -515,6 +516,7 @@ namespace FritzHome
                             TemperatureTab.Controls.Add(tc);
                             SmartDeviceTabContainer.TabPages.Add(TemperatureTab);
                         }
+                        Application.DoEvents();
                     }
                 }
             }

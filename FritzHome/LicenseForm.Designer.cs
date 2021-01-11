@@ -39,6 +39,7 @@
             this.LabelExpires = new System.Windows.Forms.Label();
             this.LabelType = new System.Windows.Forms.Label();
             this.DonateBtn = new System.Windows.Forms.Button();
+            this.LabelBuild = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // LicenseBox
@@ -136,11 +137,21 @@
             this.DonateBtn.UseVisualStyleBackColor = true;
             this.DonateBtn.Click += new System.EventHandler(this.donateBtn_Click_1);
             // 
+            // LabelBuild
+            // 
+            this.LabelBuild.AutoSize = true;
+            this.LabelBuild.Location = new System.Drawing.Point(207, 9);
+            this.LabelBuild.Name = "LabelBuild";
+            this.LabelBuild.Size = new System.Drawing.Size(48, 13);
+            this.LabelBuild.TabIndex = 17;
+            this.LabelBuild.Text = "Version: ";
+            // 
             // LicenseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 561);
+            this.Controls.Add(this.LabelBuild);
             this.Controls.Add(this.LicenseBox);
             this.Controls.Add(this.LabelKey);
             this.Controls.Add(this.CloseBtn);
@@ -169,5 +180,6 @@
         private System.Windows.Forms.Label LabelExpires;
         private System.Windows.Forms.Label LabelType;
         private System.Windows.Forms.Button DonateBtn;
+        private System.Windows.Forms.Label LabelBuild;
     }
 }

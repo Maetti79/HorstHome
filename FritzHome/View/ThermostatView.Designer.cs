@@ -91,6 +91,7 @@
             this.Firmware.Location = new System.Drawing.Point(138, 162);
             this.Firmware.Name = "Firmware";
             this.Firmware.ReadOnly = true;
+            this.Firmware.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.Firmware.Size = new System.Drawing.Size(260, 20);
             this.Firmware.TabIndex = 23;
             this.Firmware.TextChanged += new System.EventHandler(this.Firmware_TextChanged);
@@ -102,6 +103,7 @@
             this.Manufacturer.Location = new System.Drawing.Point(138, 124);
             this.Manufacturer.Name = "Manufacturer";
             this.Manufacturer.ReadOnly = true;
+            this.Manufacturer.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.Manufacturer.Size = new System.Drawing.Size(260, 20);
             this.Manufacturer.TabIndex = 22;
             this.Manufacturer.TextChanged += new System.EventHandler(this.Manufacturer_TextChanged);
@@ -113,6 +115,7 @@
             this.Identifier.Location = new System.Drawing.Point(138, 86);
             this.Identifier.Name = "Identifier";
             this.Identifier.ReadOnly = true;
+            this.Identifier.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.Identifier.Size = new System.Drawing.Size(260, 20);
             this.Identifier.TabIndex = 21;
             this.Identifier.TextChanged += new System.EventHandler(this.Identifier_TextChanged);
@@ -124,6 +127,7 @@
             this.Modell.Location = new System.Drawing.Point(138, 10);
             this.Modell.Name = "Modell";
             this.Modell.ReadOnly = true;
+            this.Modell.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.Modell.Size = new System.Drawing.Size(260, 20);
             this.Modell.TabIndex = 20;
             this.Modell.TextChanged += new System.EventHandler(this.Modell_TextChanged);
@@ -190,6 +194,7 @@
             this.DeviceName.Location = new System.Drawing.Point(138, 48);
             this.DeviceName.Name = "DeviceName";
             this.DeviceName.ReadOnly = true;
+            this.DeviceName.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.DeviceName.Size = new System.Drawing.Size(260, 20);
             this.DeviceName.TabIndex = 25;
             this.DeviceName.TextChanged += new System.EventHandler(this.DeviceName_TextChanged);
@@ -219,6 +224,7 @@
             this.Tempratur.Location = new System.Drawing.Point(138, 238);
             this.Tempratur.Name = "Tempratur";
             this.Tempratur.ReadOnly = true;
+            this.Tempratur.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.Tempratur.Size = new System.Drawing.Size(260, 20);
             this.Tempratur.TabIndex = 33;
             this.Tempratur.TextChanged += new System.EventHandler(this.Tempratur_TextChanged);
@@ -496,7 +502,7 @@
             // 
             // refreshTimer
             // 
-            this.refreshTimer.Interval = 5000;
+            this.refreshTimer.Interval = 1000;
             this.refreshTimer.Tick += new System.EventHandler(this.refreshTimer_Tick);
             // 
             // OffBtn
@@ -563,6 +569,7 @@
             this.Controls.Add(this.LabelManufacturer);
             this.Controls.Add(this.LabelIdentifier);
             this.Controls.Add(this.LabelModel);
+            this.DoubleBuffered = true;
             this.Name = "ThermostatView";
             this.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.Size = new System.Drawing.Size(400, 450);

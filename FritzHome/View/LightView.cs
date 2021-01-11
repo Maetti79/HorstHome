@@ -10,6 +10,7 @@ namespace FritzHome
         String Uri;
         String SID;
         SmartDevice device;
+        Boolean Initiated;
         private FritzHome parent;
 
         public LightView()
@@ -37,7 +38,12 @@ namespace FritzHome
             Manufacturer.Text = device.Manufacturer;
             Firmware.Text = device.FirmwareVersion;
 
-            colorWheel1.Color = ColorRGB.HsBtoRgb((Double)device.ColorHue, (Double)device.ColorSaturation/ 255, (Double)device.Levelpercentage/255);
+            LightColor.Color = ColorRGB.HsBtoRgb((Double)device.ColorHue, (Double)device.ColorSaturation/ 255, (Double)device.Levelpercentage/255);
+
+            Initiated = false;
+            LightColor.Enabled = false;
+            OnBtn.Enabled = false;
+            OffBtn.Enabled = false;
 
             updateDynamics();
             refreshTimer.Enabled = true;
@@ -74,6 +80,15 @@ namespace FritzHome
 
         public void updateDynamics()
         {
+            if (Initiated == true)
+            {
+
+            }
+            else
+            {
+                OnBtn.Enabled = false;
+                OffBtn.Enabled = false;
+            }
             if (device.Switch == true)
             {
                 OnBtn.Enabled = false;
@@ -102,7 +117,7 @@ namespace FritzHome
             {
                 SmartDeviceColor[] colorsArr = parent.fritzBox.Colors.ToArray();
                 //Color selectedColor = ColorDistance.GetClosestColor(colorsArr, ColorRGB.HSL2RGB(colorWheel1.Color.GetHue() / 360, colorWheel1.Color.GetSaturation() / 255, colorWheel1.Color.GetBrightness() / 100));
-                SmartDeviceColor selectedColor = ColorDistance.GetClosestColor(colorsArr, colorWheel1.Color);
+                SmartDeviceColor selectedColor = ColorDistance.GetClosestColor(colorsArr, LightColor.Color);
                 device.ColorHue = Convert.ToInt32(selectedColor.Hue);
                 device.ColorSaturation = Convert.ToInt32(selectedColor.Saturation);
                 device.Level = Convert.ToInt32(selectedColor.Value);
@@ -133,6 +148,15 @@ namespace FritzHome
                 device.Switch = false;
                 OnBtn.Enabled = true;
                 OffBtn.Enabled = false;
+            }
+        }
+
+        private void refreshTimer_Tick(object sender, EventArgs e)
+        {
+            DateTime Now = DateTime.Now;
+            if (Now.Subtract(device.lastUpdate).TotalSeconds > 0)
+            {
+                Initiated = true;
             }
         }
     }

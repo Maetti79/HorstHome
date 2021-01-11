@@ -268,6 +268,7 @@
             this.Controls.Add(this.LabelManufacturer);
             this.Controls.Add(this.LabelSerial);
             this.Controls.Add(this.LabelModel);
+            this.DoubleBuffered = true;
             this.Name = "FritzboxView";
             this.Size = new System.Drawing.Size(400, 450);
             this.Load += new System.EventHandler(this.FritzboxView_Load);

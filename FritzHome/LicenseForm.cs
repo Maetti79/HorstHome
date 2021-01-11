@@ -40,6 +40,7 @@ namespace FritzHome
                     LabelKey.Text = i18n.de.License_Key.ToString();
                     LabelType.Text = i18n.de.License_Type.ToString();
                     LabelExpires.Text = i18n.de.License_Expires.ToString();
+                    LabelBuild.Text = i18n.de.License_Version.ToString() + " " + Application.ProductVersion.ToString();
                     DonateBtn.Text = i18n.de.License_Donate.ToString();
                     ReloadBtn.Text = i18n.de.License_Reload.ToString();
                     CloseBtn.Text = i18n.de.License_Close.ToString();
@@ -52,6 +53,7 @@ namespace FritzHome
                     LabelKey.Text = i18n.en.License_Key.ToString();
                     LabelType.Text = i18n.en.License_Type.ToString();
                     LabelExpires.Text = i18n.en.License_Expires.ToString();
+                    LabelBuild.Text = i18n.de.License_Version.ToString() + " " + Application.ProductVersion.ToString();
                     DonateBtn.Text = i18n.en.License_Donate.ToString();
                     ReloadBtn.Text = i18n.en.License_Reload.ToString();
                     CloseBtn.Text = i18n.en.License_Close.ToString();

@@ -10,6 +10,7 @@ namespace FritzHome
         String Uri;
         String SID;
         SmartDevice device;
+        Boolean Initiated;
         private FritzHome parent;
 
         public SocketView()
@@ -40,6 +41,10 @@ namespace FritzHome
             Identifier.Text = device.Identifier;
             Manufacturer.Text = device.Manufacturer;
             Firmware.Text = device.FirmwareVersion;
+
+            Initiated = false;
+            OnBtn.Enabled = false;
+            OffBtn.Enabled = false;
 
             updateDynamics();
             refreshTimer.Enabled = true;
@@ -79,6 +84,16 @@ namespace FritzHome
         }
 
         public void updateDynamics() {
+            if (Initiated == true)
+            {
+                OnBtn.Enabled = true;
+                OffBtn.Enabled = true;
+            }
+            else
+            {
+                OnBtn.Enabled = false;
+                OffBtn.Enabled = false;
+            }
             Tempratur.Text = device.Temperature.ToString() + "°C";
             Energie.Text = Math.Round(device.Energie / 1000m, 2).ToString() + " Wh";
             Power.Text = Math.Round(device.Power / 1000m, 2).ToString() + " Watt";
@@ -129,6 +144,11 @@ namespace FritzHome
         private void refreshTimer_Tick(object sender, EventArgs e)
         {
             device.tryUpdate(Uri, SID, 5);
+            DateTime Now = DateTime.Now;
+            if (Now.Subtract(device.lastUpdate).TotalSeconds > 0)
+            {
+                Initiated = true;
+            }
             updateDynamics();
         }
 
