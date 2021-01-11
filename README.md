@@ -29,7 +29,11 @@
 
 # Install
 
-Windows 10 (32/64) Installer https://fritzhome.purepix.net/setup.exe
+Windows 10 (32/64) Installer
+
+OneClickInstaller https://fritzhome.purepix.net/setup.exe
+
+Setup https://fritzhome.purepix.net/FritzHome.exe (Best Option)
 
 ![Overview](https://github.com/Maetti79/FritzHome/blob/main/Images/OverviewView.png?raw=true)
 
