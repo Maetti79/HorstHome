@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // Attribute gesteuert. Ändern Sie diese Attributwerte, um die Informationen zu ändern,
 // die mit einer Assembly verknüpft sind.
 [assembly: AssemblyTitle("IPlugin")]
-[assembly: AssemblyDescription("IPlugin Interface für FritzHome")]
+[assembly: AssemblyDescription("IPlugin Interface für HorstHome")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("PurePix")]
 [assembly: AssemblyProduct("IPlugin Interface")]
