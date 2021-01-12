@@ -169,7 +169,7 @@ namespace i18n {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Energieverbrauch (Wh) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Energie (Wh) ähnelt.
         /// </summary>
         internal static string Detail_Energie {
             get {

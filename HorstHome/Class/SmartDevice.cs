@@ -636,7 +636,7 @@ namespace HorstHome
                     + "&duration=" + duration
                     + "&sid=" + SID
                     + "&switchcmd=setcolor");
-                Console.WriteLine(Result);
+                //Console.WriteLine(Result);
                 return true;
             }
             else
@@ -744,7 +744,7 @@ namespace HorstHome
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Error: " + e.Message);
+                    //Console.WriteLine("Error: " + e.Message);
                 }
                 return null;
             });

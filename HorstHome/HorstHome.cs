@@ -650,7 +650,7 @@ namespace HorstHome
             try
             {
                 Error = Error.AddItemToArray(DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss") + " [" + Class + "] " + ErrorMsg.Message);
-                Console.WriteLine(DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss") + " [" + Class + "] " + ErrorMsg.Message);
+                //Console.WriteLine(DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss") + " [" + Class + "] " + ErrorMsg.Message);
             }
             catch (Exception e)
             {
@@ -740,7 +740,7 @@ namespace HorstHome
                     {
                         d.LastWarning = DateTime.Now;
                         ShowEvent(fritzBox.Name + " " + d.DeviceName, "Battery: " + d.Battery + "%");
-                        Console.WriteLine(d.DeviceName + " Battery: " + d.Battery + "%");
+                        //Console.WriteLine(d.DeviceName + " Battery: " + d.Battery + "%");
                     }
                 }
             }

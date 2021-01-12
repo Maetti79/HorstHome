@@ -154,7 +154,7 @@
     <value>Farbe</value>
   </data>
   <data name="Detail_Energie" xml:space="preserve">
-    <value>Energieverbrauch (Wh)</value>
+    <value>Energie (Wh)</value>
   </data>
   <data name="Detail_Firmware" xml:space="preserve">
     <value>Firmware</value>
