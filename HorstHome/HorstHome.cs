@@ -650,7 +650,7 @@ namespace HorstHome
             try
             {
                 Error = Error.AddItemToArray(DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss") + " [" + Class + "] " + ErrorMsg.Message);
-                //Console.WriteLine(DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss") + " [" + Class + "] " + ErrorMsg.Message);
+                Console.WriteLine(DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss") + " [" + Class + "] " + ErrorMsg.Message);
             }
             catch (Exception e)
             {
@@ -776,13 +776,15 @@ namespace HorstHome
                             ToolStripMenuItem CMenu = new ToolStripMenuItem("Edit " + fritzBox.Name, Icons.Images[fritzBox.iconId]);
                             CMenu.Click += CMenu_ItemClicked;
                             contextMenu.Items.Add(CMenu);
+                            ToolStripMenuItem DMenu = new ToolStripMenuItem("Delete " + fritzBox.Name, Icons.Images[fritzBox.iconId]);
+                            DMenu.Click += DMenu_ItemClicked;
+                            contextMenu.Items.Add(DMenu);
                             break;
                         }
                     }
                 }
-
-             
             }
+            contextMenu.Show();
         }
 
         private void CMenu_ItemClicked(object sender, EventArgs e)
@@ -818,9 +820,64 @@ namespace HorstHome
             }
         }
 
+        private void DMenu_ItemClicked(object sender, EventArgs e)
+        {
+            try
+            {
+                if (SmartDeviceTreeView.SelectedNode != null)
+                {
+                    using (FritzBox fritzbox = fritzBoxes.Find(x => x.Name.Equals(SmartDeviceTreeView.SelectedNode.Text.ToString())))
+                    {
+                        fritzBoxes.Remove(fritzbox);
+                        removeConnection(fritzbox);
+                    }
+                    reload();
+                }
+            }
+            catch (Exception err)
+            {
+                errorLog(System.Reflection.MethodBase.GetCurrentMethod().Name, err);
+            }
+        }
+
         private void UpdateToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        public void saveConnection(FritzBox fritzBox)
+        {
+            Microsoft.Win32.RegistryKey key;
+            Microsoft.Win32.RegistryKey subkey;
+            string rootKey = "SOFTWARE\\" + Assembly.GetExecutingAssembly().GetName().Name + "\\Connections";
+            key = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(rootKey);
+            if (key != null)
+            {
+                subkey = key.CreateSubKey(fritzBox.Name);
+                if (subkey != null)
+                {
+                    subkey.SetValue("FritzBoxUri", fritzBox.Uri);
+                    subkey.SetValue("Username", fritzBox.Username);
+                    if (fritzBox.Password != "")
+                    {
+                        String Salt = StringEncryptor.GenerateAPassKey(Serial.cpuSerial());
+                        subkey.SetValue("Password", StringEncryptor.Encrypt(fritzBox.Password, Salt));
+                    }
+                }
+                key.Close();
+            }
+        }
+
+        public void removeConnection(FritzBox fritzBox)
+        {
+            Microsoft.Win32.RegistryKey key;
+            string rootKey = "SOFTWARE\\" + Assembly.GetExecutingAssembly().GetName().Name + "\\Connections";
+            key = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(rootKey);
+            if (key != null)
+            {
+                key.DeleteSubKeyTree(fritzBox.Name);
+                key.Close();
+            }
         }
     }
 }

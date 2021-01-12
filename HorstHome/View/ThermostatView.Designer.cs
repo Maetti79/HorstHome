@@ -458,6 +458,7 @@
             this.TempTargetBar.Maximum = 28;
             this.TempTargetBar.Minimum = 8;
             this.TempTargetBar.Name = "TempTargetBar";
+            this.TempTargetBar.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.TempTargetBar.Size = new System.Drawing.Size(208, 45);
             this.TempTargetBar.TabIndex = 50;
             this.TempTargetBar.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
@@ -472,6 +473,7 @@
             this.TempLowBar.Maximum = 28;
             this.TempLowBar.Minimum = 8;
             this.TempLowBar.Name = "TempLowBar";
+            this.TempLowBar.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.TempLowBar.Size = new System.Drawing.Size(208, 45);
             this.TempLowBar.TabIndex = 51;
             this.TempLowBar.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
@@ -486,6 +488,7 @@
             this.TempHighBar.Maximum = 28;
             this.TempHighBar.Minimum = 8;
             this.TempHighBar.Name = "TempHighBar";
+            this.TempHighBar.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.TempHighBar.Size = new System.Drawing.Size(208, 45);
             this.TempHighBar.TabIndex = 52;
             this.TempHighBar.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
