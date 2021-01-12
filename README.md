@@ -31,10 +31,17 @@
 
 Windows 10 (32/64)
 
-Setup https://horsthome.purepix.net/HorstHome.exe (Best Option)
+Setup https://horsthome.purepix.net/HorstHome.exe
 
+Learnmore about the Project or get in touch, just visit https://horsthome.purepix.net
+
+# HorstHome
 
 ![Overview](https://github.com/Maetti79/FritzHome/blob/main/Images/OverviewView.png?raw=true)
+
+# HorstCMD
+
+![CMD](https://github.com/Maetti79/HorstHome/blob/main/Images/Cmd.png?raw=true)
 
 # Roadmap:
 
@@ -49,21 +56,3 @@ Manage Groups
 Add Calendar/Scheduler
 
 Add Alerts
-
-# ToDo:
-
-add Han-FUN SmartHome Devices
-
-add DECT 500 Color control
-
-add HAN-FUN getBattery()
-
-add HAN-FUN setColor()
-
-add HAN-FUN getThemperatur()
-
-add HAN-FUN getLevel()
-
-add Calendar/Scheduler
-
-add Room Mangment
