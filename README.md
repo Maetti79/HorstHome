@@ -29,11 +29,10 @@
 
 # Install
 
-Windows 10 (32/64) Installer
-
-OneClickInstaller https://horsthome.purepix.net/setup.exe
+Windows 10 (32/64)
 
 Setup https://horsthome.purepix.net/HorstHome.exe (Best Option)
+
 
 ![Overview](https://github.com/Maetti79/FritzHome/blob/main/Images/OverviewView.png?raw=true)
 
@@ -50,7 +49,6 @@ Manage Groups
 Add Calendar/Scheduler
 
 Add Alerts
-
 
 # ToDo:
 
