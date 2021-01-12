@@ -1,6 +1,6 @@
-# FritzHome 
+# HorstHome 
 
- FritzHome is a SmartHome ControlCenter for Windows 
+ HorstHome is a SmartHome ControlCenter for Windows 
  
  Windows GUI and Commandline Interface
  
@@ -20,20 +20,20 @@
 
 # The Windows GUI and SystemTray Version
 
-**FritzHome** -> _AVM Fritzbox SmartHome Controlcenter for Windows_
+**HorstHome** -> _AVM Fritzbox SmartHome Controlcenter for Windows_
 
 
 # The Comandline/Shell Version
 
-**FritzCMD** -> _CLI AVM Fritzbox SmartHome Controlcenter for Windows_ 
+**HorstCMD** -> _CLI AVM Fritzbox SmartHome Controlcenter for Windows_ 
 
 # Install
 
 Windows 10 (32/64) Installer
 
-OneClickInstaller https://fritzhome.purepix.net/setup.exe
+OneClickInstaller https://horsthome.purepix.net/setup.exe
 
-Setup https://fritzhome.purepix.net/FritzHome.exe (Best Option)
+Setup https://horsthome.purepix.net/HorstHome.exe (Best Option)
 
 ![Overview](https://github.com/Maetti79/FritzHome/blob/main/Images/OverviewView.png?raw=true)
 
