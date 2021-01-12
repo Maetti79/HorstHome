@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Collections.Generic;
 using HorstHome;
 
-namespace FritzCMD
+namespace HorstCMD
 {
 
     class Program
@@ -17,7 +17,7 @@ namespace FritzCMD
             try
             {
                 String Version = typeof(Program).Assembly.GetName().Version.ToString();
-                Console.WriteLine("FritzCMD Version: " + Version);
+                Console.WriteLine("HorstCMD Version: " + Version);
 
                 Parameter parameter = new Parameter(args);
 
@@ -260,7 +260,7 @@ namespace FritzCMD
 
                 Console.WriteLine("");
                 Console.WriteLine("Usage:");
-                Console.WriteLine("FritzCMD /FritzBox:[Uri] /Username:[Username] /Password:[Password] [/Device:[Device]] [/Command:[Cmd]] [args]");
+                Console.WriteLine("HorstCMD /FritzBox:[Uri] /Username:[Username] /Password:[Password] [/Device:[Device]] [/Command:[Cmd]] [args]");
                 Console.WriteLine("");
                 Console.WriteLine("\t/FritzBox:\t[FritzBox]\tFritzBox Uri default='http://fritz.box'");
                 Console.WriteLine("\t/Password:\t[Password]\tFritzBox Username"); 
