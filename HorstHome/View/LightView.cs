@@ -115,7 +115,7 @@ namespace HorstHome
         {
             if (device.SupportedColorModes.hasFlag(SmartDeviceColorModeType.HueSaturation))
             {
-                SmartDeviceColor[] colorsArr = parent.fritzBox.Colors.ToArray();
+                SmartDeviceColor[] colorsArr = parent.fritzBoxes[0].Colors.ToArray();
                 //Color selectedColor = ColorDistance.GetClosestColor(colorsArr, ColorRGB.HSL2RGB(colorWheel1.Color.GetHue() / 360, colorWheel1.Color.GetSaturation() / 255, colorWheel1.Color.GetBrightness() / 100));
                 SmartDeviceColor selectedColor = ColorDistance.GetClosestColor(colorsArr, LightColor.Color);
                 device.ColorHue = Convert.ToInt32(selectedColor.Hue);

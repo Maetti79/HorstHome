@@ -8,6 +8,7 @@ namespace HorstHome
 {
     public class FritzBox : IDisposable
     {
+        public String Name;
         public String Uri;
         public String Username;
         public String Password;
@@ -38,8 +39,9 @@ namespace HorstHome
             iconId = 11;
         }
 
-        public FritzBox(String b, String u, String p)
+        public FritzBox(String n, String b, String u, String p)
         {
+            Name = n;
             Devices = new List<SmartDevice>();
             Groups = new List<SmartDeviceGroup>();
             Colors = new List<SmartDeviceColor>();

@@ -48,12 +48,16 @@
             this.LabelUsername = new System.Windows.Forms.Label();
             this.LabelUri = new System.Windows.Forms.Label();
             this.ConnectIcons = new System.Windows.Forms.ImageList(this.components);
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.NameTxt = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.FritzBoxGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // FritzBoxGroup
@@ -61,6 +65,9 @@
             this.FritzBoxGroup.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.FritzBoxGroup.Controls.Add(this.label1);
+            this.FritzBoxGroup.Controls.Add(this.NameTxt);
+            this.FritzBoxGroup.Controls.Add(this.pictureBox2);
             this.FritzBoxGroup.Controls.Add(this.LabelConnection);
             this.FritzBoxGroup.Controls.Add(this.pictureBox1);
             this.FritzBoxGroup.Controls.Add(this.CancelBtn);
@@ -88,7 +95,7 @@
             // LabelConnection
             // 
             this.LabelConnection.AutoSize = true;
-            this.LabelConnection.Location = new System.Drawing.Point(36, 109);
+            this.LabelConnection.Location = new System.Drawing.Point(36, 134);
             this.LabelConnection.Name = "LabelConnection";
             this.LabelConnection.Size = new System.Drawing.Size(61, 13);
             this.LabelConnection.TabIndex = 55;
@@ -96,7 +103,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(12, 104);
+            this.pictureBox1.Location = new System.Drawing.Point(12, 129);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(18, 18);
             this.pictureBox1.TabIndex = 54;
@@ -119,18 +126,18 @@
             this.errorTxt.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.errorTxt.Location = new System.Drawing.Point(39, 138);
+            this.errorTxt.Location = new System.Drawing.Point(39, 163);
             this.errorTxt.Multiline = true;
             this.errorTxt.Name = "errorTxt";
             this.errorTxt.ReadOnly = true;
             this.errorTxt.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.errorTxt.Size = new System.Drawing.Size(247, 162);
+            this.errorTxt.Size = new System.Drawing.Size(247, 123);
             this.errorTxt.TabIndex = 52;
             // 
             // pictureBox8
             // 
             this.pictureBox8.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox8.Image")));
-            this.pictureBox8.Location = new System.Drawing.Point(12, 138);
+            this.pictureBox8.Location = new System.Drawing.Point(12, 163);
             this.pictureBox8.Name = "pictureBox8";
             this.pictureBox8.Size = new System.Drawing.Size(18, 17);
             this.pictureBox8.TabIndex = 51;
@@ -139,7 +146,7 @@
             // pictureBox7
             // 
             this.pictureBox7.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox7.Image")));
-            this.pictureBox7.Location = new System.Drawing.Point(12, 22);
+            this.pictureBox7.Location = new System.Drawing.Point(12, 47);
             this.pictureBox7.Name = "pictureBox7";
             this.pictureBox7.Size = new System.Drawing.Size(18, 16);
             this.pictureBox7.TabIndex = 50;
@@ -148,7 +155,7 @@
             // pictureBox9
             // 
             this.pictureBox9.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox9.Image")));
-            this.pictureBox9.Location = new System.Drawing.Point(12, 78);
+            this.pictureBox9.Location = new System.Drawing.Point(12, 103);
             this.pictureBox9.Name = "pictureBox9";
             this.pictureBox9.Size = new System.Drawing.Size(18, 17);
             this.pictureBox9.TabIndex = 49;
@@ -157,7 +164,7 @@
             // pictureBox10
             // 
             this.pictureBox10.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox10.Image")));
-            this.pictureBox10.Location = new System.Drawing.Point(12, 51);
+            this.pictureBox10.Location = new System.Drawing.Point(12, 76);
             this.pictureBox10.Name = "pictureBox10";
             this.pictureBox10.Size = new System.Drawing.Size(18, 16);
             this.pictureBox10.TabIndex = 48;
@@ -166,14 +173,14 @@
             // 
             // UsernameTxt
             // 
-            this.UsernameTxt.Location = new System.Drawing.Point(131, 51);
+            this.UsernameTxt.Location = new System.Drawing.Point(131, 76);
             this.UsernameTxt.Name = "UsernameTxt";
             this.UsernameTxt.Size = new System.Drawing.Size(155, 20);
             this.UsernameTxt.TabIndex = 2;
             // 
             // PasswordTxt
             // 
-            this.PasswordTxt.Location = new System.Drawing.Point(131, 77);
+            this.PasswordTxt.Location = new System.Drawing.Point(131, 102);
             this.PasswordTxt.Name = "PasswordTxt";
             this.PasswordTxt.Size = new System.Drawing.Size(155, 20);
             this.PasswordTxt.TabIndex = 3;
@@ -181,7 +188,7 @@
             // 
             // UriTxt
             // 
-            this.UriTxt.Location = new System.Drawing.Point(131, 22);
+            this.UriTxt.Location = new System.Drawing.Point(131, 47);
             this.UriTxt.Name = "UriTxt";
             this.UriTxt.Size = new System.Drawing.Size(155, 20);
             this.UriTxt.TabIndex = 1;
@@ -201,7 +208,7 @@
             // 
             // ValidateBtn
             // 
-            this.ValidateBtn.Location = new System.Drawing.Point(131, 104);
+            this.ValidateBtn.Location = new System.Drawing.Point(131, 129);
             this.ValidateBtn.Name = "ValidateBtn";
             this.ValidateBtn.Size = new System.Drawing.Size(155, 23);
             this.ValidateBtn.TabIndex = 4;
@@ -212,7 +219,7 @@
             // LabelPassword
             // 
             this.LabelPassword.AutoSize = true;
-            this.LabelPassword.Location = new System.Drawing.Point(36, 81);
+            this.LabelPassword.Location = new System.Drawing.Point(36, 106);
             this.LabelPassword.Name = "LabelPassword";
             this.LabelPassword.Size = new System.Drawing.Size(53, 13);
             this.LabelPassword.TabIndex = 2;
@@ -221,7 +228,7 @@
             // LabelUsername
             // 
             this.LabelUsername.AutoSize = true;
-            this.LabelUsername.Location = new System.Drawing.Point(36, 54);
+            this.LabelUsername.Location = new System.Drawing.Point(36, 79);
             this.LabelUsername.Name = "LabelUsername";
             this.LabelUsername.Size = new System.Drawing.Size(55, 13);
             this.LabelUsername.TabIndex = 1;
@@ -230,7 +237,7 @@
             // LabelUri
             // 
             this.LabelUri.AutoSize = true;
-            this.LabelUri.Location = new System.Drawing.Point(36, 25);
+            this.LabelUri.Location = new System.Drawing.Point(36, 50);
             this.LabelUri.Name = "LabelUri";
             this.LabelUri.Size = new System.Drawing.Size(20, 13);
             this.LabelUri.TabIndex = 0;
@@ -243,6 +250,32 @@
             this.ConnectIcons.Images.SetKeyName(0, "connecti.png");
             this.ConnectIcons.Images.SetKeyName(1, "connect.png");
             this.ConnectIcons.Images.SetKeyName(2, "disconnect.png");
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+            this.pictureBox2.Location = new System.Drawing.Point(12, 19);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(18, 16);
+            this.pictureBox2.TabIndex = 56;
+            this.pictureBox2.TabStop = false;
+            // 
+            // NameTxt
+            // 
+            this.NameTxt.Location = new System.Drawing.Point(131, 19);
+            this.NameTxt.Name = "NameTxt";
+            this.NameTxt.Size = new System.Drawing.Size(155, 20);
+            this.NameTxt.TabIndex = 57;
+            this.NameTxt.Text = "FritzBox";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(36, 22);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 58;
+            this.label1.Text = "Name";
             // 
             // Settings
             // 
@@ -263,6 +296,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -287,5 +321,8 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ImageList ConnectIcons;
         private System.Windows.Forms.Label LabelConnection;
+        private System.Windows.Forms.TextBox NameTxt;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.Label label1;
     }
 }

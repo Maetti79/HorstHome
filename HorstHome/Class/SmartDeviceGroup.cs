@@ -11,6 +11,7 @@ namespace HorstHome
         public Int32 iconId;
 
         public List<SmartDevice> Devices;
+        public DateTime lastUpdate;
 
         public SmartDeviceGroup(String name)
         {
@@ -23,6 +24,26 @@ namespace HorstHome
         {
             Devices.Add(device);
             iconId = device.iconId;
+        }
+
+        public void tryUpdate(String Uri, String SID, Int32 cooldown = 10)
+        {
+            DateTime Now = DateTime.Now;
+            try
+            {
+                if (Now.Subtract(lastUpdate).TotalSeconds > cooldown)
+                {
+                    foreach (SmartDevice device in Devices)
+                    {
+                        device.tryUpdate(Uri, SID, 30);
+                    }
+                    lastUpdate = DateTime.Now;
+                }
+            }
+            catch (Exception Ex)
+            {
+              
+            }
         }
 
         public void Dispose()

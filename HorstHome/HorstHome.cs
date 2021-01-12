@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Reflection;
 using System.Globalization;
+using System.Collections.Generic;
 using System.Resources;
 
 namespace HorstHome
@@ -15,7 +16,7 @@ namespace HorstHome
         public String[] Error;
         private Int32 BatteryWarning = 5;
 
-        public FritzBox fritzBox;
+        public List<FritzBox> fritzBoxes;
         public CultureInfo culture;
         public ResourceManager rm;
         public NotifyIcon trayIcon;
@@ -30,7 +31,14 @@ namespace HorstHome
 
             trayMenu = new ContextMenuStrip();
             trayMenu.ImageList = Icons;
-            trayMenu.Items.Add("Beenden", Icons.Images[0], OnExit);
+            if (culture.ToString() == "de-DE")
+            {
+                trayMenu.Items.Add(i18n.de.Tray_Quit.ToString(), Icons.Images[13], OnExit);
+            }
+            else
+            {
+                trayMenu.Items.Add(i18n.en.Tray_Quit.ToString(), Icons.Images[13], OnExit);
+            }
 
             trayIcon = new NotifyIcon();
             trayIcon.Text = "Horst!Home";
@@ -40,27 +48,50 @@ namespace HorstHome
             trayIcon.Visible = true;
         }
 
-
         private void Form1_Load(object sender, EventArgs e)
         {
- 
-            fritzBox = new FritzBox();
-            changeCulture(culture.ToString());
 
-            if (loadLicense() == true && loadConnection() == true)
-            {
-                loadFritzbox();
-            }
-          
-            SmartDeviceTreeView.Nodes.Clear();
-            trayMenu.Items.Clear();
-
-            loadDevices();
-            loadGroups();
-            BatteryWarnings();
+            fritzBoxes = new List<FritzBox>();
+            reload();
         }
 
-         private Boolean loadFritzbox() {
+        private void reload()
+        {
+            changeCulture(culture.ToString());
+            if (loadLicense() == true && loadConnection() == true)
+            {
+                loadFritzboxes();
+            }
+
+            SmartDeviceTreeView.Nodes.Clear();
+            trayMenu.Items.Clear();
+            foreach (FritzBox fritzBox in fritzBoxes)
+            {
+                loadDevices(fritzBox);
+                loadGroups(fritzBox);
+                BatteryWarnings(fritzBox);
+            }
+        }
+
+        private Boolean loadFritzboxes()
+        {
+            try
+            {
+                foreach (FritzBox fritzBox in fritzBoxes)
+                {
+                    loadFritzbox(fritzBox);
+                }
+                return true;
+            }
+            catch (Exception err)
+            {
+                errorLog(System.Reflection.MethodBase.GetCurrentMethod().Name, err);
+                return false;
+            }
+        }
+
+        private Boolean loadFritzbox(FritzBox fritzBox)
+        {
             try
             {
                 fritzBox.info();
@@ -69,12 +100,13 @@ namespace HorstHome
                     fritzBox.getDevicelist();
                     fritzBox.getColordefaults();
                     fritzBox.getTemplatelist();
-                    loadDevices();
-                    loadGroups();
-                    BatteryWarnings();
+                    loadDevices(fritzBox);
+                    loadGroups(fritzBox);
+                    BatteryWarnings(fritzBox);
                     return true;
                 }
-                else {
+                else
+                {
                     return false;
                 }
             }
@@ -85,10 +117,11 @@ namespace HorstHome
             }
         }
 
-        private void loadDevices() {
+        private void loadDevices(FritzBox fritzBox)
+        {
             try
             {
-                BNodeName = fritzBox.Info["Name"];
+                BNodeName = fritzBox.Name;
 
                 BNode = new TreeNode(BNodeName);
                 BNode.ImageIndex = fritzBox.iconId;
@@ -120,9 +153,12 @@ namespace HorstHome
                             TreeNode DNode = new TreeNode(DNodeName);
                             DNode.ImageIndex = device.iconId;
                             DNode.SelectedImageIndex = device.iconId;
-                            if (device.isConnected == false) {
+                            if (device.isConnected == false)
+                            {
                                 DNode.ForeColor = Color.Gray;
-                            } else {
+                            }
+                            else
+                            {
                                 DNode.ForeColor = Color.Black;
                             }
                             GNode.Nodes.Add(DNode);
@@ -141,7 +177,8 @@ namespace HorstHome
             }
         }
 
-        private void loadGroups() {
+        private void loadGroups(FritzBox fritzBox)
+        {
             try
             {
                 foreach (SmartDevice device in fritzBox.Devices)
@@ -218,7 +255,7 @@ namespace HorstHome
         {
             try
             {
-                licenseInformation = Serial.CallWebservice("https://HorstHome.purepix.net/", Serial.GetSerialNumber());
+                licenseInformation = Serial.CallWebservice("https://HorstHome.purepix.net/", Serial.GetSerialNumber()).Trim();
                 Microsoft.Win32.RegistryKey key;
                 string rootKey = "SOFTWARE\\" + Assembly.GetExecutingAssembly().GetName().Name;
                 key = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(rootKey);
@@ -267,18 +304,21 @@ namespace HorstHome
                 {
                     key = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(rootKey);
                 }
-                subkey = key.OpenSubKey("FritzBox");
-                if (subkey != null)
+                foreach (String subKeyName in key.GetSubKeyNames())
                 {
-                    String UriTxt = subkey.GetValue("FritzBoxUri", "http://fritz.box/").ToString();
-                    String UsernameTxt = subkey.GetValue("Username", "").ToString();
-                    String Salt = StringEncryptor.GenerateAPassKey(Serial.cpuSerial());
-                    String PasswordTxt = "";
-                    if (subkey.GetValue("Password", "").ToString() != "")
+                    subkey = key.OpenSubKey(subKeyName);
+                    if (subkey != null)
                     {
-                        PasswordTxt = StringEncryptor.Decrypt(subkey.GetValue("Password", "").ToString(), Salt);
+                        String UriTxt = subkey.GetValue("FritzBoxUri", "http://fritz.box/").ToString();
+                        String UsernameTxt = subkey.GetValue("Username", "").ToString();
+                        String Salt = StringEncryptor.GenerateAPassKey(Serial.cpuSerial());
+                        String PasswordTxt = "";
+                        if (subkey.GetValue("Password", "").ToString() != "")
+                        {
+                            PasswordTxt = StringEncryptor.Decrypt(subkey.GetValue("Password", "").ToString(), Salt);
+                        }
+                        fritzBoxes.Add(new FritzBox(subKeyName, UriTxt, UsernameTxt, PasswordTxt));
                     }
-                    fritzBox = new FritzBox(UriTxt, UsernameTxt, PasswordTxt);
                 }
                 key.Close();
                 return true;
@@ -295,18 +335,14 @@ namespace HorstHome
             try
             {
                 Microsoft.Win32.RegistryKey key;
-                Microsoft.Win32.RegistryKey subkey;
-                string rootKey = "SOFTWARE\\" + Assembly.GetExecutingAssembly().GetName().Name + "\\Connections";
+                string rootKey = "SOFTWARE\\" + Assembly.GetExecutingAssembly().GetName().Name;
                 key = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(rootKey);
-                if (key != null)
+                if (key == null)
                 {
-                    subkey = key.CreateSubKey("FritzBox");
-                    if (subkey != null)
-                    {
-                        subkey.SetValue("Culture", CultureInfo.CurrentCulture.ToString());
-                    }
-                    key.Close();
+                    key = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(rootKey);
                 }
+                key.SetValue("Culture", CultureInfo.CurrentCulture.ToString());
+                key.Close();
                 return true;
             }
             catch (Exception err)
@@ -322,7 +358,7 @@ namespace HorstHome
             {
                 Microsoft.Win32.RegistryKey key;
                 Microsoft.Win32.RegistryKey subkey;
-                string rootKey = "SOFTWARE\\" + Assembly.GetExecutingAssembly().GetName().Name + "\\Connections";
+                string rootKey = "SOFTWARE\\" + Assembly.GetExecutingAssembly().GetName().Name;
                 key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(rootKey);
                 if (key == null)
                 {
@@ -423,100 +459,109 @@ namespace HorstHome
         {
             if (SmartDeviceTreeView.SelectedNode != null)
             {
-                if (fritzBox.Info.Count > 0)
+                foreach (FritzBox fritzBox in fritzBoxes)
                 {
-                    if (fritzBox.Info["Name"].ToString() == SmartDeviceTreeView.SelectedNode.Text.ToString())
+                    if (fritzBox.Info.Count > 0)
                     {
-                        SmartDeviceTabContainer.TabPages.Clear();
-                        FritzboxView fbv = new FritzboxView(this, fritzBox);
-                        fbv.Dock = DockStyle.Fill;
-                        TabPage DeviceInfoTab = new TabPage(fritzBox.Info["Name"].ToString());
-                        DeviceInfoTab.Controls.Add(fbv);
-                        SmartDeviceTabContainer.TabPages.Add(DeviceInfoTab);
-                        Application.DoEvents();
+                        if (fritzBox.Name == SmartDeviceTreeView.SelectedNode.Text.ToString())
+                        {
+                            SmartDeviceTabContainer.TabPages.Clear();
+                            FritzboxView fbv = new FritzboxView(this, fritzBox);
+                            fbv.Dock = DockStyle.Fill;
+                            TabPage DeviceInfoTab = new TabPage(fritzBox.Name);
+                            DeviceInfoTab.Controls.Add(fbv);
+                            SmartDeviceTabContainer.TabPages.Add(DeviceInfoTab);
+                            Application.DoEvents();
+                        }
                     }
-                }
 
-                using (SmartDeviceGroup group = fritzBox.Groups.Find(x => x.GroupName.Equals(SmartDeviceTreeView.SelectedNode.Text.ToString())))
-                {
-                    if (group != null)
+                    using (SmartDeviceGroup group = fritzBox.Groups.Find(x => x.GroupName.Equals(SmartDeviceTreeView.SelectedNode.Text.ToString())))
                     {
-                        //NameLbl.Text = group.GroupName;
+                        if (group != null)
+                        {
+                            SmartDeviceTabContainer.TabPages.Clear();
+                            GroupView gv = new GroupView(this, fritzBox.Uri, fritzBox.SID, group);
+                            gv.Dock = DockStyle.Fill;
+                            TabPage DeviceInfoTab = new TabPage(group.GroupName);
+                            DeviceInfoTab.Controls.Add(gv);
+                            SmartDeviceTabContainer.TabPages.Add(DeviceInfoTab);
+                            Application.DoEvents();
+                        }
                     }
-                }
 
-                using (SmartDevice device = fritzBox.Devices.Find(x => x.DeviceName.Equals(SmartDeviceTreeView.SelectedNode.Text.ToString())))
-                {
-                    if (device != null)
+                    using (SmartDevice device = fritzBox.Devices.Find(x => x.DeviceName.Equals(SmartDeviceTreeView.SelectedNode.Text.ToString())))
                     {
-                        SmartDeviceTabContainer.TabPages.Clear();
-                        device.tryUpdate(fritzBox.Uri, fritzBox.SID);
-                        if (device.SupportedFunctions.hasFlag(SmartDeviceFunctionType.Thermostat))
+                        if (device != null)
                         {
-                            ThermostatView thv = new ThermostatView(this, fritzBox.Uri, fritzBox.SID, device);
-                            thv.Dock = DockStyle.Fill;
-                            TabPage DeviceInfoTab = new TabPage(device.DeviceName);
-                            DeviceInfoTab.Controls.Add(thv);
-                            SmartDeviceTabContainer.TabPages.Add(DeviceInfoTab);
-                        }
-                        else if (device.SupportedFunctions.hasFlag(SmartDeviceFunctionType.Switch))
-                        {
-                            SocketView sv = new SocketView(this, fritzBox.Uri, fritzBox.SID, device);
-                            sv.Dock = DockStyle.Fill;
-                            TabPage DeviceInfoTab = new TabPage(device.DeviceName);
-                            DeviceInfoTab.Controls.Add(sv);
-                            SmartDeviceTabContainer.TabPages.Add(DeviceInfoTab);
-                        }
-                        else if (device.SupportedFunctions.hasFlag(SmartDeviceFunctionType.Color))
-                        {
-                            LightView lv = new LightView(this, fritzBox.Uri, fritzBox.SID, device);
-                            lv.Dock = DockStyle.Fill;
-                            TabPage DeviceInfoTab = new TabPage(device.DeviceName);
-                            DeviceInfoTab.Controls.Add(lv);
-                            SmartDeviceTabContainer.TabPages.Add(DeviceInfoTab);
-                        }
-                        else
-                        {
-                            AlarmView av = new AlarmView(this, fritzBox.Uri, fritzBox.SID, device);
-                            av.Dock = DockStyle.Fill;
-                            TabPage DeviceInfoTab = new TabPage(device.DeviceName);
-                            DeviceInfoTab.Controls.Add(av);
-                            SmartDeviceTabContainer.TabPages.Add(DeviceInfoTab);
-                        }
+                            SmartDeviceTabContainer.TabPages.Clear();
+                            device.tryUpdate(fritzBox.Uri, fritzBox.SID);
+                            if (device.SupportedFunctions.hasFlag(SmartDeviceFunctionType.Thermostat))
+                            {
+                                ThermostatView thv = new ThermostatView(this, fritzBox.Uri, fritzBox.SID, device);
+                                thv.Dock = DockStyle.Fill;
+                                TabPage DeviceInfoTab = new TabPage(device.DeviceName);
+                                DeviceInfoTab.Controls.Add(thv);
+                                SmartDeviceTabContainer.TabPages.Add(DeviceInfoTab);
+                            }
+                            else if (device.SupportedFunctions.hasFlag(SmartDeviceFunctionType.Switch))
+                            {
+                                SocketView sv = new SocketView(this, fritzBox.Uri, fritzBox.SID, device);
+                                sv.Dock = DockStyle.Fill;
+                                TabPage DeviceInfoTab = new TabPage(device.DeviceName);
+                                DeviceInfoTab.Controls.Add(sv);
+                                SmartDeviceTabContainer.TabPages.Add(DeviceInfoTab);
+                            }
+                            else if (device.SupportedFunctions.hasFlag(SmartDeviceFunctionType.Color))
+                            {
+                                LightView lv = new LightView(this, fritzBox.Uri, fritzBox.SID, device);
+                                lv.Dock = DockStyle.Fill;
+                                TabPage DeviceInfoTab = new TabPage(device.DeviceName);
+                                DeviceInfoTab.Controls.Add(lv);
+                                SmartDeviceTabContainer.TabPages.Add(DeviceInfoTab);
+                            }
+                            else
+                            {
+                                AlarmView av = new AlarmView(this, fritzBox.Uri, fritzBox.SID, device);
+                                av.Dock = DockStyle.Fill;
+                                TabPage DeviceInfoTab = new TabPage(device.DeviceName);
+                                DeviceInfoTab.Controls.Add(av);
+                                SmartDeviceTabContainer.TabPages.Add(DeviceInfoTab);
+                            }
 
-                        if (device.SupportedFunctions.hasFlag(SmartDeviceFunctionType.Energie))
-                        {
-                            EnergieChart ec = new EnergieChart(this, fritzBox.Uri, fritzBox.SID, device);
-                            ec.Dock = DockStyle.Fill;
-                            TabPage EnergieTab = new TabPage("Energie");
-                            EnergieTab.Controls.Add(ec);
-                            SmartDeviceTabContainer.TabPages.Add(EnergieTab);
+                            if (device.SupportedFunctions.hasFlag(SmartDeviceFunctionType.Energie))
+                            {
+                                EnergieChart ec = new EnergieChart(this, fritzBox.Uri, fritzBox.SID, device);
+                                ec.Dock = DockStyle.Fill;
+                                TabPage EnergieTab = new TabPage("Energie");
+                                EnergieTab.Controls.Add(ec);
+                                SmartDeviceTabContainer.TabPages.Add(EnergieTab);
+                            }
+                            if (device.SupportedFunctions.hasFlag(SmartDeviceFunctionType.Energie))
+                            {
+                                VoltageChart vc = new VoltageChart(this, fritzBox.Uri, fritzBox.SID, device);
+                                vc.Dock = DockStyle.Fill;
+                                TabPage VoltageTab = new TabPage("Voltage");
+                                VoltageTab.Controls.Add(vc);
+                                SmartDeviceTabContainer.TabPages.Add(VoltageTab);
+                            }
+                            if (device.SupportedFunctions.hasFlag(SmartDeviceFunctionType.Energie))
+                            {
+                                PowerChart pc = new PowerChart(this, fritzBox.Uri, fritzBox.SID, device);
+                                pc.Dock = DockStyle.Fill;
+                                TabPage PowerTab = new TabPage("Power");
+                                PowerTab.Controls.Add(pc);
+                                SmartDeviceTabContainer.TabPages.Add(PowerTab);
+                            }
+                            if (device.SupportedFunctions.hasFlag(SmartDeviceFunctionType.Thermometer))
+                            {
+                                TemperatureChart tc = new TemperatureChart(this, fritzBox.Uri, fritzBox.SID, device);
+                                tc.Dock = DockStyle.Fill;
+                                TabPage TemperatureTab = new TabPage("Temperature");
+                                TemperatureTab.Controls.Add(tc);
+                                SmartDeviceTabContainer.TabPages.Add(TemperatureTab);
+                            }
+                            Application.DoEvents();
                         }
-                        if (device.SupportedFunctions.hasFlag(SmartDeviceFunctionType.Energie))
-                        {
-                            VoltageChart vc = new VoltageChart(this, fritzBox.Uri, fritzBox.SID, device);
-                            vc.Dock = DockStyle.Fill;
-                            TabPage VoltageTab = new TabPage("Voltage");
-                            VoltageTab.Controls.Add(vc);
-                            SmartDeviceTabContainer.TabPages.Add(VoltageTab);
-                        }
-                        if (device.SupportedFunctions.hasFlag(SmartDeviceFunctionType.Energie))
-                        {
-                            PowerChart pc = new PowerChart(this, fritzBox.Uri, fritzBox.SID, device);
-                            pc.Dock = DockStyle.Fill;
-                            TabPage PowerTab = new TabPage("Power");
-                            PowerTab.Controls.Add(pc);
-                            SmartDeviceTabContainer.TabPages.Add(PowerTab);
-                        }
-                        if (device.SupportedFunctions.hasFlag(SmartDeviceFunctionType.Thermometer))
-                        {
-                            TemperatureChart tc = new TemperatureChart(this, fritzBox.Uri, fritzBox.SID, device);
-                            tc.Dock = DockStyle.Fill;
-                            TabPage TemperatureTab = new TabPage("Temperature");
-                            TemperatureTab.Controls.Add(tc);
-                            SmartDeviceTabContainer.TabPages.Add(TemperatureTab);
-                        }
-                        Application.DoEvents();
                     }
                 }
             }
@@ -633,11 +678,14 @@ namespace HorstHome
 
         private void ReloadTimer_Tick(object sender, EventArgs e)
         {
-            fritzBox.info();
-            if (fritzBox.connect() == true)
+            foreach (FritzBox fritzBox in fritzBoxes)
             {
-                fritzBox.getDevicelist();
-                BatteryWarnings();
+                fritzBox.info();
+                if (fritzBox.connect() == true)
+                {
+                    fritzBox.getDevicelist();
+                    BatteryWarnings(fritzBox);
+                }
             }
         }
 
@@ -650,20 +698,7 @@ namespace HorstHome
                     var result = sform.ShowDialog();
                     if (result == DialogResult.OK)
                     {
-                        fritzBox = new FritzBox();
-                        changeCulture(culture.ToString());
-
-                        if (loadLicense() == true && loadConnection() == true)
-                        {
-                            loadFritzbox();
-                        }
-
-                        SmartDeviceTreeView.Nodes.Clear();
-                        trayMenu.Items.Clear();
-
-                        loadDevices();
-                        loadGroups();
-                        BatteryWarnings();
+                        reload();
                     }
                 }
             }
@@ -691,8 +726,9 @@ namespace HorstHome
 
         }
 
-        private void BatteryWarnings()
+        private void BatteryWarnings(FritzBox fritzBox)
         {
+
             foreach (SmartDevice d in fritzBox.Devices)
             {
                 if (d.Battery <= BatteryWarning)
@@ -709,6 +745,11 @@ namespace HorstHome
         }
 
         private void MainMenu_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void fritzBoxSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }

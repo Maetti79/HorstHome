@@ -198,6 +198,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="View\GroupView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\GroupView.Designer.cs">
+      <DependentUpon>GroupView.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\LightView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -266,6 +272,9 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\GroupView.resx">
+      <DependentUpon>GroupView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\LightView.resx">
       <DependentUpon>LightView.cs</DependentUpon>

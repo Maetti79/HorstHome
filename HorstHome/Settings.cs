@@ -115,7 +115,7 @@ namespace HorstHome
         public Boolean validateConnection() {
             pictureBox1.Image = ConnectIcons.Images[0];
             errorTxt.Text = "";
-            TestBox = new FritzBox(UriTxt.Text.ToString(), UsernameTxt.Text.ToString(), PasswordTxt.Text.ToString());
+            TestBox = new FritzBox(NameTxt.Text, UriTxt.Text.ToString(), UsernameTxt.Text.ToString(), PasswordTxt.Text.ToString());
             TestBox.info();
             if (TestBox.connect())
             {

@@ -45,6 +45,15 @@
             this.UpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.SmartDeviceTreeView = new System.Windows.Forms.TreeView();
+            this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.fritzBoxSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deviceSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.groupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.refreshToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.SmartDeviceTabContainer = new System.Windows.Forms.TabControl();
             this.SmartDeviceTab = new System.Windows.Forms.TabPage();
             this.ReloadTimer = new System.Windows.Forms.Timer(this.components);
@@ -53,6 +62,7 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.contextMenu.SuspendLayout();
             this.SmartDeviceTabContainer.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -73,6 +83,7 @@
             this.Icons.Images.SetKeyName(10, "Han-Fun-Smoke.png");
             this.Icons.Images.SetKeyName(11, "7490.png");
             this.Icons.Images.SetKeyName(12, "7590.png");
+            this.Icons.Images.SetKeyName(13, "smarthome_icon.ico");
             // 
             // TrayIcons
             // 
@@ -100,26 +111,26 @@
             this.toolStripSeparator1,
             this.QuitToolStripMenuItem});
             this.FritzboxToolStripMenuItem.Name = "FritzboxToolStripMenuItem";
-            this.FritzboxToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-            this.FritzboxToolStripMenuItem.Text = "FritzBox";
+            this.FritzboxToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
+            this.FritzboxToolStripMenuItem.Text = "HorstHome";
             this.FritzboxToolStripMenuItem.Click += new System.EventHandler(this.connectionToolStripMenuItem_Click);
             // 
             // SettingsToolStripMenuItem
             // 
             this.SettingsToolStripMenuItem.Name = "SettingsToolStripMenuItem";
-            this.SettingsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.SettingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.SettingsToolStripMenuItem.Text = "Settings";
             this.SettingsToolStripMenuItem.Click += new System.EventHandler(this.SettingsToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(113, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // QuitToolStripMenuItem
             // 
             this.QuitToolStripMenuItem.Name = "QuitToolStripMenuItem";
-            this.QuitToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.QuitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.QuitToolStripMenuItem.Text = "Quit";
             this.QuitToolStripMenuItem.Click += new System.EventHandler(this.QuitToolStripMenuItem_Click);
             // 
@@ -192,6 +203,7 @@
             // 
             // SmartDeviceTreeView
             // 
+            this.SmartDeviceTreeView.ContextMenuStrip = this.contextMenu;
             this.SmartDeviceTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.SmartDeviceTreeView.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SmartDeviceTreeView.ImageIndex = 0;
@@ -203,6 +215,72 @@
             this.SmartDeviceTreeView.Size = new System.Drawing.Size(261, 537);
             this.SmartDeviceTreeView.TabIndex = 3;
             this.SmartDeviceTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.deviceTree_AfterSelect);
+            // 
+            // contextMenu
+            // 
+            this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fritzBoxSettingsToolStripMenuItem,
+            this.deviceSettingsToolStripMenuItem,
+            this.groupToolStripMenuItem});
+            this.contextMenu.Name = "contextMenu";
+            this.contextMenu.Size = new System.Drawing.Size(146, 70);
+            // 
+            // fritzBoxSettingsToolStripMenuItem
+            // 
+            this.fritzBoxSettingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addToolStripMenuItem,
+            this.editToolStripMenuItem,
+            this.deleteToolStripMenuItem});
+            this.fritzBoxSettingsToolStripMenuItem.Name = "fritzBoxSettingsToolStripMenuItem";
+            this.fritzBoxSettingsToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.fritzBoxSettingsToolStripMenuItem.Text = "FritzBox";
+            this.fritzBoxSettingsToolStripMenuItem.Click += new System.EventHandler(this.fritzBoxSettingsToolStripMenuItem_Click);
+            // 
+            // addToolStripMenuItem
+            // 
+            this.addToolStripMenuItem.Name = "addToolStripMenuItem";
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.addToolStripMenuItem.Text = "Add";
+            // 
+            // editToolStripMenuItem
+            // 
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.editToolStripMenuItem.Text = "Edit";
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.deleteToolStripMenuItem.Text = "Delete";
+            // 
+            // deviceSettingsToolStripMenuItem
+            // 
+            this.deviceSettingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.refreshToolStripMenuItem});
+            this.deviceSettingsToolStripMenuItem.Name = "deviceSettingsToolStripMenuItem";
+            this.deviceSettingsToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.deviceSettingsToolStripMenuItem.Text = "Smart Device";
+            // 
+            // refreshToolStripMenuItem
+            // 
+            this.refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
+            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
+            this.refreshToolStripMenuItem.Text = "Refresh";
+            // 
+            // groupToolStripMenuItem
+            // 
+            this.groupToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.refreshToolStripMenuItem1});
+            this.groupToolStripMenuItem.Name = "groupToolStripMenuItem";
+            this.groupToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.groupToolStripMenuItem.Text = "Device Group";
+            // 
+            // refreshToolStripMenuItem1
+            // 
+            this.refreshToolStripMenuItem1.Name = "refreshToolStripMenuItem1";
+            this.refreshToolStripMenuItem1.Size = new System.Drawing.Size(113, 22);
+            this.refreshToolStripMenuItem1.Text = "Refresh";
             // 
             // SmartDeviceTabContainer
             // 
@@ -251,6 +329,7 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.contextMenu.ResumeLayout(false);
             this.SmartDeviceTabContainer.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -276,6 +355,15 @@
         private System.Windows.Forms.ToolStripMenuItem SettingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem QuitToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip contextMenu;
+        private System.Windows.Forms.ToolStripMenuItem fritzBoxSettingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deviceSettingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem groupToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem1;
     }
 }
 

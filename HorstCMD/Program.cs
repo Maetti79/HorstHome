@@ -21,7 +21,7 @@ namespace HorstCMD
 
                 Parameter parameter = new Parameter(args);
 
-                FritzBox box = new FritzBox(parameter.Arguments["FritzBox"], parameter.Arguments["Username"], parameter.Arguments["Password"]);
+                FritzBox box = new FritzBox("FritzBox",parameter.Arguments["FritzBox"], parameter.Arguments["Username"], parameter.Arguments["Password"]);
 
                 if (box.info() == true)
                 {

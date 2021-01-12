@@ -318,4 +318,7 @@
   <data name="Settings_Validate" xml:space="preserve">
     <value>Validate</value>
   </data>
+  <data name="Tray_Quit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
 </root>

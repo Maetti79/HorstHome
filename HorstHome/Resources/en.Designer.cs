@@ -662,5 +662,14 @@ namespace i18n {
                 return ResourceManager.GetString("Settings_Validate", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Exit ähnelt.
+        /// </summary>
+        internal static string Tray_Quit {
+            get {
+                return ResourceManager.GetString("Tray_Quit", resourceCulture);
+            }
+        }
     }
 }

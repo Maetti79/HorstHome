@@ -127,7 +127,7 @@ namespace HorstHome
 
         private void OkBtn_Click(object sender, EventArgs e)
         {
-            LicenseInformation = Serial.CallWebservice("https://HorstHome.purepix.net/", Serial.GetSerialNumber());
+            LicenseInformation = Serial.CallWebservice("https://HorstHome.purepix.net/", Serial.GetSerialNumber()).Trim();
             Microsoft.Win32.RegistryKey key;
             string rootKey = "SOFTWARE\\" + Assembly.GetExecutingAssembly().GetName().Name;
             key = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(rootKey);
