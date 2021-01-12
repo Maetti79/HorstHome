@@ -20,6 +20,7 @@ namespace HorstHome
             parent = mainfrm;
             changeCulture();
             DeviceName.Text = box.Info["Name"].ToString();
+            ModelName.Text = box.Name;
             Serial.Text = box.Info["Serial"].ToString();
             Manufacturer.Text = box.Info["OEM"].ToString();
             Firmware.Text = box.Info["Version"].ToString();
@@ -46,6 +47,7 @@ namespace HorstHome
                 if (parent.culture.ToString() == "de-DE")
                 {
                     LabelModel.Text = i18n.de.Detail_Fritzbox.ToString();
+                    LabelName.Text = i18n.de.Detail_Name.ToString();
                     LabelManufacturer.Text = i18n.de.Detail_Manufacturer.ToString();
                     LabelRevision.Text = i18n.de.Detail_Revision.ToString();
                     LabelFirmware.Text = i18n.de.Detail_Firmware.ToString();
@@ -55,6 +57,7 @@ namespace HorstHome
                 else
                 {
                     LabelModel.Text = i18n.en.Detail_Fritzbox.ToString();
+                    LabelName.Text = i18n.en.Detail_Name.ToString();
                     LabelManufacturer.Text = i18n.en.Detail_Manufacturer.ToString();
                     LabelRevision.Text = i18n.en.Detail_Revision.ToString();
                     LabelFirmware.Text = i18n.en.Detail_Firmware.ToString();

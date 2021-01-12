@@ -255,7 +255,6 @@ namespace HorstHome
                 {
                     XElement name = template.Element("name");
                     Templates.Add(new SmartDeviceTemplate(name.Value.ToString()));
-
                 }
             }
             catch (Exception Ex)

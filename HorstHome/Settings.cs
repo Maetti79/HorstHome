@@ -12,6 +12,7 @@ namespace HorstHome
         private FritzBox TestBox;
         private Boolean connectionOk;
         private HorstHome parent;
+        private String Name;
 
         public Settings()
         {
@@ -23,9 +24,10 @@ namespace HorstHome
             validateConnection();
         }
 
-        public Settings(HorstHome mainfrm)
+        public Settings(HorstHome mainfrm, String name = "Fritzbox")
         {
             InitializeComponent();
+            Name = name;
             parent = mainfrm;
             changeCulture();
             loadConnection();
@@ -113,6 +115,7 @@ namespace HorstHome
         }
 
         public Boolean validateConnection() {
+            Name = NameTxt.Text;
             pictureBox1.Image = ConnectIcons.Images[0];
             errorTxt.Text = "";
             TestBox = new FritzBox(NameTxt.Text, UriTxt.Text.ToString(), UsernameTxt.Text.ToString(), PasswordTxt.Text.ToString());
@@ -143,7 +146,7 @@ namespace HorstHome
             key = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(rootKey);
             if (key != null)
             {
-                subkey = key.CreateSubKey("FritzBox");
+                subkey = key.CreateSubKey(NameTxt.Text.ToString());
                 if (subkey != null)
                 {
                     subkey.SetValue("FritzBoxUri", UriTxt.Text.ToString());
@@ -168,9 +171,10 @@ namespace HorstHome
             {
                 key = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(rootKey);
             }
-            subkey = key.OpenSubKey("FritzBox");
+            subkey = key.OpenSubKey(Name);
             if (subkey != null)
             {
+                NameTxt.Text = Name;
                 UriTxt.Text = subkey.GetValue("FritzBoxUri", "http://fritz.box/").ToString();
                 UsernameTxt.Text = subkey.GetValue("Username", "").ToString();
                 String Salt = StringEncryptor.GenerateAPassKey(Serial.cpuSerial());

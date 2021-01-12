@@ -49,12 +49,16 @@
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
             this.DeviceIcons = new System.Windows.Forms.ImageList(this.components);
+            this.pictureBox10 = new System.Windows.Forms.PictureBox();
+            this.ModelName = new System.Windows.Forms.TextBox();
+            this.LabelName = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).BeginInit();
             this.SuspendLayout();
             // 
             // LabelModel
@@ -69,7 +73,7 @@
             // 
             // LabelManufacturer
             // 
-            this.LabelManufacturer.Location = new System.Drawing.Point(4, 41);
+            this.LabelManufacturer.Location = new System.Drawing.Point(4, 79);
             this.LabelManufacturer.Name = "LabelManufacturer";
             this.LabelManufacturer.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.LabelManufacturer.Size = new System.Drawing.Size(90, 32);
@@ -79,7 +83,7 @@
             // 
             // LabelAnnex
             // 
-            this.LabelAnnex.Location = new System.Drawing.Point(4, 193);
+            this.LabelAnnex.Location = new System.Drawing.Point(4, 231);
             this.LabelAnnex.Name = "LabelAnnex";
             this.LabelAnnex.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.LabelAnnex.Size = new System.Drawing.Size(90, 32);
@@ -89,7 +93,7 @@
             // 
             // LabelRevision
             // 
-            this.LabelRevision.Location = new System.Drawing.Point(4, 79);
+            this.LabelRevision.Location = new System.Drawing.Point(4, 117);
             this.LabelRevision.Name = "LabelRevision";
             this.LabelRevision.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.LabelRevision.Size = new System.Drawing.Size(90, 32);
@@ -99,7 +103,7 @@
             // 
             // LabelFirmware
             // 
-            this.LabelFirmware.Location = new System.Drawing.Point(4, 117);
+            this.LabelFirmware.Location = new System.Drawing.Point(4, 155);
             this.LabelFirmware.Name = "LabelFirmware";
             this.LabelFirmware.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.LabelFirmware.Size = new System.Drawing.Size(90, 32);
@@ -121,7 +125,7 @@
             // 
             this.Serial.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Serial.Location = new System.Drawing.Point(137, 162);
+            this.Serial.Location = new System.Drawing.Point(137, 200);
             this.Serial.Name = "Serial";
             this.Serial.ReadOnly = true;
             this.Serial.Size = new System.Drawing.Size(260, 20);
@@ -132,7 +136,7 @@
             // 
             this.Manufacturer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Manufacturer.Location = new System.Drawing.Point(138, 48);
+            this.Manufacturer.Location = new System.Drawing.Point(138, 86);
             this.Manufacturer.Name = "Manufacturer";
             this.Manufacturer.ReadOnly = true;
             this.Manufacturer.Size = new System.Drawing.Size(260, 20);
@@ -142,7 +146,7 @@
             // 
             this.Firmware.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Firmware.Location = new System.Drawing.Point(137, 124);
+            this.Firmware.Location = new System.Drawing.Point(137, 162);
             this.Firmware.Name = "Firmware";
             this.Firmware.ReadOnly = true;
             this.Firmware.Size = new System.Drawing.Size(260, 20);
@@ -152,7 +156,7 @@
             // 
             this.Annex.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Annex.Location = new System.Drawing.Point(137, 200);
+            this.Annex.Location = new System.Drawing.Point(137, 238);
             this.Annex.Name = "Annex";
             this.Annex.ReadOnly = true;
             this.Annex.Size = new System.Drawing.Size(260, 20);
@@ -162,7 +166,7 @@
             // 
             this.Revision.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Revision.Location = new System.Drawing.Point(137, 86);
+            this.Revision.Location = new System.Drawing.Point(137, 124);
             this.Revision.Name = "Revision";
             this.Revision.ReadOnly = true;
             this.Revision.Size = new System.Drawing.Size(260, 20);
@@ -170,7 +174,7 @@
             // 
             // LabelSerial
             // 
-            this.LabelSerial.Location = new System.Drawing.Point(4, 155);
+            this.LabelSerial.Location = new System.Drawing.Point(4, 193);
             this.LabelSerial.Name = "LabelSerial";
             this.LabelSerial.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.LabelSerial.Size = new System.Drawing.Size(90, 32);
@@ -191,7 +195,7 @@
             // pictureBox2
             // 
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(100, 41);
+            this.pictureBox2.Location = new System.Drawing.Point(100, 79);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(32, 32);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -201,7 +205,7 @@
             // pictureBox3
             // 
             this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
-            this.pictureBox3.Location = new System.Drawing.Point(100, 79);
+            this.pictureBox3.Location = new System.Drawing.Point(100, 117);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(32, 32);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -211,7 +215,7 @@
             // pictureBox4
             // 
             this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
-            this.pictureBox4.Location = new System.Drawing.Point(100, 155);
+            this.pictureBox4.Location = new System.Drawing.Point(100, 193);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(32, 32);
             this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -221,7 +225,7 @@
             // pictureBox5
             // 
             this.pictureBox5.Image = global::HorstHome.Properties.Resources.cpu;
-            this.pictureBox5.Location = new System.Drawing.Point(100, 117);
+            this.pictureBox5.Location = new System.Drawing.Point(100, 155);
             this.pictureBox5.Name = "pictureBox5";
             this.pictureBox5.Size = new System.Drawing.Size(32, 32);
             this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -231,7 +235,7 @@
             // pictureBox6
             // 
             this.pictureBox6.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox6.Image")));
-            this.pictureBox6.Location = new System.Drawing.Point(100, 193);
+            this.pictureBox6.Location = new System.Drawing.Point(100, 231);
             this.pictureBox6.Name = "pictureBox6";
             this.pictureBox6.Size = new System.Drawing.Size(32, 32);
             this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -245,11 +249,45 @@
             this.DeviceIcons.Images.SetKeyName(0, "7490.png");
             this.DeviceIcons.Images.SetKeyName(1, "7590.png");
             // 
+            // pictureBox10
+            // 
+            this.pictureBox10.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox10.Image")));
+            this.pictureBox10.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox10.InitialImage")));
+            this.pictureBox10.Location = new System.Drawing.Point(100, 41);
+            this.pictureBox10.Name = "pictureBox10";
+            this.pictureBox10.Size = new System.Drawing.Size(32, 32);
+            this.pictureBox10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox10.TabIndex = 108;
+            this.pictureBox10.TabStop = false;
+            // 
+            // ModelName
+            // 
+            this.ModelName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ModelName.Location = new System.Drawing.Point(137, 48);
+            this.ModelName.Name = "ModelName";
+            this.ModelName.ReadOnly = true;
+            this.ModelName.Size = new System.Drawing.Size(260, 20);
+            this.ModelName.TabIndex = 107;
+            // 
+            // LabelName
+            // 
+            this.LabelName.Location = new System.Drawing.Point(4, 41);
+            this.LabelName.Name = "LabelName";
+            this.LabelName.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.LabelName.Size = new System.Drawing.Size(90, 32);
+            this.LabelName.TabIndex = 106;
+            this.LabelName.Text = "Name";
+            this.LabelName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // FritzboxView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.Controls.Add(this.pictureBox10);
+            this.Controls.Add(this.ModelName);
+            this.Controls.Add(this.LabelName);
             this.Controls.Add(this.pictureBox6);
             this.Controls.Add(this.pictureBox5);
             this.Controls.Add(this.pictureBox4);
@@ -278,6 +316,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -304,5 +343,8 @@
         private System.Windows.Forms.PictureBox pictureBox5;
         private System.Windows.Forms.PictureBox pictureBox6;
         private System.Windows.Forms.ImageList DeviceIcons;
+        private System.Windows.Forms.PictureBox pictureBox10;
+        private System.Windows.Forms.TextBox ModelName;
+        private System.Windows.Forms.Label LabelName;
     }
 }

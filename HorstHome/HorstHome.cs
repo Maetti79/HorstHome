@@ -737,7 +737,7 @@ namespace HorstHome
                     if (Now.Subtract(d.LastWarning).TotalMinutes > 60)
                     {
                         d.LastWarning = DateTime.Now;
-                        ShowEvent(d.DeviceName, "Battery: " + d.Battery + "%");
+                        ShowEvent(fritzBox.Name + " " + d.DeviceName, "Battery: " + d.Battery + "%");
                         Console.WriteLine(d.DeviceName + " Battery: " + d.Battery + "%");
                     }
                 }
@@ -750,6 +750,59 @@ namespace HorstHome
         }
 
         private void fritzBoxSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void contextMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            contextMenu.Items.Clear();
+            if (SmartDeviceTreeView.SelectedNode == null)
+            {
+                ToolStripMenuItem CMenu = new ToolStripMenuItem("Add Fritzbox", Icons.Images[11]);
+                CMenu.Click += CMenu_ItemClicked;
+                contextMenu.Items.Add(CMenu);
+            }
+            else
+            {
+                foreach (FritzBox fritzBox in fritzBoxes)
+                {
+                    if (fritzBox.Info.Count > 0)
+                    {
+                        if (fritzBox.Name == SmartDeviceTreeView.SelectedNode.Text.ToString())
+                        {
+                            ToolStripMenuItem CMenu = new ToolStripMenuItem("Edit " + fritzBox.Name, Icons.Images[fritzBox.iconId]);
+                            CMenu.Click += CMenu_ItemClicked;
+                            contextMenu.Items.Add(CMenu);
+                            break;
+                        }
+                    }
+                }
+
+             
+            }
+        }
+
+        private void CMenu_ItemClicked(object sender, EventArgs e)
+        {
+            try
+            {
+                using (Form sform = new Settings(this, SmartDeviceTreeView.SelectedNode.Text.ToString()))
+                {
+                    var result = sform.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        reload();
+                    }
+                }
+            }
+            catch (Exception err)
+            {
+                errorLog(System.Reflection.MethodBase.GetCurrentMethod().Name, err);
+            }
+        }
+
+        private void UpdateToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }
