@@ -114,7 +114,7 @@ namespace HorstHome
             }
             catch (Exception licenseEx)
             {
-                Console.Write(licenseEx.Message);
+                //Console.Write(licenseEx.Message);
             }
         }
 

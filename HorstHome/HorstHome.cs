@@ -279,10 +279,12 @@ namespace HorstHome
             try
             {
                 Array pls = pluginCore.getPlugins(licenseInformation);
+                /*
                 foreach (Object pl in pls)
                 {
                     Console.WriteLine(pl.ToString());
                 }
+                */
                 return true;
             }
             catch (Exception err)
@@ -787,12 +789,26 @@ namespace HorstHome
         {
             try
             {
-                using (Form sform = new Settings(this, SmartDeviceTreeView.SelectedNode.Text.ToString()))
+                if (SmartDeviceTreeView.SelectedNode == null)
                 {
-                    var result = sform.ShowDialog();
-                    if (result == DialogResult.OK)
+                    using (Form sform = new Settings(this))
                     {
-                        reload();
+                        var result = sform.ShowDialog();
+                        if (result == DialogResult.OK)
+                        {
+                            reload();
+                        }
+                    }
+                }
+                else
+                {
+                    using (Form sform = new Settings(this, SmartDeviceTreeView.SelectedNode.Text.ToString()))
+                    {
+                        var result = sform.ShowDialog();
+                        if (result == DialogResult.OK)
+                        {
+                            reload();
+                        }
                     }
                 }
             }
