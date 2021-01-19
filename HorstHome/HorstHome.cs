@@ -527,6 +527,7 @@ namespace HorstHome
                         }
                     }
                 }));
+                NGNode.Text = "Network (Scan)";
                 Application.DoEvents();
             }
             catch (Exception err)

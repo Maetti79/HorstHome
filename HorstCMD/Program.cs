@@ -4,12 +4,14 @@ using System.Linq;
 using System.Reflection;
 using System.Collections.Generic;
 using HorstHome;
+using SubnetPing;
 
 namespace HorstCMD
 {
 
     class Program
     {
+        static public String[] Error;
 
         static void Main(string[] args)
         {
@@ -22,6 +24,7 @@ namespace HorstCMD
                 Parameter parameter = new Parameter(args);
 
                 FritzBox box = new FritzBox("FritzBox",parameter.Arguments["FritzBox"], parameter.Arguments["Username"], parameter.Arguments["Password"]);
+        
 
                 if (box.info() == true)
                 {
@@ -86,7 +89,7 @@ namespace HorstCMD
         {
             try
             {
-                box.getDevicelist();
+                box.getDevicelist(DevicelistCallback);
                 foreach (SmartDevice device in box.Devices.OrderBy(x => x.DeviceName))
                 {
                     Console.WriteLine(device.GetType().ToString().Replace("HorstHome.", "").PadLeft(12, ' ') + ":\t" + device.DeviceName);
@@ -102,7 +105,7 @@ namespace HorstCMD
         {
             try
             {
-                box.getDevicelist();
+                box.getDevicelist(DevicelistCallback);
                 using (SmartDevice device = box.Devices.Find(x => x.DeviceName.Equals(parameter.Arguments["Device"])))
                 {
                     device.getBasicDeviceStats(box.Uri, box.SID);
@@ -134,7 +137,7 @@ namespace HorstCMD
         {
             try
             {
-                box.getDevicelist();
+                box.getDevicelist(DevicelistCallback);
                 using (SmartDevice device = box.Devices.Find(x => x.DeviceName.Equals(parameter.Arguments["Device"])))
                 {
                     device.getSwitchStateAsync(box.Uri, box.SID);
@@ -158,7 +161,7 @@ namespace HorstCMD
         {
             try
             {
-                box.getDevicelist();
+                box.getDevicelist(DevicelistCallback);
                 using (SmartDevice device = box.Devices.Find(x => x.DeviceName.Equals(parameter.Arguments["Device"])))
                 {
                     if (Int32.Parse(parameter.Arguments["Value"]) == 1)
@@ -187,7 +190,7 @@ namespace HorstCMD
         {
             try
             {
-                box.getDevicelist();
+                box.getDevicelist(DevicelistCallback);
                 using (SmartDevice device = box.Devices.Find(x => x.DeviceName.Equals(parameter.Arguments["Device"])))
                 {
                     device.getTemperatureAsync(box.Uri, box.SID);
@@ -204,7 +207,7 @@ namespace HorstCMD
         {
             try
             {
-                box.getDevicelist();
+                box.getDevicelist(DevicelistCallback);
                 using (SmartDevice device = box.Devices.Find(x => x.DeviceName.Equals(parameter.Arguments["Device"])))
                 {
                     device.setTemperatureAsync(box.Uri, box.SID, Double.Parse(parameter.Arguments["Value"], CultureInfo.InvariantCulture));
@@ -221,7 +224,7 @@ namespace HorstCMD
         {
             try
             {
-                box.getDevicelist();
+                box.getDevicelist(DevicelistCallback);
                 using (SmartDevice device = box.Devices.Find(x => x.DeviceName.Equals(parameter.Arguments["Device"])))
                 {
                     //device.getTemperatureAsync(box.Uri, box.SID);
@@ -238,8 +241,8 @@ namespace HorstCMD
         {
             try
             {
-                box.getDevicelist();
-                box.getColordefaults();
+                box.getDevicelist(DevicelistCallback);
+                box.getColordefaults(ColordefaultsCallback);
                 using (SmartDevice device = box.Devices.Find(x => x.DeviceName.Equals(parameter.Arguments["Device"])))
                 {
                     device.getBasicDeviceStats(box.Uri, box.SID);
@@ -280,6 +283,80 @@ namespace HorstCMD
             catch (Exception Ex)
             {
                 Console.WriteLine(MethodBase.GetCurrentMethod() + ": " + Ex.Message.ToString());
+            }
+        }
+
+        public static void errorLog(String Class, Exception ErrorMsg)
+        {
+            try
+            {
+                Error = Error.AddItemToArray(DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss") + " [" + Class + "] " + ErrorMsg.Message);
+                Console.WriteLine(DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss") + " [" + Class + "] " + ErrorMsg.Message);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(ErrorMsg.Message);
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        private static void DevicelistCallback(SmartDevice device)
+        {
+            try
+            {
+    
+            }
+            catch (Exception err)
+            {
+                errorLog(System.Reflection.MethodBase.GetCurrentMethod().Name, err);
+            }
+        }
+
+        private static void ColordefaultsCallback(SmartDeviceColor color)
+        {
+            try
+            {
+
+            }
+            catch (Exception err)
+            {
+                errorLog(System.Reflection.MethodBase.GetCurrentMethod().Name, err);
+            }
+        }
+
+        private static void TemplatelistCallback(SmartDeviceTemplate template)
+        {
+            try
+            {
+  
+            }
+            catch (Exception err)
+            {
+                errorLog(System.Reflection.MethodBase.GetCurrentMethod().Name, err);
+            }
+        }
+
+        private static void StatsCallback(SmartDeviceStats stats)
+        {
+            try
+            {
+      
+            }
+            catch (Exception err)
+            {
+                errorLog(System.Reflection.MethodBase.GetCurrentMethod().Name, err);
+            }
+        }
+
+        private static void NetworkCallback(SubnetClientV4 client)
+        {
+            try
+            {
+               
+            }
+            catch (Exception err)
+            {
+                errorLog(System.Reflection.MethodBase.GetCurrentMethod().Name, err);
             }
         }
 
