@@ -162,11 +162,20 @@
   <data name="Detail_Fritzbox" xml:space="preserve">
     <value>FritzBox</value>
   </data>
+  <data name="Detail_Hostname" xml:space="preserve">
+    <value>Hostname</value>
+  </data>
   <data name="Detail_Indentifier" xml:space="preserve">
     <value>Identifier</value>
   </data>
+  <data name="Detail_IP" xml:space="preserve">
+    <value>IP</value>
+  </data>
   <data name="Detail_Level" xml:space="preserve">
     <value>Dimmer (%)</value>
+  </data>
+  <data name="Detail_Mac" xml:space="preserve">
+    <value>MAC</value>
   </data>
   <data name="Detail_Manufacturer" xml:space="preserve">
     <value>OEM</value>

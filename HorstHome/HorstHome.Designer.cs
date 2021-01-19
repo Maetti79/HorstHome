@@ -75,6 +75,7 @@
             this.Icons.Images.SetKeyName(11, "7490.png");
             this.Icons.Images.SetKeyName(12, "7590.png");
             this.Icons.Images.SetKeyName(13, "smarthome_icon.ico");
+            this.Icons.Images.SetKeyName(14, "Iconshock-Real-Vista-Data-Connect.ico");
             // 
             // TrayIcons
             // 
@@ -109,19 +110,19 @@
             // SettingsToolStripMenuItem
             // 
             this.SettingsToolStripMenuItem.Name = "SettingsToolStripMenuItem";
-            this.SettingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.SettingsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.SettingsToolStripMenuItem.Text = "Settings";
             this.SettingsToolStripMenuItem.Click += new System.EventHandler(this.SettingsToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(113, 6);
             // 
             // QuitToolStripMenuItem
             // 
             this.QuitToolStripMenuItem.Name = "QuitToolStripMenuItem";
-            this.QuitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.QuitToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.QuitToolStripMenuItem.Text = "Quit";
             this.QuitToolStripMenuItem.Click += new System.EventHandler(this.QuitToolStripMenuItem_Click);
             // 
@@ -171,7 +172,7 @@
             // UpdateToolStripMenuItem
             // 
             this.UpdateToolStripMenuItem.Name = "UpdateToolStripMenuItem";
-            this.UpdateToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.UpdateToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
             this.UpdateToolStripMenuItem.Text = "Update";
             this.UpdateToolStripMenuItem.Visible = false;
             this.UpdateToolStripMenuItem.Click += new System.EventHandler(this.UpdateToolStripMenuItem_Click);

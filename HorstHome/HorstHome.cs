@@ -5,6 +5,8 @@ using System.Reflection;
 using System.Globalization;
 using System.Collections.Generic;
 using System.Resources;
+using System.ComponentModel;
+using SubnetPing;
 
 namespace HorstHome
 {
@@ -23,53 +25,76 @@ namespace HorstHome
         public ContextMenuStrip trayMenu;
         String BNodeName;
         TreeNode BNode;
+        TreeNode NGNode;
 
         public HorstHome()
         {
             InitializeComponent();
-            culture = CultureInfo.CurrentCulture;
-
-            trayMenu = new ContextMenuStrip();
-            trayMenu.ImageList = Icons;
-            if (culture.ToString() == "de-DE")
+            try
             {
-                trayMenu.Items.Add(i18n.de.Tray_Quit.ToString(), Icons.Images[13], OnExit);
+                culture = CultureInfo.CurrentCulture;
+
+                trayMenu = new ContextMenuStrip();
+                trayMenu.ImageList = Icons;
+                if (culture.ToString() == "de-DE")
+                {
+                    trayMenu.Items.Add(i18n.de.Tray_Quit.ToString(), Icons.Images[13], OnExit);
+                }
+                else
+                {
+                    trayMenu.Items.Add(i18n.en.Tray_Quit.ToString(), Icons.Images[13], OnExit);
+                }
+
+                trayIcon = new NotifyIcon();
+                trayIcon.Text = "Horst!Home";
+                trayIcon.Icon = Icon.FromHandle(((Bitmap)TrayIcons.Images[0]).GetHicon());
+
+                trayIcon.ContextMenuStrip = trayMenu;
+                trayIcon.Visible = true;
             }
-            else
+            catch (Exception err)
             {
-                trayMenu.Items.Add(i18n.en.Tray_Quit.ToString(), Icons.Images[13], OnExit);
+                errorLog(System.Reflection.MethodBase.GetCurrentMethod().Name, err);
             }
-
-            trayIcon = new NotifyIcon();
-            trayIcon.Text = "Horst!Home";
-            trayIcon.Icon = Icon.FromHandle(((Bitmap)TrayIcons.Images[0]).GetHicon());
-
-            trayIcon.ContextMenuStrip = trayMenu;
-            trayIcon.Visible = true;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
-            fritzBoxes = new List<FritzBox>();
-            reload();
+            try
+            {
+                this.Show();
+                fritzBoxes = new List<FritzBox>();
+                reload();
+            }
+            catch (Exception err)
+            {
+                errorLog(System.Reflection.MethodBase.GetCurrentMethod().Name, err);
+            }
         }
 
         private void reload()
         {
-            changeCulture(culture.ToString());
-            if (loadLicense() == true && loadConnection() == true)
+            try
             {
-                loadFritzboxes();
-            }
+                changeCulture(culture.ToString());
+                if (loadLicense() == true && loadConnection() == true)
+                {
+                    loadFritzboxes();
+                }
 
-            SmartDeviceTreeView.Nodes.Clear();
-            trayMenu.Items.Clear();
-            foreach (FritzBox fritzBox in fritzBoxes)
+                SmartDeviceTreeView.Nodes.Clear();
+                trayMenu.Items.Clear();
+                foreach (FritzBox fritzBox in fritzBoxes)
+                {
+                    loadDevices(fritzBox);
+                    loadGroups(fritzBox);
+                    loadNetwork(fritzBox);
+                    BatteryWarnings(fritzBox);
+                }
+            }
+            catch (Exception err)
             {
-                loadDevices(fritzBox);
-                loadGroups(fritzBox);
-                BatteryWarnings(fritzBox);
+                errorLog(System.Reflection.MethodBase.GetCurrentMethod().Name, err);
             }
         }
 
@@ -97,12 +122,14 @@ namespace HorstHome
                 fritzBox.info();
                 if (fritzBox.connect() == true)
                 {
-                    fritzBox.getDevicelist();
-                    fritzBox.getColordefaults();
-                    fritzBox.getTemplatelist();
+                    fritzBox.getDevicelist(DevicelistCallback);
+                    fritzBox.getColordefaults(ColordefaultsCallback);
+                    fritzBox.getTemplatelist(TemplatelistCallback);
                     loadDevices(fritzBox);
                     loadGroups(fritzBox);
                     BatteryWarnings(fritzBox);
+                    //Async Callback
+                    fritzBox.getLocalNetworkDevices(NetworkCallback);
                     return true;
                 }
                 else
@@ -214,41 +241,86 @@ namespace HorstHome
             }
         }
 
+        public void loadNetwork(FritzBox fritzBox)
+        {
+            try
+            {
+                NGNode = new TreeNode("Network");
+                NGNode.ImageIndex = 14;
+                NGNode.SelectedImageIndex = 14;
+                NGNode.ForeColor = Color.Black;
+                BNode.Nodes.Add(NGNode);
+                foreach (SubnetPing.SubnetClientV4 ClientV4 in fritzBox.LocalSubnetV4._SubnetClients)
+                {
+                    if (ClientV4._isOnline == true)
+                    {
+                        TreeNode NDNode = new TreeNode(ClientV4._ipAddressV4.ToString());
+                        NDNode.ImageIndex = 14;
+                        NDNode.SelectedImageIndex = 14;
+
+                        NDNode.ForeColor = Color.Black;
+
+                        NGNode.Nodes.Add(NDNode);
+                    }
+                }
+            }
+            catch (Exception err)
+            {
+                errorLog(System.Reflection.MethodBase.GetCurrentMethod().Name, err);
+            }
+        }
+
         private void trayMenu_ItemClicked(object sender, EventArgs e)
         {
-            this.Show();
-            this.WindowState = FormWindowState.Normal;
-            SmartDeviceTreeView.SelectedNode = GetNodeByName(SmartDeviceTreeView.Nodes, sender.ToString());
-            SmartDeviceTreeView.Select();
+            try
+            {
+                this.Show();
+                this.WindowState = FormWindowState.Normal;
+                SmartDeviceTreeView.SelectedNode = GetNodeByName(SmartDeviceTreeView.Nodes, sender.ToString());
+                SmartDeviceTreeView.Select();
+            }
+            catch (Exception err)
+            {
+                errorLog(System.Reflection.MethodBase.GetCurrentMethod().Name, err);
+            }
+
         }
 
         private TreeNode GetNodeByName(TreeNodeCollection nodes, string searchtext)
         {
-            TreeNode n_found_node = null;
-            bool b_node_found = false;
-
-            foreach (TreeNode node in nodes)
+            try
             {
+                TreeNode n_found_node = null;
+                bool b_node_found = false;
 
-                if (node.Text == searchtext)
+                foreach (TreeNode node in nodes)
                 {
-                    b_node_found = true;
-                    n_found_node = node;
 
-                    return n_found_node;
-                }
-
-                if (!b_node_found)
-                {
-                    n_found_node = GetNodeByName(node.Nodes, searchtext);
-
-                    if (n_found_node != null)
+                    if (node.Text == searchtext)
                     {
+                        b_node_found = true;
+                        n_found_node = node;
+
                         return n_found_node;
                     }
+
+                    if (!b_node_found)
+                    {
+                        n_found_node = GetNodeByName(node.Nodes, searchtext);
+
+                        if (n_found_node != null)
+                        {
+                            return n_found_node;
+                        }
+                    }
                 }
+                return null;
             }
-            return null;
+            catch (Exception err)
+            {
+                errorLog(System.Reflection.MethodBase.GetCurrentMethod().Name, err);
+                return null;
+            }
         }
 
         public Boolean loadLicense()
@@ -354,6 +426,115 @@ namespace HorstHome
             }
         }
 
+        private void DevicelistCallback(SmartDevice device)
+        {
+            try
+            {
+                Invoke(new Action(() =>
+                {
+                    if (GetNodeByName(NGNode.Nodes, device.DeviceName) != null)
+                    {
+
+                    }
+                }));
+                Application.DoEvents();
+            }
+            catch (Exception err)
+            {
+                errorLog(System.Reflection.MethodBase.GetCurrentMethod().Name, err);
+            }
+        }
+
+        private void ColordefaultsCallback(SmartDeviceColor color)
+        {
+            try
+            {
+                Invoke(new Action(() =>
+                {
+
+                }));
+                Application.DoEvents();
+            }
+            catch (Exception err)
+            {
+                errorLog(System.Reflection.MethodBase.GetCurrentMethod().Name, err);
+            }
+        }
+
+        private void TemplatelistCallback(SmartDeviceTemplate template)
+        {
+            try
+            {
+                Invoke(new Action(() =>
+                {
+
+                }));
+                Application.DoEvents();
+            }
+            catch (Exception err)
+            {
+                errorLog(System.Reflection.MethodBase.GetCurrentMethod().Name, err);
+            }
+        }
+
+        private void StatsCallback(SmartDeviceStats stats)
+        {
+            try
+            {
+                Invoke(new Action(() =>
+                {
+
+                }));
+                Application.DoEvents();
+            }
+            catch (Exception err)
+            {
+                errorLog(System.Reflection.MethodBase.GetCurrentMethod().Name, err);
+            }
+        }
+
+        private void NetworkCallback(SubnetClientV4 client)
+        {
+            try
+            {
+                Invoke(new Action(() =>
+                {
+                    if (GetNodeByName(NGNode.Nodes, client._ipAddressV4.ToString()) == null)
+                    {
+                        TreeNode NDNode = new TreeNode(client._ipAddressV4);
+                        NDNode.ImageIndex = 14;
+                        NDNode.SelectedImageIndex = 14;
+                        if (client._isOnline == true)
+                        {
+                            NDNode.ForeColor = Color.Black;
+                        }
+                        else
+                        {
+                            NDNode.ForeColor = Color.Gray;
+                        }
+                        NGNode.Nodes.Add(NDNode);
+                    }
+                    else
+                    {
+                        TreeNode NDNode = GetNodeByName(NGNode.Nodes, client._ipAddressV4.ToString());
+                        if (client._isOnline == true)
+                        {
+                            NDNode.ForeColor = Color.Black;
+                        }
+                        else
+                        {
+                            NDNode.ForeColor = Color.Gray;
+                        }
+                    }
+                }));
+                Application.DoEvents();
+            }
+            catch (Exception err)
+            {
+                errorLog(System.Reflection.MethodBase.GetCurrentMethod().Name, err);
+            }
+        }
+
         public void loadSettings()
         {
             try
@@ -378,58 +559,66 @@ namespace HorstHome
                     key.Close();
                 }
             }
-            catch (Exception Ex)
+            catch (Exception err)
             {
+                errorLog(System.Reflection.MethodBase.GetCurrentMethod().Name, err);
             }
         }
 
         public void changeCulture(String c)
         {
-            if (c != "de-DE")
+            try
             {
-                c = "en-US";
-            }
-            culture = new CultureInfo(c);
-            CultureInfo.DefaultThreadCurrentCulture = new CultureInfo(c);
-            CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo(c);
+                if (c != "de-DE")
+                {
+                    c = "en-US";
+                }
+                culture = new CultureInfo(c);
+                CultureInfo.DefaultThreadCurrentCulture = new CultureInfo(c);
+                CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo(c);
 
-            if (culture.ToString() == "de-DE")
+                if (culture.ToString() == "de-DE")
+                {
+                    MainMenu.Items.Find("FritzboxToolStripMenuItem", true)[0].Text = i18n.de.Menu_Fritzbox.ToString();
+                    MainMenu.Items.Find("SettingsToolStripMenuItem", true)[0].Text = i18n.de.Menu_Settings.ToString();
+                    MainMenu.Items.Find("QuitToolStripMenuItem", true)[0].Text = i18n.de.Menu_Quit.ToString();
+
+                    MainMenu.Items.Find("LanguageToolStripMenuItem", true)[0].Text = i18n.de.Menu_Language.ToString();
+                    MainMenu.Items.Find("LanguageDEToolStripMenuItem", true)[0].Text = i18n.de.Menu_DE.ToString();
+                    ToolStripMenuItem d = (ToolStripMenuItem)MainMenu.Items.Find("LanguageDEToolStripMenuItem", true)[0];
+                    d.Checked = true;
+                    MainMenu.Items.Find("LanguageENToolStripMenuItem", true)[0].Text = i18n.de.Menu_EN.ToString();
+                    ToolStripMenuItem e = (ToolStripMenuItem)MainMenu.Items.Find("LanguageENToolStripMenuItem", true)[0];
+                    e.Checked = false;
+
+                    MainMenu.Items.Find("AboutToolStripMenuItem", true)[0].Text = i18n.de.Menu_About.ToString();
+                    MainMenu.Items.Find("LicenseToolStripMenuItem", true)[0].Text = i18n.de.Menu_License.ToString();
+                    MainMenu.Items.Find("UpdateToolStripMenuItem", true)[0].Text = i18n.de.Menu_Update.ToString();
+                }
+                else
+                {
+                    MainMenu.Items.Find("FritzboxToolStripMenuItem", true)[0].Text = i18n.en.Menu_Fritzbox.ToString();
+                    MainMenu.Items.Find("SettingsToolStripMenuItem", true)[0].Text = i18n.en.Menu_Settings.ToString();
+                    MainMenu.Items.Find("QuitToolStripMenuItem", true)[0].Text = i18n.en.Menu_Quit.ToString();
+
+                    MainMenu.Items.Find("LanguageToolStripMenuItem", true)[0].Text = i18n.en.Menu_Language.ToString();
+                    MainMenu.Items.Find("LanguageDEToolStripMenuItem", true)[0].Text = i18n.en.Menu_DE.ToString();
+                    ToolStripMenuItem d = (ToolStripMenuItem)MainMenu.Items.Find("LanguageDEToolStripMenuItem", true)[0];
+                    d.Checked = true;
+                    MainMenu.Items.Find("LanguageENToolStripMenuItem", true)[0].Text = i18n.en.Menu_EN.ToString();
+                    ToolStripMenuItem e = (ToolStripMenuItem)MainMenu.Items.Find("LanguageENToolStripMenuItem", true)[0];
+                    e.Checked = false;
+
+                    MainMenu.Items.Find("AboutToolStripMenuItem", true)[0].Text = i18n.en.Menu_About.ToString();
+                    MainMenu.Items.Find("LicenseToolStripMenuItem", true)[0].Text = i18n.en.Menu_License.ToString();
+                    MainMenu.Items.Find("UpdateToolStripMenuItem", true)[0].Text = i18n.en.Menu_Update.ToString();
+                }
+                saveSettings();
+            }
+            catch (Exception err)
             {
-                MainMenu.Items.Find("FritzboxToolStripMenuItem", true)[0].Text = i18n.de.Menu_Fritzbox.ToString();
-                MainMenu.Items.Find("SettingsToolStripMenuItem", true)[0].Text = i18n.de.Menu_Settings.ToString();
-                MainMenu.Items.Find("QuitToolStripMenuItem", true)[0].Text = i18n.de.Menu_Quit.ToString();
-
-                MainMenu.Items.Find("LanguageToolStripMenuItem", true)[0].Text = i18n.de.Menu_Language.ToString();
-                MainMenu.Items.Find("LanguageDEToolStripMenuItem", true)[0].Text = i18n.de.Menu_DE.ToString();
-                ToolStripMenuItem d = (ToolStripMenuItem)MainMenu.Items.Find("LanguageDEToolStripMenuItem", true)[0];
-                d.Checked = true;
-                MainMenu.Items.Find("LanguageENToolStripMenuItem", true)[0].Text = i18n.de.Menu_EN.ToString();
-                ToolStripMenuItem e = (ToolStripMenuItem)MainMenu.Items.Find("LanguageENToolStripMenuItem", true)[0];
-                e.Checked = false;
-
-                MainMenu.Items.Find("AboutToolStripMenuItem", true)[0].Text = i18n.de.Menu_About.ToString();
-                MainMenu.Items.Find("LicenseToolStripMenuItem", true)[0].Text = i18n.de.Menu_License.ToString();
-                MainMenu.Items.Find("UpdateToolStripMenuItem", true)[0].Text = i18n.de.Menu_Update.ToString();
+                errorLog(System.Reflection.MethodBase.GetCurrentMethod().Name, err);
             }
-            else
-            {
-                MainMenu.Items.Find("FritzboxToolStripMenuItem", true)[0].Text = i18n.en.Menu_Fritzbox.ToString();
-                MainMenu.Items.Find("SettingsToolStripMenuItem", true)[0].Text = i18n.en.Menu_Settings.ToString();
-                MainMenu.Items.Find("QuitToolStripMenuItem", true)[0].Text = i18n.en.Menu_Quit.ToString();
-
-                MainMenu.Items.Find("LanguageToolStripMenuItem", true)[0].Text = i18n.en.Menu_Language.ToString();
-                MainMenu.Items.Find("LanguageDEToolStripMenuItem", true)[0].Text = i18n.en.Menu_DE.ToString();
-                ToolStripMenuItem d = (ToolStripMenuItem)MainMenu.Items.Find("LanguageDEToolStripMenuItem", true)[0];
-                d.Checked = true;
-                MainMenu.Items.Find("LanguageENToolStripMenuItem", true)[0].Text = i18n.en.Menu_EN.ToString();
-                ToolStripMenuItem e = (ToolStripMenuItem)MainMenu.Items.Find("LanguageENToolStripMenuItem", true)[0];
-                e.Checked = false;
-
-                MainMenu.Items.Find("AboutToolStripMenuItem", true)[0].Text = i18n.en.Menu_About.ToString();
-                MainMenu.Items.Find("LicenseToolStripMenuItem", true)[0].Text = i18n.en.Menu_License.ToString();
-                MainMenu.Items.Find("UpdateToolStripMenuItem", true)[0].Text = i18n.en.Menu_Update.ToString();
-            }
-            saveSettings();
         }
 
         private void OnExit(object sender, EventArgs e)
@@ -439,145 +628,173 @@ namespace HorstHome
                 trayIcon.Visible = false;
                 Application.Exit();
             }
-            catch (Exception ex)
+            catch (Exception err)
             {
-
+                errorLog(System.Reflection.MethodBase.GetCurrentMethod().Name, err);
             }
         }
 
         private void einstellungenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (Form sform = new Settings())
+            try
             {
-                var result = sform.ShowDialog();
-                if (result == DialogResult.OK)
+                using (Form sform = new Settings())
                 {
+                    var result = sform.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
 
+                    }
                 }
+            }
+            catch (Exception err)
+            {
+                errorLog(System.Reflection.MethodBase.GetCurrentMethod().Name, err);
             }
         }
 
         private void deviceTree_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            if (SmartDeviceTreeView.SelectedNode != null)
+            try
             {
-                foreach (FritzBox fritzBox in fritzBoxes)
+                if (SmartDeviceTreeView.SelectedNode != null)
                 {
-                    if (fritzBox.Info.Count > 0)
+                    foreach (FritzBox fritzBox in fritzBoxes)
                     {
-                        if (fritzBox.Name == SmartDeviceTreeView.SelectedNode.Text.ToString())
+                        if (fritzBox.Info.Count > 0)
                         {
-                            SmartDeviceTabContainer.TabPages.Clear();
-                            FritzboxView fbv = new FritzboxView(this, fritzBox);
-                            fbv.Dock = DockStyle.Fill;
-                            TabPage DeviceInfoTab = new TabPage(fritzBox.Name);
-                            DeviceInfoTab.Controls.Add(fbv);
-                            SmartDeviceTabContainer.TabPages.Add(DeviceInfoTab);
-                            Application.DoEvents();
+                            if (fritzBox.Name == SmartDeviceTreeView.SelectedNode.Text.ToString())
+                            {
+                                SmartDeviceTabContainer.TabPages.Clear();
+                                FritzboxView fbv = new FritzboxView(this, fritzBox);
+                                fbv.Dock = DockStyle.Fill;
+                                TabPage DeviceInfoTab = new TabPage(fritzBox.Name);
+                                DeviceInfoTab.Controls.Add(fbv);
+                                SmartDeviceTabContainer.TabPages.Add(DeviceInfoTab);
+                                Application.DoEvents();
+                            }
                         }
-                    }
 
-                    using (SmartDeviceGroup group = fritzBox.Groups.Find(x => x.GroupName.Equals(SmartDeviceTreeView.SelectedNode.Text.ToString())))
-                    {
-                        if (group != null)
+                        using (SmartDeviceGroup group = fritzBox.Groups.Find(x => x.GroupName.Equals(SmartDeviceTreeView.SelectedNode.Text.ToString())))
                         {
-                            SmartDeviceTabContainer.TabPages.Clear();
-                            GroupView gv = new GroupView(this, fritzBox.Uri, fritzBox.SID, group);
-                            gv.Dock = DockStyle.Fill;
-                            TabPage DeviceInfoTab = new TabPage(group.GroupName);
-                            DeviceInfoTab.Controls.Add(gv);
-                            SmartDeviceTabContainer.TabPages.Add(DeviceInfoTab);
-                            Application.DoEvents();
+                            if (group != null)
+                            {
+                                SmartDeviceTabContainer.TabPages.Clear();
+                                GroupView gv = new GroupView(this, fritzBox.Uri, fritzBox.SID, group);
+                                gv.Dock = DockStyle.Fill;
+                                TabPage DeviceInfoTab = new TabPage(group.GroupName);
+                                DeviceInfoTab.Controls.Add(gv);
+                                SmartDeviceTabContainer.TabPages.Add(DeviceInfoTab);
+                                Application.DoEvents();
+                            }
                         }
-                    }
 
-                    using (SmartDevice device = fritzBox.Devices.Find(x => x.DeviceName.Equals(SmartDeviceTreeView.SelectedNode.Text.ToString())))
-                    {
-                        if (device != null)
+                        using (SmartDevice device = fritzBox.Devices.Find(x => x.DeviceName.Equals(SmartDeviceTreeView.SelectedNode.Text.ToString())))
                         {
-                            SmartDeviceTabContainer.TabPages.Clear();
-                            device.tryUpdate(fritzBox.Uri, fritzBox.SID);
-                            if (device.SupportedFunctions.hasFlag(SmartDeviceFunctionType.Thermostat))
+                            if (device != null)
                             {
-                                ThermostatView thv = new ThermostatView(this, fritzBox.Uri, fritzBox.SID, device);
-                                thv.Dock = DockStyle.Fill;
-                                TabPage DeviceInfoTab = new TabPage(device.DeviceName);
-                                DeviceInfoTab.Controls.Add(thv);
-                                SmartDeviceTabContainer.TabPages.Add(DeviceInfoTab);
-                            }
-                            else if (device.SupportedFunctions.hasFlag(SmartDeviceFunctionType.Switch))
-                            {
-                                SocketView sv = new SocketView(this, fritzBox.Uri, fritzBox.SID, device);
-                                sv.Dock = DockStyle.Fill;
-                                TabPage DeviceInfoTab = new TabPage(device.DeviceName);
-                                DeviceInfoTab.Controls.Add(sv);
-                                SmartDeviceTabContainer.TabPages.Add(DeviceInfoTab);
-                            }
-                            else if (device.SupportedFunctions.hasFlag(SmartDeviceFunctionType.Color))
-                            {
-                                LightView lv = new LightView(this, fritzBox.Uri, fritzBox.SID, device);
-                                lv.Dock = DockStyle.Fill;
-                                TabPage DeviceInfoTab = new TabPage(device.DeviceName);
-                                DeviceInfoTab.Controls.Add(lv);
-                                SmartDeviceTabContainer.TabPages.Add(DeviceInfoTab);
-                            }
-                            else
-                            {
-                                AlarmView av = new AlarmView(this, fritzBox.Uri, fritzBox.SID, device);
-                                av.Dock = DockStyle.Fill;
-                                TabPage DeviceInfoTab = new TabPage(device.DeviceName);
-                                DeviceInfoTab.Controls.Add(av);
-                                SmartDeviceTabContainer.TabPages.Add(DeviceInfoTab);
-                            }
+                                SmartDeviceTabContainer.TabPages.Clear();
+                                device.tryUpdate(fritzBox.Uri, fritzBox.SID);
+                                if (device.SupportedFunctions.hasFlag(SmartDeviceFunctionType.Thermostat))
+                                {
+                                    ThermostatView thv = new ThermostatView(this, fritzBox.Uri, fritzBox.SID, device);
+                                    thv.Dock = DockStyle.Fill;
+                                    TabPage DeviceInfoTab = new TabPage(device.DeviceName);
+                                    DeviceInfoTab.Controls.Add(thv);
+                                    SmartDeviceTabContainer.TabPages.Add(DeviceInfoTab);
+                                }
+                                else if (device.SupportedFunctions.hasFlag(SmartDeviceFunctionType.Switch))
+                                {
+                                    SocketView sv = new SocketView(this, fritzBox.Uri, fritzBox.SID, device);
+                                    sv.Dock = DockStyle.Fill;
+                                    TabPage DeviceInfoTab = new TabPage(device.DeviceName);
+                                    DeviceInfoTab.Controls.Add(sv);
+                                    SmartDeviceTabContainer.TabPages.Add(DeviceInfoTab);
+                                }
+                                else if (device.SupportedFunctions.hasFlag(SmartDeviceFunctionType.Color))
+                                {
+                                    LightView lv = new LightView(this, fritzBox.Uri, fritzBox.SID, device);
+                                    lv.Dock = DockStyle.Fill;
+                                    TabPage DeviceInfoTab = new TabPage(device.DeviceName);
+                                    DeviceInfoTab.Controls.Add(lv);
+                                    SmartDeviceTabContainer.TabPages.Add(DeviceInfoTab);
+                                }
+                                else
+                                {
+                                    AlarmView av = new AlarmView(this, fritzBox.Uri, fritzBox.SID, device);
+                                    av.Dock = DockStyle.Fill;
+                                    TabPage DeviceInfoTab = new TabPage(device.DeviceName);
+                                    DeviceInfoTab.Controls.Add(av);
+                                    SmartDeviceTabContainer.TabPages.Add(DeviceInfoTab);
+                                }
 
-                            if (device.SupportedFunctions.hasFlag(SmartDeviceFunctionType.Energie))
-                            {
-                                EnergieChart ec = new EnergieChart(this, fritzBox.Uri, fritzBox.SID, device);
-                                ec.Dock = DockStyle.Fill;
-                                TabPage EnergieTab = new TabPage("Energie");
-                                EnergieTab.Controls.Add(ec);
-                                SmartDeviceTabContainer.TabPages.Add(EnergieTab);
+                                if (device.SupportedFunctions.hasFlag(SmartDeviceFunctionType.Energie))
+                                {
+                                    EnergieChart ec = new EnergieChart(this, fritzBox.Uri, fritzBox.SID, device);
+                                    ec.Dock = DockStyle.Fill;
+                                    TabPage EnergieTab = new TabPage("Energie");
+                                    EnergieTab.Controls.Add(ec);
+                                    SmartDeviceTabContainer.TabPages.Add(EnergieTab);
+                                }
+                                if (device.SupportedFunctions.hasFlag(SmartDeviceFunctionType.Energie))
+                                {
+                                    VoltageChart vc = new VoltageChart(this, fritzBox.Uri, fritzBox.SID, device);
+                                    vc.Dock = DockStyle.Fill;
+                                    TabPage VoltageTab = new TabPage("Voltage");
+                                    VoltageTab.Controls.Add(vc);
+                                    SmartDeviceTabContainer.TabPages.Add(VoltageTab);
+                                }
+                                if (device.SupportedFunctions.hasFlag(SmartDeviceFunctionType.Energie))
+                                {
+                                    PowerChart pc = new PowerChart(this, fritzBox.Uri, fritzBox.SID, device);
+                                    pc.Dock = DockStyle.Fill;
+                                    TabPage PowerTab = new TabPage("Power");
+                                    PowerTab.Controls.Add(pc);
+                                    SmartDeviceTabContainer.TabPages.Add(PowerTab);
+                                }
+                                if (device.SupportedFunctions.hasFlag(SmartDeviceFunctionType.Thermometer))
+                                {
+                                    TemperatureChart tc = new TemperatureChart(this, fritzBox.Uri, fritzBox.SID, device);
+                                    tc.Dock = DockStyle.Fill;
+                                    TabPage TemperatureTab = new TabPage("Temperature");
+                                    TemperatureTab.Controls.Add(tc);
+                                    SmartDeviceTabContainer.TabPages.Add(TemperatureTab);
+                                }
+                                Application.DoEvents();
                             }
-                            if (device.SupportedFunctions.hasFlag(SmartDeviceFunctionType.Energie))
+                        }
+
+                        using (SubnetClientV4 client = fritzBox.LocalSubnetV4._SubnetClients.Find(x => x._ipAddressV4.Equals(SmartDeviceTreeView.SelectedNode.Text.ToString())))
+                        {
+                            if (client != null)
                             {
-                                VoltageChart vc = new VoltageChart(this, fritzBox.Uri, fritzBox.SID, device);
-                                vc.Dock = DockStyle.Fill;
-                                TabPage VoltageTab = new TabPage("Voltage");
-                                VoltageTab.Controls.Add(vc);
-                                SmartDeviceTabContainer.TabPages.Add(VoltageTab);
+                                SmartDeviceTabContainer.TabPages.Clear();
+                                NetworkView  nv = new NetworkView(this, fritzBox.Uri, fritzBox.SID, client);
+                                nv.Dock = DockStyle.Fill;
+                                TabPage DeviceInfoTab = new TabPage(client._ipAddressV4);
+                                DeviceInfoTab.Controls.Add(nv);
+                                SmartDeviceTabContainer.TabPages.Add(DeviceInfoTab);
+                                Application.DoEvents();
                             }
-                            if (device.SupportedFunctions.hasFlag(SmartDeviceFunctionType.Energie))
-                            {
-                                PowerChart pc = new PowerChart(this, fritzBox.Uri, fritzBox.SID, device);
-                                pc.Dock = DockStyle.Fill;
-                                TabPage PowerTab = new TabPage("Power");
-                                PowerTab.Controls.Add(pc);
-                                SmartDeviceTabContainer.TabPages.Add(PowerTab);
-                            }
-                            if (device.SupportedFunctions.hasFlag(SmartDeviceFunctionType.Thermometer))
-                            {
-                                TemperatureChart tc = new TemperatureChart(this, fritzBox.Uri, fritzBox.SID, device);
-                                tc.Dock = DockStyle.Fill;
-                                TabPage TemperatureTab = new TabPage("Temperature");
-                                TemperatureTab.Controls.Add(tc);
-                                SmartDeviceTabContainer.TabPages.Add(TemperatureTab);
-                            }
-                            Application.DoEvents();
                         }
                     }
                 }
-            }
 
-            /*
-            using (SmartDevice device = box.Devices.Find(x => x.DeviceName.Equals(deviceTree.SelectedNode.Text.ToString())))
-            {
-                Random r = new Random();
-                int rr = r.Next(0, box.Colors.Count - 1);
-                SmartDeviceColor c = box.Colors[rr];
-                device.setLevel(box.Uri, box.SID, c.Value);
-                device.setColor(box.Uri, box.SID, c.Hue, c.Saturation, 5);
+                /*
+                using (SmartDevice device = box.Devices.Find(x => x.DeviceName.Equals(deviceTree.SelectedNode.Text.ToString())))
+                {
+                    Random r = new Random();
+                    int rr = r.Next(0, box.Colors.Count - 1);
+                    SmartDeviceColor c = box.Colors[rr];
+                    device.setLevel(box.Uri, box.SID, c.Value);
+                    device.setColor(box.Uri, box.SID, c.Hue, c.Saturation, 5);
+                }
+                */
             }
-            */
+            catch (Exception err)
+            {
+                errorLog(System.Reflection.MethodBase.GetCurrentMethod().Name, err);
+            }
         }
 
         private void connectionToolStripMenuItem_Click(object sender, EventArgs e)
@@ -597,51 +814,100 @@ namespace HorstHome
 
         private void deutschdeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            changeCulture("de-DE");
+            try
+            {
+                changeCulture("de-DE");
+            }
+            catch (Exception err)
+            {
+                errorLog(System.Reflection.MethodBase.GetCurrentMethod().Name, err);
+            }
         }
 
         private void englischENToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            changeCulture("en-US");
+            try
+            {
+                changeCulture("en-US");
+            }
+            catch (Exception err)
+            {
+                errorLog(System.Reflection.MethodBase.GetCurrentMethod().Name, err);
+            }
         }
 
         private void HorstHome_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (e.CloseReason == CloseReason.UserClosing)
+            try
             {
-                trayIcon.Visible = true;
-                this.Hide();
-                e.Cancel = true;
+                if (e.CloseReason == CloseReason.UserClosing)
+                {
+                    trayIcon.Visible = true;
+                    this.Hide();
+                    e.Cancel = true;
+                }
+            }
+            catch (Exception err)
+            {
+                errorLog(System.Reflection.MethodBase.GetCurrentMethod().Name, err);
             }
         }
 
         private void ShowEvent(String Titel, String Message)
         {
-            trayIcon.BalloonTipText = Titel;
-            trayIcon.BalloonTipTitle = Message;
-            trayIcon.ShowBalloonTip(500);
+            try
+            {
+                trayIcon.BalloonTipText = Titel;
+                trayIcon.BalloonTipTitle = Message;
+                trayIcon.ShowBalloonTip(500);
+            }
+            catch (Exception err)
+            {
+                errorLog(System.Reflection.MethodBase.GetCurrentMethod().Name, err);
+            }
         }
 
         private void MinimzedTray()
         {
-            trayIcon.Visible = true;
+            try
+            {
+                trayIcon.Visible = true;
+            }
+            catch (Exception err)
+            {
+                errorLog(System.Reflection.MethodBase.GetCurrentMethod().Name, err);
+            }
         }
 
         private void MaxmizedFromTray()
         {
-            trayIcon.Visible = true;
+            try
+            {
+                trayIcon.Visible = true;
+            }
+            catch (Exception err)
+            {
+                errorLog(System.Reflection.MethodBase.GetCurrentMethod().Name, err);
+            }
         }
 
         private void HorstHome_Resize(object sender, EventArgs e)
         {
-            if (FormWindowState.Minimized == this.WindowState)
+            try
             {
-                MinimzedTray();
-            }
-            else if (FormWindowState.Normal == this.WindowState)
-            {
+                if (FormWindowState.Minimized == this.WindowState)
+                {
+                    MinimzedTray();
+                }
+                else if (FormWindowState.Normal == this.WindowState)
+                {
 
-                MaxmizedFromTray();
+                    MaxmizedFromTray();
+                }
+            }
+            catch (Exception err)
+            {
+                errorLog(System.Reflection.MethodBase.GetCurrentMethod().Name, err);
             }
         }
 
@@ -680,14 +946,21 @@ namespace HorstHome
 
         private void ReloadTimer_Tick(object sender, EventArgs e)
         {
-            foreach (FritzBox fritzBox in fritzBoxes)
+            try
             {
-                fritzBox.info();
-                if (fritzBox.connect() == true)
+                foreach (FritzBox fritzBox in fritzBoxes)
                 {
-                    fritzBox.getDevicelist();
-                    BatteryWarnings(fritzBox);
+                    fritzBox.info();
+                    if (fritzBox.connect() == true)
+                    {
+                        fritzBox.getDevicelist(DevicelistCallback);
+                        BatteryWarnings(fritzBox);
+                    }
                 }
+            }
+            catch (Exception err)
+            {
+                errorLog(System.Reflection.MethodBase.GetCurrentMethod().Name, err);
             }
         }
 
@@ -717,9 +990,9 @@ namespace HorstHome
                 trayIcon.Visible = false;
                 Application.Exit();
             }
-            catch (Exception ex)
+            catch (Exception err)
             {
-
+                errorLog(System.Reflection.MethodBase.GetCurrentMethod().Name, err);
             }
         }
 
@@ -731,18 +1004,25 @@ namespace HorstHome
         private void BatteryWarnings(FritzBox fritzBox)
         {
 
-            foreach (SmartDevice d in fritzBox.Devices)
+            try
             {
-                if (d.Battery <= BatteryWarning)
+                foreach (SmartDevice d in fritzBox.Devices)
                 {
-                    DateTime Now = DateTime.Now;
-                    if (Now.Subtract(d.LastWarning).TotalMinutes > 60)
+                    if (d.Battery <= BatteryWarning)
                     {
-                        d.LastWarning = DateTime.Now;
-                        ShowEvent(fritzBox.Name + " " + d.DeviceName, "Battery: " + d.Battery + "%");
-                        //Console.WriteLine(d.DeviceName + " Battery: " + d.Battery + "%");
+                        DateTime Now = DateTime.Now;
+                        if (Now.Subtract(d.LastWarning).TotalMinutes > 60)
+                        {
+                            d.LastWarning = DateTime.Now;
+                            ShowEvent(fritzBox.Name + " " + d.DeviceName, "Battery: " + d.Battery + "%");
+                            //Console.WriteLine(d.DeviceName + " Battery: " + d.Battery + "%");
+                        }
                     }
                 }
+            }
+            catch (Exception err)
+            {
+                errorLog(System.Reflection.MethodBase.GetCurrentMethod().Name, err);
             }
         }
 
@@ -847,37 +1127,52 @@ namespace HorstHome
 
         public void saveConnection(FritzBox fritzBox)
         {
-            Microsoft.Win32.RegistryKey key;
-            Microsoft.Win32.RegistryKey subkey;
-            string rootKey = "SOFTWARE\\" + Assembly.GetExecutingAssembly().GetName().Name + "\\Connections";
-            key = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(rootKey);
-            if (key != null)
+            try
             {
-                subkey = key.CreateSubKey(fritzBox.Name);
-                if (subkey != null)
+                Microsoft.Win32.RegistryKey key;
+                Microsoft.Win32.RegistryKey subkey;
+                string rootKey = "SOFTWARE\\" + Assembly.GetExecutingAssembly().GetName().Name + "\\Connections";
+                key = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(rootKey);
+                if (key != null)
                 {
-                    subkey.SetValue("FritzBoxUri", fritzBox.Uri);
-                    subkey.SetValue("Username", fritzBox.Username);
-                    if (fritzBox.Password != "")
+                    subkey = key.CreateSubKey(fritzBox.Name);
+                    if (subkey != null)
                     {
-                        String Salt = StringEncryptor.GenerateAPassKey(Serial.cpuSerial());
-                        subkey.SetValue("Password", StringEncryptor.Encrypt(fritzBox.Password, Salt));
+                        subkey.SetValue("FritzBoxUri", fritzBox.Uri);
+                        subkey.SetValue("Username", fritzBox.Username);
+                        if (fritzBox.Password != "")
+                        {
+                            String Salt = StringEncryptor.GenerateAPassKey(Serial.cpuSerial());
+                            subkey.SetValue("Password", StringEncryptor.Encrypt(fritzBox.Password, Salt));
+                        }
                     }
+                    key.Close();
                 }
-                key.Close();
+            }
+            catch (Exception err)
+            {
+                errorLog(System.Reflection.MethodBase.GetCurrentMethod().Name, err);
             }
         }
 
         public void removeConnection(FritzBox fritzBox)
         {
-            Microsoft.Win32.RegistryKey key;
-            string rootKey = "SOFTWARE\\" + Assembly.GetExecutingAssembly().GetName().Name + "\\Connections";
-            key = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(rootKey);
-            if (key != null)
+            try
             {
-                key.DeleteSubKeyTree(fritzBox.Name);
-                key.Close();
+                Microsoft.Win32.RegistryKey key;
+                string rootKey = "SOFTWARE\\" + Assembly.GetExecutingAssembly().GetName().Name + "\\Connections";
+                key = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(rootKey);
+                if (key != null)
+                {
+                    key.DeleteSubKeyTree(fritzBox.Name);
+                    key.Close();
+                }
+            }
+            catch (Exception err)
+            {
+                errorLog(System.Reflection.MethodBase.GetCurrentMethod().Name, err);
             }
         }
+
     }
 }

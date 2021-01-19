@@ -121,10 +121,25 @@
     <Compile Include="Class\ColorDistance.cs" />
     <Compile Include="Class\ColorRGB.cs" />
     <Compile Include="Class\Extensions.cs" />
+    <Compile Include="Class\SmartDeviceEvent.cs" />
+    <Compile Include="Subnetping\IPSort.cs" />
+    <Compile Include="Subnetping\IPV4address.cs" />
     <Compile Include="Class\PluginCore.cs" />
     <Compile Include="Class\Serial.cs" />
     <Compile Include="Class\SmartDeviceTemplate.cs" />
     <Compile Include="Class\StringEncryptor.cs" />
+    <Compile Include="Subnetping\PacketLoss.cs" />
+    <Compile Include="Subnetping\ReceiveState.cs" />
+    <Compile Include="Subnetping\ResolveState.cs" />
+    <Compile Include="Subnetping\ResolveType.cs" />
+    <Compile Include="Subnetping\Roundtrip.cs" />
+    <Compile Include="Subnetping\ScanCompleted.cs" />
+    <Compile Include="Subnetping\ScanMode.cs" />
+    <Compile Include="Subnetping\ScanPort.cs" />
+    <Compile Include="Subnetping\ScanProperties.cs" />
+    <Compile Include="Subnetping\SubnetClassV4.cs" />
+    <Compile Include="Subnetping\SubnetClientV4.cs" />
+    <Compile Include="Subnetping\SubnetV4.cs" />
     <Compile Include="Device\HanFunSmoke.cs" />
     <Compile Include="Device\HanFunMotion.cs" />
     <Compile Include="LicenseForm.cs">
@@ -148,6 +163,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>de.resx</DependentUpon>
     </Compile>
+    <Compile Include="Subnetping\Trace.cs" />
     <Compile Include="View\AlarmView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -216,6 +232,12 @@
     <Compile Include="Chart\PowerChart.Designer.cs">
       <DependentUpon>PowerChart.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\NetworkView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\NetworkView.Designer.cs">
+      <DependentUpon>NetworkView.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\SocketView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -281,6 +303,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Chart\PowerChart.resx">
       <DependentUpon>PowerChart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\NetworkView.resx">
+      <DependentUpon>NetworkView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\SocketView.resx">
       <DependentUpon>SocketView.cs</DependentUpon>

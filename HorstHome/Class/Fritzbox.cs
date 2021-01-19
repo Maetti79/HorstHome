@@ -3,9 +3,21 @@ using System.Security.Cryptography;
 using System.Xml.Linq;
 using System.Collections.Generic;
 using System.Text;
+using SubnetPing;
+using System.Windows.Forms;
+using System.ComponentModel;
 
 namespace HorstHome
 {
+    
+    public delegate void DeviceCallback(SmartDevice device);
+    public delegate void GroupCallback(SmartDeviceGroup group);
+    public delegate void ColorCallback(SmartDeviceColor color);
+    public delegate void TemplcateCallback(SmartDeviceTemplate template);
+    public delegate void StatsCallback(SmartDeviceStats stats);
+    public delegate void EventCallback(SmartDeviceEvent e);
+    public delegate void NetworkCallback(SubnetClientV4 device);
+
     public class FritzBox : IDisposable
     {
         public String Name;
@@ -23,6 +35,16 @@ namespace HorstHome
         public List<SmartDeviceColor> Colors;
         public List<SmartDeviceTemplate> Templates;
 
+        public DeviceCallback DevicesCallback;
+        public GroupCallback GroupsCallback;
+        public ColorCallback ColorsCallback;
+        public TemplcateCallback TemplatesCallback;
+        public NetworkCallback NetworkCallback;
+
+        public SubnetV4 LocalSubnetV4;
+        public Timer timer;
+        public BackgroundWorker backgroundWorker;
+        
         enum NodeTypes
         {
             HasChildren,
@@ -36,6 +58,12 @@ namespace HorstHome
             Groups = new List<SmartDeviceGroup>();
             Colors = new List<SmartDeviceColor>();
             Info = new Dictionary<String, String>();
+            backgroundWorker = new BackgroundWorker();
+            backgroundWorker.DoWork += new DoWorkEventHandler(backgroundWorker_DoWork);
+            timer = new Timer();
+            timer.Interval = 1000;
+            timer.Tick += Timer_Tick;
+            timer.Enabled = true;
             iconId = 11;
         }
 
@@ -46,11 +74,16 @@ namespace HorstHome
             Groups = new List<SmartDeviceGroup>();
             Colors = new List<SmartDeviceColor>();
             Info = new Dictionary<String, String>();
+            backgroundWorker = new BackgroundWorker();
+            backgroundWorker.DoWork += new DoWorkEventHandler(backgroundWorker_DoWork);
+            timer = new Timer();
+            timer.Interval = 1000;
+            timer.Tick += Timer_Tick;
+            timer.Enabled = true;
             iconId = 11;
             Uri = b;
             Username = u;
             Password = p;
-
         }
 
         public Boolean info()
@@ -139,10 +172,11 @@ namespace HorstHome
             return info.Element(name).Value;
         }
 
-        public void getDevicelist()
+        public void getDevicelist(DeviceCallback callback)
         {
             try
             {
+                DevicesCallback = callback;
                 Devices = new List<SmartDevice>();
                 Groups = new List<SmartDeviceGroup>();
 
@@ -213,10 +247,11 @@ namespace HorstHome
             }
         }
 
-        public void getColordefaults()
+        public void getColordefaults(ColorCallback callback)
         {
             try
             {
+                ColorsCallback = callback;
                 Colors = new List<SmartDeviceColor>();
 
                 XDocument doc;
@@ -241,10 +276,11 @@ namespace HorstHome
             }
         }
 
-        public void getTemplatelist()
+        public void getTemplatelist(TemplcateCallback callback)
         {
             try
             {
+                TemplatesCallback = callback;
                 Templates = new List<SmartDeviceTemplate>();
 
                 XDocument doc;
@@ -259,6 +295,52 @@ namespace HorstHome
             }
             catch (Exception Ex)
             {
+            }
+        }
+
+        public void getLocalNetworkDevices(NetworkCallback callback) {
+            NetworkCallback = callback;
+            LocalSubnetV4 = new SubnetV4(Uri, 64, 128, 1000);
+            LocalSubnetV4._subnetClientCallback = LocalNetworkDevicesDetected;
+            LocalSubnetV4._enabled = true;
+            LocalSubnetV4.clientList();
+            //LocalSubnetV4.ScanInitial(ScanMode.AUTO);
+        }
+
+        private void LocalNetworkDevicesDetected(SubnetClientV4 n)
+        {
+            try
+            {
+                if (n._isOnline == true)
+                {
+                    NetworkCallback?.Invoke(n);
+                }
+                Application.DoEvents();
+            }
+            catch (Exception ex)
+            {
+                //Console.WriteLine("Update: " + ex.Message);
+            }
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            if (backgroundWorker.IsBusy == false)
+            {
+                backgroundWorker.RunWorkerAsync();
+            }
+        }
+
+        private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            var worker = (BackgroundWorker)sender;
+            if (worker.CancellationPending)
+            {
+                return;
+            }
+            else
+            {
+                LocalSubnetV4.ScanSubnet(sender, e, false);
             }
         }
 

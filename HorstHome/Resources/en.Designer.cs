@@ -196,6 +196,15 @@ namespace i18n {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Hostname ähnelt.
+        /// </summary>
+        internal static string Detail_Hostname {
+            get {
+                return ResourceManager.GetString("Detail_Hostname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Indentifier ähnelt.
         /// </summary>
         internal static string Detail_Indentifier {
@@ -205,11 +214,29 @@ namespace i18n {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die IP ähnelt.
+        /// </summary>
+        internal static string Detail_IP {
+            get {
+                return ResourceManager.GetString("Detail_IP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Dimmer (%) ähnelt.
         /// </summary>
         internal static string Detail_Level {
             get {
                 return ResourceManager.GetString("Detail_Level", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die MAC ähnelt.
+        /// </summary>
+        internal static string Detail_Mac {
+            get {
+                return ResourceManager.GetString("Detail_Mac", resourceCulture);
             }
         }
         
