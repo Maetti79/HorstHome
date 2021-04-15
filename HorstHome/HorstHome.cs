@@ -327,7 +327,7 @@ namespace HorstHome
         {
             try
             {
-                licenseInformation = Serial.CallWebservice("https://HorstHome.purepix.net/", Serial.GetSerialNumber()).Trim();
+                licenseInformation = Serial.CallWebservice("https://horsthome.compucampus.de/", Serial.GetSerialNumber()).Trim();
                 Microsoft.Win32.RegistryKey key;
                 string rootKey = "SOFTWARE\\" + Assembly.GetExecutingAssembly().GetName().Name;
                 key = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(rootKey);

@@ -6,10 +6,11 @@ using System.Text;
 using SubnetPing;
 using System.Windows.Forms;
 using System.ComponentModel;
+using System.Security.Cryptography;
 
 namespace HorstHome
 {
-    
+
     public delegate void DeviceCallback(SmartDevice device);
     public delegate void GroupCallback(SmartDeviceGroup group);
     public delegate void ColorCallback(SmartDeviceColor color);
@@ -44,7 +45,7 @@ namespace HorstHome
         public SubnetV4 LocalSubnetV4;
         public Timer timer;
         public BackgroundWorker backgroundWorker;
-        
+
         enum NodeTypes
         {
             HasChildren,
@@ -118,7 +119,8 @@ namespace HorstHome
                     return false;
                 }
             }
-            catch (Exception Ex) {
+            catch (Exception Ex)
+            {
                 return false;
             }
         }
@@ -127,13 +129,14 @@ namespace HorstHome
         {
             try
             {
-                XDocument doc = XDocument.Load(Uri + @"login_sid.lua");
+                XDocument doc = XDocument.Load(Uri + "login_sid.lua?username=" + Username );
                 SID = GetValue(doc, "SID");
                 if (SID == "0000000000000000")
                 {
                     String challenge = GetValue(doc, "Challenge");
-                    doc = XDocument.Load(Uri + @"login_sid.lua?username=" + Username + @"&response=" + GetResponse(challenge, Password));
+                    doc = XDocument.Load(Uri + "login_sid.lua?username=" + Username + "&response=" + GetResponse(challenge, Password));
                     SID = GetValue(doc, "SID");
+                    Console.WriteLine(SID);
                 }
                 if (SID != "0000000000000000")
                 {
@@ -144,14 +147,134 @@ namespace HorstHome
                     return false;
                 }
             }
-            catch (Exception Ex) {
+            catch (Exception Ex)
+            {
                 return false;
             }
         }
 
-        private String GetResponse(string challenge, string kennwort)
+        private String GetResponse(string challenge, string password)
         {
-            return challenge + "-" + GetMD5Hash(challenge + "-" + kennwort);
+            Console.WriteLine("challenge: " + challenge);
+            Console.WriteLine("password: " + password);
+            String response = "";
+            if (challenge.StartsWith("2$") == true)
+            {
+
+                challenge = "2$10000$5A1711$2000$5A1722";
+                password = "1example!";
+                Console.WriteLine("challenge: " + challenge);
+
+                var challengeParts = challenge.Split('$');
+                int iter1 = int.Parse(challengeParts[1]);
+                byte[] salt1 = fromHex(challengeParts[2]);
+                int iter2 = int.Parse(challengeParts[3]);
+                byte[] salt2 = fromHex(challengeParts[4]);
+
+                Console.WriteLine("iter1: " + iter1);
+                Console.WriteLine("salt1: " + toHex(salt1));
+                Console.WriteLine("iter2: " + iter2);
+                Console.WriteLine("salt2: " + toHex(salt2));
+                
+                Rfc2898 hasher1 = new Rfc2898(Encoding.ASCII.GetBytes(password), salt1, iter1);
+                //acf42b45bfbaa714e84b3f0e073b31482b60e590525bd07db2853c4b101bf8b9
+                byte[] hash1 = hasher1.GetDerivedKeyBytes_PBKDF2_HMACSHA512(32);
+                //byte[] hash1 = PBKDF2Sha256GetBytes(32, Encoding.UTF8.GetBytes(password), salt1, iter1);
+                string shash1 = toHex(hash1);
+
+                Rfc2898 hasher2 = new Rfc2898(hash1, salt2, iter2);
+                //3e25e467ab3068e90a62ed5db0881df35c0a9ca67d6a2c820753dc514abd6d9f
+                //byte[] hash2 = PBKDF2Sha256GetBytes(32, hash1, salt2, iter2);
+                byte[] hash2 = hasher2.GetDerivedKeyBytes_PBKDF2_HMACSHA512(32);
+                string shash2 = toHex(hash2);
+                /*
+                using (var pbkdf2 = new Rfc2898DeriveBytes(password, salt1, iter1, HashAlgorithmName.SHA512))
+                {
+                    hash1 = pbkdf2.GetBytes(32);
+                }
+                using (var pbkdf2 = new Rfc2898DeriveBytes(hash1, salt2, iter2, HashAlgorithmName.SHA512))
+                {
+                    hash2 = pbkdf2.GetBytes(32);
+                }*/
+                
+                Console.WriteLine("hash1: " + shash1);
+                Console.WriteLine("hash2: " + shash2);
+                response = challengeParts[4] + "$" + shash2;
+            }
+            else
+            {
+                response = challenge + "-" + GetMD5Hash(challenge + "-" + password);
+            }
+            Console.WriteLine("response: " + response);
+            return response;
+        }
+
+        public static string toHex(byte[] ba)
+        {
+            StringBuilder hex = new StringBuilder(ba.Length * 2);
+            foreach (byte b in ba)
+                hex.AppendFormat("{0:x2}", b);
+            return hex.ToString();
+        }
+
+        public static byte[] fromHex(String hex)
+        {
+            int NumberChars = hex.Length;
+            byte[] bytes = new byte[NumberChars / 2];
+            for (int i = 0; i < NumberChars; i += 2)
+                bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
+            return bytes;
+        }
+
+        public static byte[] PBKDF2Sha256GetBytes(int dklen, byte[] password, byte[] salt, int iterationCount)
+        {
+            using (var hmac = new System.Security.Cryptography.HMACSHA256(password))
+            {
+                int hashLength = hmac.HashSize / 8;
+                if ((hmac.HashSize & 7) != 0)
+                    hashLength++;
+                int keyLength = dklen / hashLength;
+                if ((long)dklen > (0xFFFFFFFFL * hashLength) || dklen < 0)
+                    throw new ArgumentOutOfRangeException("dklen");
+                if (dklen % hashLength != 0)
+                    keyLength++;
+                byte[] extendedkey = new byte[salt.Length + 4];
+                Buffer.BlockCopy(salt, 0, extendedkey, 0, salt.Length);
+                using (var ms = new System.IO.MemoryStream())
+                {
+                    for (int i = 0; i < keyLength; i++)
+                    {
+                        extendedkey[salt.Length] = (byte)(((i + 1) >> 24) & 0xFF);
+                        extendedkey[salt.Length + 1] = (byte)(((i + 1) >> 16) & 0xFF);
+                        extendedkey[salt.Length + 2] = (byte)(((i + 1) >> 8) & 0xFF);
+                        extendedkey[salt.Length + 3] = (byte)(((i + 1)) & 0xFF);
+                        byte[] u = hmac.ComputeHash(extendedkey);
+                        Array.Clear(extendedkey, salt.Length, 4);
+                        byte[] f = u;
+                        for (int j = 1; j < iterationCount; j++)
+                        {
+                            u = hmac.ComputeHash(u);
+                            for (int k = 0; k < f.Length; k++)
+                            {
+                                f[k] ^= u[k];
+                            }
+                        }
+                        ms.Write(f, 0, f.Length);
+                        Array.Clear(u, 0, u.Length);
+                        Array.Clear(f, 0, f.Length);
+                    }
+                    byte[] dk = new byte[dklen];
+                    ms.Position = 0;
+                    ms.Read(dk, 0, dklen);
+                    ms.Position = 0;
+                    for (long i = 0; i < ms.Length; i++)
+                    {
+                        ms.WriteByte(0);
+                    }
+                    Array.Clear(extendedkey, 0, extendedkey.Length);
+                    return dk;
+                }
+            }
         }
 
         private String GetMD5Hash(string input)
@@ -298,7 +421,8 @@ namespace HorstHome
             }
         }
 
-        public void getLocalNetworkDevices(NetworkCallback callback) {
+        public void getLocalNetworkDevices(NetworkCallback callback)
+        {
             NetworkCallback = callback;
             LocalSubnetV4 = new SubnetV4(Uri, 64, 128, 1000);
             LocalSubnetV4._subnetClientCallback = LocalNetworkDevicesDetected;

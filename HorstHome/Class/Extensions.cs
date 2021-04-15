@@ -1,6 +1,8 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
+using System.Diagnostics.CodeAnalysis;
+
 
 public static class Extensions
 {
@@ -201,6 +203,16 @@ public static class Extensions
             items = items.AddItemToArray(c.Value.ToString());
         }
         return items;
+    }
+
+    public static byte[] CloneByteArray(this byte[] src)
+    {
+        if (src == null)
+        {
+            return null;
+        }
+
+        return (byte[])(src.Clone());
     }
 
 }
