@@ -31,9 +31,9 @@
 
 Windows 10 (32/64)
 
-Setup https://horsthome.purepix.net/HorstHome.exe
+Setup https://horsthome.compucampus.de/HorstHome.exe
 
-Learnmore about the Project or get in touch, just visit https://horsthome.purepix.net
+Learnmore about the Project or get in touch, just visit https://horsthome.compucampus.de/
 
 # HorstHome
 
