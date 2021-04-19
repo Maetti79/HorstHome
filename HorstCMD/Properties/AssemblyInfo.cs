@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("HorstCMD")]
 [assembly: AssemblyDescription("FritzBox SmartHome ComandLine Interface")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("PurePix")]
+[assembly: AssemblyCompany("CompuCampus")]
 [assembly: AssemblyProduct("HorstCMD")]
 [assembly: AssemblyCopyright("Copyright © 2021 Dennis Sven Mittmann")]
 [assembly: AssemblyTrademark("purepix.net")]

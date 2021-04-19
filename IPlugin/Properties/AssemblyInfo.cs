@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("IPlugin")]
 [assembly: AssemblyDescription("IPlugin Interface für HorstHome")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("PurePix")]
+[assembly: AssemblyCompany("CompuCampus")]
 [assembly: AssemblyProduct("IPlugin Interface")]
 [assembly: AssemblyCopyright("Copyright © 2021 Dennis Sven Mittmann")]
 [assembly: AssemblyTrademark("purepix.net")]

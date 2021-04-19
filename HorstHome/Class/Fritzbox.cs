@@ -80,7 +80,6 @@ namespace HorstHome
             timer = new Timer();
             timer.Interval = 1000;
             timer.Tick += Timer_Tick;
-            timer.Enabled = true;
             iconId = 11;
             Uri = b;
             Username = u;
@@ -140,6 +139,7 @@ namespace HorstHome
                 }
                 if (SID != "0000000000000000")
                 {
+                    timer.Enabled = true;
                     return true;
                 }
                 else

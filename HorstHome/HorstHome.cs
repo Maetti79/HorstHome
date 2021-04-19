@@ -79,7 +79,22 @@ namespace HorstHome
                 changeCulture(culture.ToString());
                 if (loadLicense() == true && loadConnection() == true)
                 {
-                    loadFritzboxes();
+                    if (fritzBoxes.Count == 0)
+                    {
+                        using (Form sform = new Settings(this))
+                        {
+                            var result = sform.ShowDialog();
+                            if (result == DialogResult.OK)
+                            {
+                                reload();
+                            }
+                        }
+                    }
+                    else
+                    {
+
+                        loadFritzboxes();
+                    }
                 }
 
                 SmartDeviceTreeView.Nodes.Clear();
@@ -106,6 +121,7 @@ namespace HorstHome
                 {
                     loadFritzbox(fritzBox);
                 }
+                { }
                 return true;
             }
             catch (Exception err)
@@ -370,6 +386,7 @@ namespace HorstHome
         {
             try
             {
+                fritzBoxes.Clear();
                 Microsoft.Win32.RegistryKey key;
                 Microsoft.Win32.RegistryKey subkey;
                 string rootKey = "SOFTWARE\\" + Assembly.GetExecutingAssembly().GetName().Name + "\\Connections";
@@ -526,8 +543,9 @@ namespace HorstHome
                             NDNode.ForeColor = Color.Gray;
                         }
                     }
+                    NGNode.Text = "Network (Scan)";
                 }));
-                NGNode.Text = "Network (Scan)";
+                
                 Application.DoEvents();
             }
             catch (Exception err)

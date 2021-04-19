@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("HorstHome")]
 [assembly: AssemblyDescription("FritzBox SmartHome Windows ControlCenter")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("PurePix")]
+[assembly: AssemblyCompany("CompuCampus")]
 [assembly: AssemblyProduct("HorstHome")]
 [assembly: AssemblyCopyright("Copyright © 2021 Dennis Sven Mittmann")]
 [assembly: AssemblyTrademark("puerpix.net")]
